@@ -109,7 +109,7 @@ export default function RootLayout({ children }) {
                 Built for cinephiles and binge watchers who forgot who died 2 years ago.
               </p>
               <div className="text-slate-400">
-                Next.js 14 • React Bits • MongoDB Ready
+                TV Series • Anime • Movies • Full Story-Book Mode
               </div>
             </div>
           </footer>

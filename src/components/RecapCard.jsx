@@ -14,7 +14,10 @@ import {
   Clock,
   Zap,
   Scissors,
-  Flag
+  Flag,
+  ChevronLeft,
+  ChevronRight,
+  Users
 } from 'lucide-react';
 
 export default function RecapCard({
@@ -23,7 +26,8 @@ export default function RecapCard({
   episode,
   nextEpisodeData,
   showTitle = '',
-  initialView = 'cumulative'
+  initialView = 'cumulative',
+  onStepEpisode
 }) {
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [summaryView, setSummaryView] = useState(initialView); // 'cumulative' | 'gist' | 'storybook'
@@ -35,15 +39,17 @@ export default function RecapCard({
   }, [initialView]);
 
   const storyBook = recap?.storyBook || null;
+  const characterGuide =
+    recap?.characterGuide || storyBook?.characterGuide || null;
 
-  // Build fallback chapters on the fly if a static catalog show doesn't have storyBook pre-attached yet
   const effectiveStoryBook = storyBook || {
     title: `${showTitle || 'Complete Series'} — Start-to-End Story-Book`,
     subtitle:
       'Every essential canon plot point from the opening scene to the climax, with all filler subplots stripped out.',
-    readingTimeMinutes: 4,
-    watchTimeSaved: '10+ Hours Saved',
+    readingTimeMinutes: 6,
+    watchTimeSaved: '12+ Hours Saved',
     fillersRemovedCount: 3,
+    characterGuide,
     chapters: [
       {
         chapterNumber: 1,
@@ -123,13 +129,29 @@ export default function RecapCard({
     }
   };
 
+  const handlePrevEpisode = () => {
+    if (!onStepEpisode) return;
+    if (Number(episode) > 1) {
+      onStepEpisode(Number(season), Number(episode) - 1);
+    } else if (Number(season) > 1) {
+      onStepEpisode(Number(season) - 1, 1);
+    }
+  };
+
+  const handleNextEpisode = () => {
+    if (!onStepEpisode) return;
+    const nextS = nextEpisodeData?.season || Number(season);
+    const nextE = nextEpisodeData?.episode || Number(episode) + 1;
+    onStepEpisode(nextS, nextE);
+  };
+
   if (!recap) {
     return (
       <SpotlightCard className="p-8 text-center text-slate-400">
         <BookOpen className="w-8 h-8 text-rose-500 mx-auto mb-2 opacity-50" />
         <p className="text-base font-medium">Recap in progress for this episode position.</p>
         <p className="text-xs text-slate-500 mt-1">
-          Drag the slider to any season or episode to fetch its live synopsis.
+          Use the Next / Prev episode buttons or slider to load any episode.
         </p>
       </SpotlightCard>
     );
@@ -151,7 +173,7 @@ export default function RecapCard({
             : 'rgba(244, 63, 94, 0.35)'
         }
       >
-        {/* Header Bar */}
+        {/* Header Bar with Direct Prev (<) and Next (>) Episode Stepper */}
         <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-cinema-border/60">
           <div className="flex items-center gap-2.5">
             <div
@@ -198,31 +220,60 @@ export default function RecapCard({
             </div>
           </div>
 
-          {/* Audio Recap / Audiobook Button */}
-          <button
-            onClick={toggleAudio}
-            className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all border ${
-              isPlayingAudio
-                ? 'bg-rose-500 text-white border-rose-400 shadow-lg shadow-rose-500/30 animate-pulse'
-                : 'bg-cinema-black/80 text-slate-300 border-cinema-border hover:text-white hover:border-rose-500/40'
-            }`}
-          >
-            {isPlayingAudio ? (
-              <>
-                <VolumeX className="w-4 h-4 text-white" />
-                <span>Stop Audio</span>
-              </>
-            ) : (
-              <>
-                <Volume2 className="w-4 h-4 text-rose-400" />
-                <span>
-                  {summaryView === 'storybook'
-                    ? 'Listen as Audiobook'
-                    : 'Listen Audio Recap'}
+          {/* Right Controls: Direct Episode Stepper (< Prev | Next >) + Audio Recap */}
+          <div className="flex flex-wrap items-center gap-2">
+            {onStepEpisode && (
+              <div className="inline-flex items-center rounded-xl bg-cinema-black/90 border border-cinema-border p-1">
+                <button
+                  type="button"
+                  onClick={handlePrevEpisode}
+                  disabled={Number(season) <= 1 && Number(episode) <= 1}
+                  title="Previous Episode"
+                  className="px-2.5 py-1 rounded-lg text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 disabled:opacity-35 disabled:pointer-events-none flex items-center gap-1 transition"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5 text-rose-400" />
+                  <span>Prev</span>
+                </button>
+                <span className="px-2.5 text-xs font-mono font-bold text-white border-x border-cinema-border/60">
+                  S{String(season).padStart(2, '0')}E{String(episode).padStart(2, '0')}
                 </span>
-              </>
+                <button
+                  type="button"
+                  onClick={handleNextEpisode}
+                  title="Next Episode"
+                  className="px-2.5 py-1 rounded-lg text-xs font-bold text-rose-300 hover:text-white hover:bg-rose-500/20 flex items-center gap-1 transition"
+                >
+                  <span>Next Ep</span>
+                  <ChevronRight className="w-3.5 h-3.5 text-rose-400" />
+                </button>
+              </div>
             )}
-          </button>
+
+            <button
+              onClick={toggleAudio}
+              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all border ${
+                isPlayingAudio
+                  ? 'bg-rose-500 text-white border-rose-400 shadow-lg shadow-rose-500/30 animate-pulse'
+                  : 'bg-cinema-black/80 text-slate-300 border-cinema-border hover:text-white hover:border-rose-500/40'
+              }`}
+            >
+              {isPlayingAudio ? (
+                <>
+                  <VolumeX className="w-4 h-4 text-white" />
+                  <span>Stop Audio</span>
+                </>
+              ) : (
+                <>
+                  <Volume2 className="w-4 h-4 text-rose-400" />
+                  <span>
+                    {summaryView === 'storybook'
+                      ? 'Listen as Audiobook'
+                      : 'Listen Audio Recap'}
+                  </span>
+                </>
+              )}
+            </button>
+          </div>
         </div>
 
         {/* 3-Mode View Switcher Buttons */}
@@ -266,6 +317,42 @@ export default function RecapCard({
             <span>📖 Read Full Story-Book (Start → End • No Fillers)</span>
           </button>
         </div>
+
+        {/* NEWCOMER'S GUIDE: WHO'S WHO & KEY CHARACTERS EXPLAINED */}
+        {characterGuide?.characters?.length > 0 && (
+          <div className="mb-6 p-4 sm:p-5 rounded-2xl bg-cinema-black/70 border border-cinema-border/80 space-y-3">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">
+                <Users className="w-4 h-4 text-rose-400" />
+                <span>Who&apos;s Who — Key Characters & Roles Explained</span>
+              </div>
+              <span className="text-[11px] text-slate-400 hidden sm:inline">
+                Beginner-friendly character guide
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {characterGuide.characters.map((char, idx) => (
+                <div
+                  key={idx}
+                  className="p-3 rounded-xl bg-cinema-card/90 border border-white/10 space-y-1"
+                >
+                  <div className="flex items-center justify-between gap-1">
+                    <span className="font-bold text-white text-xs sm:text-sm">
+                      {char.name}
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-mono text-rose-400 block">
+                    {char.role}
+                  </span>
+                  <p className="text-xs text-slate-300 leading-relaxed pt-0.5">
+                    {char.explanation}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* MODE A & B: Cumulative Recap or Single Episode Gist */}
         {summaryView !== 'storybook' ? (
@@ -346,7 +433,7 @@ export default function RecapCard({
                     </span>
                   </div>
 
-                  <div className="space-y-3 text-slate-200 text-sm sm:text-base leading-relaxed font-normal">
+                  <div className="space-y-4 text-slate-200 text-sm sm:text-base leading-relaxed font-normal">
                     {chapter.paragraphs.map((para, pIdx) => (
                       <p key={pIdx} className="leading-relaxed">
                         {para}
@@ -355,7 +442,7 @@ export default function RecapCard({
                   </div>
 
                   {chapter.keyTakeaway && (
-                    <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-200 flex items-start gap-2">
+                    <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs sm:text-sm text-amber-200 flex items-start gap-2">
                       <Sparkles className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                       <div>
                         <span className="font-bold text-amber-300">Key Plot Turn: </span>
@@ -383,8 +470,8 @@ export default function RecapCard({
         )}
       </SpotlightCard>
 
-      {/* Next Episode CTA Card */}
-      {nextEpisodeData && summaryView !== 'storybook' && (
+      {/* Bottom Next Episode Stepper & Book Mode CTA Card */}
+      {nextEpisodeData && (
         <div className="p-5 rounded-2xl bg-gradient-to-r from-rose-950/40 via-cinema-card to-cinema-card border border-rose-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
           <div className="flex items-center gap-3 text-center sm:text-left">
             <div className="w-11 h-11 rounded-2xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 shrink-0">
@@ -392,24 +479,42 @@ export default function RecapCard({
             </div>
             <div>
               <span className="text-[11px] uppercase tracking-wider font-mono text-rose-400 font-semibold block">
-                You are all caught up!
+                Continue Episode-by-Episode
               </span>
               <p className="text-sm font-semibold text-white">
-                Next up to watch: Season {nextEpisodeData.season}, Episode{' '}
-                {nextEpisodeData.episode} &ldquo;{nextEpisodeData.title}&rdquo;
+                Next up: Season {nextEpisodeData.season}, Episode {nextEpisodeData.episode}{' '}
+                {nextEpisodeData.title ? `— "${nextEpisodeData.title}"` : ''}
               </p>
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setSummaryView('storybook')}
-            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-rose-500 hover:opacity-95 text-white font-semibold text-xs tracking-wide shadow-lg shadow-rose-500/30 transition transform hover:-translate-y-0.5 active:translate-y-0 text-center w-full sm:w-auto"
-          >
-            <ShinyText className="font-semibold text-white">
-              Or Skip Watching → Read Full Story-Book 📖
-            </ShinyText>
-          </button>
+          <div className="flex flex-wrap items-center justify-center gap-2.5 w-full sm:w-auto">
+            {onStepEpisode && (
+              <button
+                type="button"
+                onClick={handleNextEpisode}
+                className="px-5 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs tracking-wide shadow-lg shadow-rose-500/30 flex items-center justify-center gap-1.5 transition transform hover:-translate-y-0.5"
+              >
+                <span>
+                  Next Episode (S{String(nextEpisodeData.season).padStart(2, '0')}E
+                  {String(nextEpisodeData.episode).padStart(2, '0')})
+                </span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            )}
+
+            {summaryView !== 'storybook' && (
+              <button
+                type="button"
+                onClick={() => setSummaryView('storybook')}
+                className="px-4 py-2.5 rounded-xl bg-amber-500/15 hover:bg-amber-500 text-amber-300 hover:text-cinema-black border border-amber-500/40 font-bold text-xs tracking-wide transition"
+              >
+                <ShinyText className="font-bold">
+                  Or Read Full Story-Book 📖
+                </ShinyText>
+              </button>
+            )}
+          </div>
         </div>
       )}
     </div>

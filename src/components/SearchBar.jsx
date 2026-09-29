@@ -259,10 +259,10 @@ export default function SearchBar({
           <div className="px-4 py-2 bg-cinema-card/90 border-b border-cinema-border/60 flex items-center justify-between text-[11px] font-semibold text-slate-300">
             <span className="flex items-center gap-1.5 uppercase font-mono tracking-wider">
               <Sparkles className="w-3.5 h-3.5 text-rose-400" />
-              Autofill Suggestions
+              Instant Search Results
             </span>
             <span className="text-[10px] text-emerald-400 font-normal">
-              ⚡ Free metadata • 0 quota used
+              Series • Anime • Movies • Story-Book
             </span>
           </div>
 
@@ -302,7 +302,7 @@ export default function SearchBar({
                           </span>
                         ) : (
                           <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-400 border border-sky-500/30 shrink-0 font-medium">
-                            ⚡ Live Web Fetch
+                            Full Guide & Book
                           </span>
                         )}
                       </div>

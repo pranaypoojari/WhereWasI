@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, Suspense, useCallback } from 'react';
+import { useState, useEffect, Suspense, useCallback, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import SpotlightCard from '@/components/reactbits/SpotlightCard';
 import ShinyText from '@/components/reactbits/ShinyText';
@@ -20,7 +20,9 @@ import {
   MessageSquareQuote,
   Share2,
   Library,
-  Scissors
+  Scissors,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 function GeneratePageContent() {
@@ -42,21 +44,20 @@ function GeneratePageContent() {
       if (!targetTitle || !targetTitle.trim()) return;
 
       setLoading(true);
-      setResult(null);
       setInitialRecapView(preferredView);
 
       setGenerationStep(
         preferredView === 'storybook'
-          ? `Fetching complete Start-to-End plot & stripping fillers for "${targetTitle}"...`
-          : `Fetching live episode synopsis for "${targetTitle}" S0${targetSeason}E0${targetEpisode}...`
+          ? `Preparing Complete Start-to-End Story-Book & Character Guide for "${targetTitle}"...`
+          : `Loading Episode S0${targetSeason}E0${targetEpisode} & Character Guide for "${targetTitle}"...`
       );
       setTimeout(() => {
         setGenerationStep(
           preferredView === 'storybook'
-            ? 'Structuring Canon Chapters I–IV & Final Ending Explained...'
+            ? 'Structuring Canon Chapters I–V & True Ending Explained...'
             : `Building cumulative story catch-up (S01E01 → S0${targetSeason}E0${targetEpisode})...`
         );
-      }, 750);
+      }, 700);
 
       try {
         const res = await fetch('/api/generate', {
@@ -75,16 +76,16 @@ function GeneratePageContent() {
           setResult(data);
           setActiveTab('recap');
           confetti({
-            particleCount: 45,
+            particleCount: 40,
             spread: 65,
             origin: { y: 0.6 }
           });
         } else {
-          alert(data.error || 'Failed to fetch show data. Please try again.');
+          alert(data.error || 'Failed to load story data. Please try again.');
         }
       } catch (err) {
         console.error('Error generating:', err);
-        alert('An error occurred while fetching show data.');
+        alert('An error occurred while loading the story guide.');
       } finally {
         setLoading(false);
         setGenerationStep('');
@@ -116,8 +117,8 @@ function GeneratePageContent() {
 
   const quickPicks = [
     { title: 'Death Note', type: 'anime', season: 1, episode: 1, label: 'Anime' },
-    { title: 'Inception', type: 'movie', season: 1, episode: 1, label: 'Movie' },
     { title: 'Attack on Titan', type: 'anime', season: 1, episode: 1, label: 'Anime' },
+    { title: 'Inception', type: 'movie', season: 1, episode: 1, label: 'Movie' },
     { title: 'Stranger Things', type: 'tv', season: 1, episode: 1, label: 'Series' },
     { title: 'The Boys', type: 'tv', season: 1, episode: 1, label: 'Series' },
     { title: 'Interstellar', type: 'movie', season: 1, episode: 1, label: 'Movie' }
@@ -141,20 +142,56 @@ function GeneratePageContent() {
     await runGeneration(title, type, season, episode, 'storybook');
   };
 
+  // Step forward or backward (< Prev | Next Ep >) right from the RecapCard without scrolling up!
+  const handleStepEpisode = async (newSeason, newEpisode) => {
+    const s = Math.max(1, Number(newSeason) || 1);
+    const e = Math.max(1, Number(newEpisode) || 1);
+    setSeason(s);
+    setEpisode(e);
+    await runGeneration(result?.show?.title || title, type, s, e, initialRecapView);
+  };
+
+  // Compute the real next episode title from result.show.episodes
+  const nextEpisodeInfo = useMemo(() => {
+    if (!result?.recap) return null;
+    const currS = Number(result.recap.season) || 1;
+    const currE = Number(result.recap.episode) || 1;
+    const epList = result?.show?.episodes || [];
+
+    const exactNext =
+      epList.find((x) => Number(x.season) === currS && Number(x.episode) === currE + 1) ||
+      epList.find((x) => Number(x.season) === currS + 1 && Number(x.episode) === 1);
+
+    if (exactNext) {
+      return {
+        season: exactNext.season,
+        episode: exactNext.episode,
+        title: exactNext.title
+      };
+    }
+
+    return {
+      season: currS,
+      episode: currE + 1,
+      title: `Episode ${currE + 1}`
+    };
+  }, [result]);
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
       {/* Header */}
       <div className="text-center space-y-4 max-w-3xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-mono font-bold">
           <Wand2 className="w-3.5 h-3.5 text-amber-400" />
-          <span>LIVE PUBLIC WEB & STORY-BOOK ENGINE • NO API KEY REQUIRED</span>
+          <span>COMPLETE STORY-BOOK & EPISODE GUIDE</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
           Episode Recaps & <span className="text-amber-400">Full Story-Book</span> Mode
         </h1>
         <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-          Search any TV series, anime, or movie. Get the exact episode gist, a cumulative{' '}
-          <strong className="text-white">Start → Episode X</strong> catch-up, or read the{' '}
+          Select any series, anime, or movie. Understand every character with our{' '}
+          <strong className="text-white">Who&apos;s Who Guide</strong>, step episode-by-episode, or
+          read the{' '}
           <strong className="text-amber-300">Complete Start-to-End Story-Book with 0% Fillers</strong>{' '}
           so you never have to sit through 3-hour movies or 500 filler episodes.
         </p>
@@ -282,7 +319,7 @@ function GeneratePageContent() {
             <div className="flex items-center gap-2 text-xs text-emerald-400 font-medium">
               <ShieldCheck className="w-4 h-4 shrink-0" />
               <span>
-                100% Free Live Web Fetch (TVMaze + Wikipedia) • Zero API Key Quota Limits
+                Includes Beginner Character Guide (&ldquo;Who&apos;s Who&rdquo;) &amp; Zero-Filler Story-Book
               </span>
             </div>
 
@@ -307,13 +344,13 @@ function GeneratePageContent() {
                 {loading ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Fetching Story Data...</span>
+                    <span>Loading Story Guide...</span>
                   </>
                 ) : (
                   <>
                     <Wand2 className="w-4 h-4" />
                     <ShinyText className="text-white font-bold">
-                      Fetch Episode & Cumulative Recap
+                      Get Episode & Cumulative Recap
                     </ShinyText>
                   </>
                 )}
@@ -322,11 +359,11 @@ function GeneratePageContent() {
           </div>
         </form>
 
-        {/* Live Loading Radar Feedback */}
+        {/* Live Loading Feedback */}
         {loading && (
           <div className="mt-6 p-4 rounded-2xl bg-cinema-black/90 border border-rose-500/40 text-center space-y-2 animate-pulse">
             <span className="text-xs font-mono text-rose-400 uppercase tracking-wider block">
-              Live Web Story & Episode Engine Active
+              Building Complete Story & Character Guide
             </span>
             <p className="text-sm font-bold text-white flex items-center justify-center gap-2">
               <Loader2 className="w-4 h-4 animate-spin text-rose-400" />
@@ -339,31 +376,70 @@ function GeneratePageContent() {
       {/* GENERATED RESULT DISPLAY */}
       {result && (
         <section className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          {/* Header Banner */}
+          {/* Header Banner with Quick Episode Stepper */}
           <SpotlightCard className="p-6 sm:p-8 border-emerald-500/40 bg-gradient-to-r from-emerald-950/20 via-cinema-card to-cinema-card">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <div className="flex flex-wrap items-center gap-2 mb-1">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+              <div className="space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
-                    <CheckCircle className="w-3.5 h-3.5" /> Live Story Data Loaded
+                    <CheckCircle className="w-3.5 h-3.5" /> Story & Character Guide Ready
                   </span>
-                  <span className="text-xs font-mono text-slate-400">
-                    Episode Target: S{String(result.recap.season).padStart(2, '0')}E
+                  <span className="text-xs font-mono text-slate-300 bg-cinema-black/70 px-2.5 py-0.5 rounded-full border border-white/10">
+                    Currently on: S{String(result.recap.season).padStart(2, '0')}E
                     {String(result.recap.episode).padStart(2, '0')}
+                    {result.recap.episodeTitle ? ` — "${result.recap.episodeTitle}"` : ''}
                   </span>
                   <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-1">
-                    <Scissors className="w-3 h-3" /> Zero-Filler Book Ready
+                    <Scissors className="w-3 h-3" /> Zero-Filler Book Included
                   </span>
                 </div>
                 <h2 className="text-2xl sm:text-4xl font-black text-white">
                   {result.show.title}
                 </h2>
-                <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-3xl">
+                <p className="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
                   {result.show.synopsis}
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-2 shrink-0">
+              {/* Quick Episode Navigation (< Prev | Next Ep >) + Book Mode + Share */}
+              <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+                <div className="inline-flex items-center rounded-xl bg-cinema-black border border-cinema-border p-1">
+                  <button
+                    type="button"
+                    disabled={
+                      loading ||
+                      (Number(result.recap.season) <= 1 && Number(result.recap.episode) <= 1)
+                    }
+                    onClick={() =>
+                      handleStepEpisode(
+                        result.recap.season,
+                        Math.max(1, Number(result.recap.episode) - 1)
+                      )
+                    }
+                    className="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 disabled:opacity-35 flex items-center gap-1 transition"
+                  >
+                    <ChevronLeft className="w-4 h-4 text-rose-400" />
+                    <span>Prev Ep</span>
+                  </button>
+                  <span className="px-3 text-xs font-mono font-bold text-white border-x border-cinema-border/60">
+                    Ep {result.recap.episode}
+                  </span>
+                  <button
+                    type="button"
+                    disabled={loading}
+                    onClick={() =>
+                      handleStepEpisode(
+                        nextEpisodeInfo?.season || result.recap.season,
+                        nextEpisodeInfo?.episode || Number(result.recap.episode) + 1
+                      )
+                    }
+                    className="px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-rose-500 hover:bg-rose-600 flex items-center gap-1 transition shadow"
+                  >
+                    <span>Next Ep</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+
                 <button
                   type="button"
                   onClick={() => {
@@ -373,15 +449,16 @@ function GeneratePageContent() {
                   className="px-4 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-cinema-black font-bold text-xs border border-amber-500/40 flex items-center gap-2 transition"
                 >
                   <Library className="w-4 h-4" />
-                  <span>📖 Open Full Story-Book</span>
+                  <span>📖 Full Story-Book</span>
                 </button>
+
                 <button
                   type="button"
                   onClick={() => setIsShareModalOpen(true)}
                   className="px-4 py-2 rounded-xl bg-cinema-black hover:bg-white/10 text-white font-semibold text-xs border border-cinema-border flex items-center gap-2 transition"
                 >
                   <Share2 className="w-4 h-4 text-rose-400" />
-                  <span>Share Card</span>
+                  <span>Share</span>
                 </button>
               </div>
             </div>
@@ -438,11 +515,8 @@ function GeneratePageContent() {
                 episode={result.recap.episode}
                 showTitle={result.show.title}
                 initialView={initialRecapView}
-                nextEpisodeData={{
-                  season: result.recap.season,
-                  episode: result.recap.episode + 1,
-                  title: 'Next Episode'
-                }}
+                nextEpisodeData={nextEpisodeInfo}
+                onStepEpisode={handleStepEpisode}
               />
             )}
 
@@ -486,7 +560,7 @@ export default function GeneratePage() {
       fallback={
         <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3 text-slate-400">
           <Loader2 className="w-8 h-8 animate-spin text-rose-500" />
-          <p className="text-sm font-medium">Loading story engine...</p>
+          <p className="text-sm font-medium">Loading story guide...</p>
         </div>
       }
     >

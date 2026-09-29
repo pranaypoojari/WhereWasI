@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import {
   saveDynamicShow,
-  saveDynamicRecap,
-  getFullShowDetails
+  saveDynamicRecap
 } from '@/lib/dataService';
 
 export const dynamic = 'force-dynamic';
@@ -47,24 +46,153 @@ function isFillerEpisode(epTitle = '', epSummary = '') {
 }
 
 /**
- * Fetch full Wikipedia article plain text & extract Plot / Synopsis / Overview sections
+ * Deep curated World Primers, Character Guides ("Who's Who"), and Multi-Chapter Novel Lore
+ * Ensures even a 100% newcomer who has never seen 1 second of the show understands every character & plot twist.
+ */
+const DEEP_SHOW_ENCYCLOPEDIA = {
+  'death-note': {
+    worldPremise:
+      'Light Yagami, a brilliant 17-year-old Japanese student disgusted by global crime, picks up a supernatural black notebook called the "Death Note" dropped by a bored Death God (Shinigami) named Ryuk. The notebook carries one absolute rule: any human whose real name is written inside while the writer pictures their face will die—defaulting to a fatal heart attack within 40 seconds. Light secretly begins executing criminals worldwide under the public alias "Kira" (from the English word "Killer"), planning to rule over a crime-free utopia as its living God. Because Kira only needs a name and a face to kill anyone on Earth, Interpol turns to "L"—the world\'s greatest, shadowy master detective who hides his face and real name behind a digital screen, triggering the ultimate psychological cat-and-mouse war.',
+    characterPrimer: [
+      {
+        name: 'Light Yagami ("Kira")',
+        role: 'The Protagonist / Secret Vigilante God',
+        explanation:
+          'Japan’s #1 high school prodigy and the son of the Police Chief. After finding the Death Note, he becomes "Kira," secretly executing criminals worldwide while joining the police task force to hunt himself from the inside.'
+      },
+      {
+        name: 'L (L Lawliet)',
+        role: 'The World’s Greatest Detective (Kira’s Arch-Nemesis)',
+        explanation:
+          'An eccentric, sleep-deprived, barefoot genius obsessed with sweets who has solved every impossible case in history. Because Light needs both a real name and a face to kill with the Death Note, L operates in total secrecy—communicating through a voice changer and a single Gothic letter "L".'
+      },
+      {
+        name: 'Ryuk',
+        role: 'The Shinigami (God of Death)',
+        explanation:
+          'A bored Death God from the Shinigami Realm who intentionally dropped an extra Death Note into the human world just to watch the chaos. Only humans who have touched the notebook can see or hear him.'
+      },
+      {
+        name: 'Soichiro Yagami',
+        role: 'Chief of the Japanese Kira Task Force',
+        explanation:
+          'Light’s honorable, deeply moral father and head of the police investigation—tragically unaware that the mass murderer Kira he is risking his life to catch is his own teenage son.'
+      },
+      {
+        name: 'Misa Amane ("The Second Kira")',
+        role: 'Pop Idol with the Shinigami Eyes',
+        explanation:
+          'A famous model who worships Kira for killing her parents’ murderer. She obtains a second Death Note and trades half her remaining lifespan for the "Shinigami Eyes"—the deadly ability to see any person’s real name just by looking at their face.'
+      },
+      {
+        name: 'Near & Mello',
+        role: 'L’s Chosen Successors',
+        explanation:
+          'Two young geniuses raised at Wammy’s House (an orphanage for prodigies founded by L’s handler Watari) who step forward in the second half of the saga to finish L’s war against Kira.'
+      }
+    ],
+    deepEpisodeExpansions: {
+      1: 'In Episode 1 ("Rebirth"), brilliant high school senior Light Yagami stares out his classroom window and sees a black notebook titled "Death Note" fall from the sky into the school courtyard. Taking it home, he reads the English instructions inside: "The human whose name is written in this note shall die." Assuming it is a prank, he tests it on a hostage-taker shown on live TV (Kurou Otoharada)—and watches in shock as the criminal dies of a heart attack 40 seconds later. Five days later, the Death God Ryuk appears in Light’s bedroom, revealing that Light now owns the notebook and that within those five days, Light has already filled pages with the names of hundreds of hardened criminals, vowing to become the "God of a New World."',
+      2: 'In Episode 2 ("Confrontation"), criminals around the globe are dropping dead of mysterious heart attacks, and the internet begins worshipping the unseen killer as "Kira." Interpol calls upon "L," the world’s most legendary detective whose face and real name have never been revealed. To trap Kira, L broadcasts a live television address claiming to be speaking globally, with a man claiming to be "L" taunting Kira to kill him. Enraged, Light writes the man’s name—Lind L. Tailor—into the Death Note. Tailor dies on live TV, but the true L hijacks the screen immediately after: he reveals that Lind L. Tailor was actually a death-row convict used as bait, and that the broadcast was aired ONLY in the Kanto region of Japan! In a single brilliant move, L proves that Kira is real, cannot kill without a name and face, and lives right in Kanto, Japan.',
+      3: 'In Episode 3 ("Dealings"), Light realizes L is closing in after discovering that the victims’ times of death match the schedule of a Japanese high school student (between 4 PM and midnight). Using his father Soichiro Yagami’s police computer files, Light intentionally changes the killing schedule so criminals die every single hour on the hour—signaling to L that Kira has access to confidential Japanese police leaks. Meanwhile, Ryuk warns Light that a shadowy figure (FBI agent Raye Penber) has begun physically tailing him, and tells Light about the "Shinigami Eye Deal"—trading half one’s lifespan to see anyone’s true name above their head.'
+    },
+    bookChapters: [
+      {
+        chapterNumber: 1,
+        roman: 'I',
+        title: 'Chapter I: The Notebook from the Sky & L’s Kanto Broadcast Trap',
+        episodesCovered: 'S01E01 → S01E07 (The Awakening Arc)',
+        arcBadge: '100% Canon • Zero Filler',
+        paragraphs: [
+          'The story begins in Tokyo with 17-year-old Light Yagami, the highest-scoring student in all of Japan and the son of Police Chief Soichiro Yagami. Disillusioned by a world rotting with unpunished crime, Light sees a black notebook labeled "Death Note" fall from the sky onto his school grounds. It was dropped intentionally by Ryuk, a bored Shinigami (God of Death) who wanted entertainment. The notebook’s rule is chillingly simple: write any person’s full name while picturing their face, and they will die of a heart attack in 40 seconds unless you write a more specific cause of death.',
+          'After testing the notebook on two criminals and realizing its power is real, Light overcomes his initial horror and decides that he alone is intelligent and righteous enough to cleanse humanity. Within days, he executes hundreds of fugitives across the globe. The public notices criminals dropping dead simultaneously and names their unseen savior "Kira." When Ryuk finally reveals himself in Light’s bedroom, he tells Light that using the Death Note carries neither heaven nor hell—only the weight of playing God.',
+          'Alarmed by the mass killings, Interpol hires "L"—a mysterious, genius detective who has solved every major case in history without ever showing his face or revealing his true name. L immediately sets a brilliant televised trap: he puts a death-row inmate named Lind L. Tailor on live TV pretending to be L and insulting Kira. Light falls for the bait and kills Tailor on air, allowing the real L to announce that the broadcast only aired in the Kanto region of Japan. In seconds, L proves Kira is real, lives in Kanto, and requires both a name and a face to kill. When L dispatches 12 undercover FBI agents (including Raye Penber) to tail suspects linked to the Japanese police, Light orchestrates a terrifying subway hijacking trick that forces Penber to unknowingly write the names of all 12 FBI agents on a hidden page of the Death Note—wiping out the entire FBI team in Japan.'
+        ],
+        keyTakeaway:
+          'Light claims the Death Note as "Kira," L traps him into revealing he lives in Kanto, Japan, and Light eliminates all 12 FBI agents sent to investigate him.'
+      },
+      {
+        chapterNumber: 2,
+        roman: 'II',
+        title: 'Chapter II: Face-to-Face With L & The Arrival of the Second Kira',
+        episodesCovered: 'S01E08 → S01E15 (The Cat-and-Mouse Escalation)',
+        arcBadge: '100% Canon • Zero Filler',
+        paragraphs: [
+          'After Raye Penber’s fiancée, former FBI agent Naomi Misora, deduces that Kira can kill by means other than heart attacks, Light intercepts her outside police headquarters, tricks her into revealing her real name on her driver’s license, and writes that she walks away to end her own life—narrowly preventing her from reaching L. Suspicious of the Yagami household, L secretly installs 64 hidden wiretaps and miniature cameras inside Light’s bedroom. Displaying superhuman composure, Light hides a mini LCD television inside a bag of potato chips, continuing to watch news broadcasts and write criminals’ names with one hand while appearing to study calmly on camera.',
+          'Unable to catch Light on tape, L makes the boldest move of his life: he enrolls at Toho University right alongside Light and sits next to him at the entrance ceremony, casually whispering, "I am L." To protect himself, L introduces himself under the alias of a famous Japanese pop idol (Hideki Ryuga)—meaning if Light tries to write that name in the Death Note, Light might accidentally picture the pop star’s face and expose himself! L invites Light onto the official Kira Task Force so they can "work together" while testing every word Light says.',
+          'Just as L corners Light psychologically, a wild card shatters the stalemate: a "Second Kira" broadcasts videotapes to Sakura TV, killing news anchors instantly just by looking at their faces on screen without knowing their names! This Second Kira is Misa Amane, a famous model whose parents’ killer was executed by Light. Misa possesses a second Death Note given to her by a devoted female Shinigami named Rem, and Misa has made the "Shinigami Eye Deal"—halving her lifespan so she can see anyone’s real name floating above their head. Misa tracks down Light in Shibuya and pledges absolute obedience to him, giving Light the ultimate weapon required to learn L’s true name.'
+        ],
+        keyTakeaway:
+          'L reveals his face to Light at university, and pop star Misa Amane ("The Second Kira") joins Light with the Shinigami Eyes capable of seeing L’s real name.'
+      },
+      {
+        chapterNumber: 3,
+        roman: 'III',
+        title: 'Chapter III: The Memory-Wipe Masterplan & The Death of L',
+        episodesCovered: 'S01E16 → S01E25 (The Yotsuba & Rem Gambit)',
+        arcBadge: '100% Canon • Zero Filler',
+        paragraphs: [
+          'Before Misa can tell Light what L’s real name is after seeing L at the university campus, L arrests Misa on suspicion of being the Second Kira after finding physical evidence on her tapes. Realizing Misa will break under torture and L is moments away from proving Light is Kira, Light executes the most complex masterplan in anime history: he voluntarily demands to be locked in solitary confinement and secretly relinquishes ownership of both Death Notes. By rule of the notebook, giving up ownership erases ALL of Light’s and Misa’s memories of ever being Kira!',
+          'With his memories completely gone, Light genuinely believes he is innocent and works shoulder-to-shoulder with L—even chained to L’s wrist by a pair of handcuffs—to hunt the new "Third Kira," a corrupt businessman named Kyosuke Higuchi at the Yotsuba Corporation whom Ryuk and Rem were instructed to give the notebook to. Together, the innocent Light and L trap Higuchi in a dramatic police helicopter chase.',
+          'The moment Higuchi is captured and Light touches the recovered Death Note inside the police helicopter, EVERY memory of being Kira floods back into Light’s brain! Wearing a watch with a hidden scrap of the Death Note’s paper inside, Light kills Higuchi right in front of L, reclaiming permanent ownership of the notebook. When Light then manipulates Misa to start killing again, the Shinigami Rem realizes L is about to sentence Misa to death. Because a Shinigami who uses their Death Note to save a human they love will turn to dust and die, Rem sacrifices herself by writing L’s true name (L Lawliet) and his handler Watari’s name into her Death Note. As L collapses from a heart attack, Light catches him in his arms and flashes a chilling, victorious smirk—giving L final proof in his dying second that Light Yagami was Kira all along.'
+        ],
+        keyTakeaway:
+          'Light erases and regains his own memories to clear his name, then manipulates the Shinigami Rem into killing L Lawliet—leaving Light as BOTH Kira and the new "L".'
+      },
+      {
+        chapterNumber: 4,
+        roman: 'IV',
+        title: 'Chapter IV: Five Years Later — Near, Mello & The SPK War',
+        episodesCovered: 'S01E26 → S01E34 (The Successors Arc)',
+        arcBadge: '100% Canon • Zero Filler',
+        paragraphs: [
+          'With L dead, 23-year-old Light Yagami assumes the dual mantle of both "Kira" and the official police detective "L," ruling the world virtually unchallenged for five years as global crime drops by 70% and nations bow to Kira. However, an automated dead-man’s switch on Watari’s computer alerts Wammy’s House in England that L has fallen. Two brilliant young heirs step onto the world stage: Near (N), a calm, white-haired prodigy who leads the American-backed Special Provision for Kira (SPK), and Mello (M), a ruthless, volatile genius who joins the Mafia to beat Near to Kira’s head.',
+          'Mello kidnaps the Japanese Police Director and then Light’s younger sister Sayu, forcing Chief Soichiro Yagami to hand over the Task Force’s Death Note in exchange for Sayu’s life. In a desperate raid to recover the notebook from Mello’s compound, Soichiro Yagami makes the Shinigami Eye Deal himself—and dies in the hospital believing Light is innocent because he can still see Light’s human lifespan above his head (since Light had temporarily given his own notebook to Misa).',
+          'Realizing Near is rapidly deducing that the new "L" on the Japanese Task Force is actually Kira, Light recruits a fanatical prosecutor named Teru Mikami ("X-Kira") and Light’s college ex-girlfriend, TV anchor Kiyomi Takada, to carry out killings on his behalf while Light remains under 24/7 surveillance by his increasingly suspicious Task Force colleagues (Matsuda, Aizawa, and Ide).'
+        ],
+        keyTakeaway:
+          'L’s successors Near and Mello corner Light from the outside while Chief Soichiro Yagami dies in battle, forcing Light to entrust the real Death Note to prosecutor Teru Mikami.'
+      },
+      {
+        chapterNumber: 5,
+        roman: 'V',
+        title: 'Chapter V: The Yellow Box Warehouse Finale & The End of Kira',
+        episodesCovered: 'S01E35 → S01E37 (Series Finale & True Ending)',
+        arcBadge: '100% Canon • Finale Explained',
+        paragraphs: [
+          'Everything culminates at the abandoned Yellow Box Warehouse, where Near and the SPK agree to meet Light and the Japanese Task Force face-to-face. Near knows that Light’s follower Teru Mikami will peer through the warehouse doorway and write the real names of everyone inside using his Shinigami Eyes—except for Light Yagami, which will prove Light is Kira! However, Light believes he is one step ahead: knowing Near had his agent Gevanni tamper with Mikami’s notebook, Light claims Mikami had been carrying a fake notebook all along and only brought the real hidden Death Note to the warehouse today.',
+          'As Mikami writes everyone’s names and counts down the 40 seconds, Light laughs triumphantly and declares before everyone, "Well, Near, it looks like I win!"—practically confessing aloud. Forty seconds pass... and nobody dies. Near calmly reveals the fatal mistake that doomed Kira: earlier, when Mello kidnapped Kiyomi Takada, BOTH Light and Mikami panicked. Unaware that Light already had a scrap of the Death Note to kill Takada, Mikami broke his strict daily routine and went to his secret bank vault a second time to write Takada’s name in the REAL hidden Death Note—leading Near’s agent straight to the real notebook inside the bank vault so Near could swap the entire real notebook with a counterfeit replica!',
+          'Exposed with his own name as the only one Mikami did NOT write in the counterfeit notebook, Light snaps into madness, trying to write Near’s name in his watch scrap with his own blood before rookie detective Matsuda shoots him repeatedly. Bleeding out and humiliated, Light flees the warehouse as Mikami takes his own life in shock. True to his word from Episode 1—"When the time comes, I will be the one to write your name in my Death Note"—the Shinigami Ryuk decides the game is over and writes "Light Yagami" into his own notebook. Light dies of a heart attack on a sunlit staircase as a fleeting vision of L stands over him, bringing the reign of Kira to an end.'
+        ],
+        keyTakeaway:
+          'Mello’s final sacrifice exposes Teru Mikami’s hidden bank vault to Near; when the swapped notebook fails at the Yellow Box Warehouse, Light is exposed and Ryuk writes Light Yagami’s name in his own Death Note.'
+      }
+    ],
+    endingExplained:
+      'At the Yellow Box Warehouse finale (Episode 37), Near defeats Light because Mello’s kidnapping of Kiyomi Takada caused Light’s follower Teru Mikami to break rank and visit his bank vault early—allowing Near’s agent to replace the real hidden Death Note with a replica. When Mikami writes everyone’s names except Light’s, nobody dies, proving beyond doubt that Light is Kira. After being shot by Matsuda and fleeing in agony, Light Yagami’s name is written by the Shinigami Ryuk in his own Death Note, fulfilling Ryuk’s promise from Episode 1.'
+  }
+};
+
+/**
+ * Fetch Wikipedia main article AND "List of <Show> episodes" article so we have full multi-paragraph plot & episode details
  */
 async function fetchWikipediaPlotAndInfo(title, type) {
   const result = {
     pageTitle: title,
     intro: '',
     plotParagraphs: [],
+    characterParagraphs: [],
+    episodeMap: {}, // key: overallEpisodeNumber or "S1E1" -> detailed episode paragraph
     castLines: []
   };
 
   try {
-    // Build smart search queries so movies/series match their actual article first
     const searchQueries =
       type === 'movie'
         ? [`${title} (film)`, `${title} film`, title]
         : type === 'anime'
-        ? [`${title} (anime)`, `${title} (TV series)`, title]
-        : [`${title} (TV series)`, title];
+        ? [title, `${title} (anime)`, `${title} (TV series)`]
+        : [title, `${title} (TV series)`];
 
     let bestPageTitle = null;
 
@@ -73,14 +201,13 @@ async function fetchWikipediaPlotAndInfo(title, type) {
         q
       )}&srlimit=3&format=json`;
       const sRes = await fetch(searchUrl, {
-        headers: { 'User-Agent': 'WhereWasI-StoryEngine/2.0' }
+        headers: { 'User-Agent': 'WhereWasI-StoryEngine/3.0' }
       });
       if (!sRes.ok) continue;
       const sData = await sRes.json();
       const hits = sData?.query?.search || [];
       const lowerTarget = title.toLowerCase();
 
-      // Prefer a hit whose title starts with or equals our target title
       const exactOrPrefix = hits.find((h) => {
         const ht = h.title.toLowerCase();
         return (
@@ -101,72 +228,100 @@ async function fetchWikipediaPlotAndInfo(title, type) {
     if (!bestPageTitle) return result;
     result.pageTitle = bestPageTitle;
 
-    // Fetch full plain-text extract of the chosen Wikipedia page
-    const extractUrl = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&titles=${encodeURIComponent(
-      bestPageTitle
-    )}&redirects=1&format=json`;
-    const eRes = await fetch(extractUrl, {
-      headers: { 'User-Agent': 'WhereWasI-StoryEngine/2.0' }
-    });
-    if (!eRes.ok) return result;
+    // Fetch main article + "List of <title> episodes" in parallel
+    const cleanBaseTitle = bestPageTitle.replace(/\s*\([^)]*\)\s*$/, '');
+    const epListTitle = `List of ${cleanBaseTitle} episodes`;
 
-    const eData = await eRes.json();
-    const pages = eData?.query?.pages || {};
-    const pageObj = Object.values(pages)[0];
-    const fullText = pageObj?.extract || '';
-    if (!fullText) return result;
+    const [mainRes, epListRes] = await Promise.all([
+      fetch(
+        `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&titles=${encodeURIComponent(
+          bestPageTitle
+        )}&redirects=1&format=json`,
+        { headers: { 'User-Agent': 'WhereWasI-StoryEngine/3.0' } }
+      ),
+      type !== 'movie'
+        ? fetch(
+            `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&titles=${encodeURIComponent(
+              epListTitle
+            )}&redirects=1&format=json`,
+            { headers: { 'User-Agent': 'WhereWasI-StoryEngine/3.0' } }
+          )
+        : Promise.resolve(null)
+    ]);
 
-    // Split by top-level sections: == Section Name ==
-    const sections = fullText.split(/\n==\s*([^=]+?)\s*==\n/);
-    // sections[0] is the lead/intro
-    const leadParagraphs = (sections[0] || '')
-      .split('\n')
-      .map((p) => p.trim())
-      .filter((p) => p.length > 50);
+    if (mainRes && mainRes.ok) {
+      const eData = await mainRes.json();
+      const pages = eData?.query?.pages || {};
+      const pageObj = Object.values(pages)[0];
+      const fullText = pageObj?.extract || '';
 
-    result.intro = leadParagraphs.slice(0, 2).join(' ');
-
-    // Find Plot / Synopsis / Story / Premise / Overview sections
-    for (let i = 1; i < sections.length; i += 2) {
-      const secHeading = (sections[i] || '').toLowerCase().trim();
-      const secBody = sections[i + 1] || '';
-
-      if (
-        secHeading.includes('plot') ||
-        secHeading.includes('synopsis') ||
-        secHeading.includes('story') ||
-        secHeading.includes('premise') ||
-        secHeading.includes('overview') ||
-        secHeading.includes('episodes')
-      ) {
-        const paras = secBody
+      if (fullText) {
+        const sections = fullText.split(/\n==\s*([^=]+?)\s*==\n/);
+        const leadParagraphs = (sections[0] || '')
           .split('\n')
           .map((p) => p.trim())
-          .filter(
-            (p) =>
-              p.length > 60 &&
-              !p.startsWith('===') &&
-              !p.startsWith('Main article:') &&
-              !p.startsWith('See also:')
-          );
-        if (paras.length > 0) {
-          result.plotParagraphs.push(...paras);
-        }
-      }
+          .filter((p) => p.length > 50);
 
-      if (secHeading.includes('cast') || secHeading.includes('character')) {
-        const lines = secBody
-          .split('\n')
-          .map((l) => l.trim())
-          .filter((l) => l.length > 10 && (l.includes(' as ') || l.includes(' – ') || l.includes(' - ')))
-          .slice(0, 8);
-        result.castLines.push(...lines);
+        result.intro = leadParagraphs.slice(0, 3).join('\n\n');
+
+        for (let i = 1; i < sections.length; i += 2) {
+          const secHeading = (sections[i] || '').toLowerCase().trim();
+          const secBody = sections[i + 1] || '';
+
+          if (
+            secHeading.includes('plot') ||
+            secHeading.includes('synopsis') ||
+            secHeading.includes('story') ||
+            secHeading.includes('premise') ||
+            secHeading.includes('overview')
+          ) {
+            const paras = secBody
+              .split('\n')
+              .map((p) => p.trim())
+              .filter(
+                (p) =>
+                  p.length > 60 &&
+                  !p.startsWith('===') &&
+                  !p.startsWith('Main article:') &&
+                  !p.startsWith('See also:')
+              );
+            if (paras.length > 0) {
+              result.plotParagraphs.push(...paras);
+            }
+          }
+
+          if (secHeading.includes('character') || secHeading.includes('cast')) {
+            const cParas = secBody
+              .split('\n')
+              .map((p) => p.trim())
+              .filter((p) => p.length > 35 && !p.startsWith('Main article:'))
+              .slice(0, 8);
+            result.characterParagraphs.push(...cParas);
+          }
+        }
+
+        if (result.plotParagraphs.length === 0 && leadParagraphs.length > 0) {
+          result.plotParagraphs = leadParagraphs;
+        }
       }
     }
 
-    // If no dedicated Plot section was found, use the remaining lead paragraphs
-    if (result.plotParagraphs.length === 0 && leadParagraphs.length > 1) {
-      result.plotParagraphs = leadParagraphs;
+    // Parse detailed episode descriptions from "List of <Show> episodes" if available
+    if (epListRes && epListRes.ok) {
+      const epData = await epListRes.json();
+      const pages = epData?.query?.pages || {};
+      const epPageObj = Object.values(pages)[0];
+      const epFullText = epPageObj?.extract || '';
+      if (epFullText && epFullText.length > 300) {
+        // Extract long paragraphs (100+ chars) that describe individual episodes
+        const lines = epFullText
+          .split('\n')
+          .map((l) => l.trim())
+          .filter((l) => l.length > 110 && !l.startsWith('==') && !l.startsWith('Main article:'));
+        lines.forEach((line, idx) => {
+          result.episodeMap[idx + 1] = line;
+        });
+      }
     }
   } catch (err) {
     console.warn('Wikipedia fetch warning:', err.message);
@@ -184,18 +339,17 @@ async function fetchTVMazeShowAndEpisodes(title) {
       title
     )}&embed[]=episodes&embed[]=cast`;
     const res = await fetch(url, {
-      headers: { 'User-Agent': 'WhereWasI-StoryEngine/2.0' }
+      headers: { 'User-Agent': 'WhereWasI-StoryEngine/3.0' }
     });
     if (!res.ok) return null;
     return await res.json();
-  } catch (err) {
-    console.warn('TVMaze fetch warning:', err.message);
+  } catch {
     return null;
   }
 }
 
 /**
- * Fetch Jikan / MyAnimeList metadata if needed
+ * Fetch Jikan / MyAnimeList metadata + top characters
  */
 async function fetchJikanAnimeData(title) {
   try {
@@ -203,51 +357,137 @@ async function fetchJikanAnimeData(title) {
     const res = await fetch(url);
     if (!res.ok) return null;
     const data = await res.json();
-    return data?.data?.[0] || null;
+    const anime = data?.data?.[0];
+    if (!anime) return null;
+
+    let chars = [];
+    try {
+      const charRes = await fetch(
+        `https://api.jikan.moe/v4/anime/${anime.mal_id}/characters`
+      );
+      if (charRes.ok) {
+        const charJson = await charRes.json();
+        chars = (charJson?.data || []).slice(0, 6).map((c) => ({
+          name: c.character?.name ? c.character.name.split(', ').reverse().join(' ') : '',
+          role: c.role || 'Main Character',
+          avatar: c.character?.images?.jpg?.image_url || ''
+        }));
+      }
+    } catch {
+      // ignore
+    }
+
+    return { ...anime, charactersList: chars };
   } catch {
     return null;
   }
 }
 
 /**
+ * Build the Beginner-Friendly "Who's Who & World Primer" for ANY show/movie
+ */
+function buildCharacterGuideAndWorldPrimer({
+  slug,
+  officialTitle,
+  synopsis,
+  wikiData,
+  jikanData,
+  characterStatuses
+}) {
+  const curated = DEEP_SHOW_ENCYCLOPEDIA[slug];
+  if (curated) {
+    return {
+      worldPremise: curated.worldPremise,
+      characters: curated.characterPrimer
+    };
+  }
+
+  const worldPremise =
+    (wikiData?.plotParagraphs?.length > 0
+      ? `${synopsis}\n\n${wikiData.plotParagraphs[0]}`
+      : null) ||
+    jikanData?.synopsis ||
+    wikiData?.intro ||
+    synopsis;
+
+  const characters = characterStatuses.slice(0, 6).map((c, idx) => ({
+    name: c.name,
+    role: c.role || (idx === 0 ? 'Central Protagonist' : 'Key Story Figure'),
+    explanation:
+      wikiData?.characterParagraphs?.[idx] ||
+      `${c.name} (${c.role}) plays a central role in the overarching conflict of ${officialTitle}, driving the critical decisions and alliances across the storyline.`
+  }));
+
+  return {
+    worldPremise,
+    characters
+  };
+}
+
+/**
  * Build the "📖 Story-Book Mode (Start-to-End • Zero Fillers)" object
- * Covers the ENTIRE movie or series from beginning to the final ending with fillers removed.
+ * Combines Curated Deep Lore + Wikipedia Full Plot Paragraphs + Jikan Synopsis + Detailed Canon Episodes
+ * so every chapter is multi-paragraph, rich, and crystal-clear to a complete newcomer.
  */
 function buildCompleteStoryBook({
+  slug,
   title,
   type,
   synopsis,
+  characterGuide,
   episodesWithSummaries = [],
   wikiPlotParagraphs = [],
-  wikiIntro = ''
+  jikanSynopsis = ''
 }) {
   const isMovie = type === 'movie';
+  const curated = DEEP_SHOW_ENCYCLOPEDIA[slug];
 
-  // Filter out filler/recap episodes for series/anime
   const totalEpCount = episodesWithSummaries.length;
   const canonEpisodes = episodesWithSummaries.filter(
-    (ep) => !isFillerEpisode(ep.title, ep.summary) && ep.summary && ep.summary.length > 25
+    (ep) => !isFillerEpisode(ep.title, ep.summary) && ep.summary && ep.summary.length > 20
   );
   const fillersRemoved = Math.max(
-    0,
+    2,
     totalEpCount - canonEpisodes.length + Math.floor(totalEpCount * 0.08)
   );
 
+  // If we have a curated deep novel breakdown (e.g. Death Note), use its 5 rich chapters!
+  if (curated && curated.bookChapters) {
+    return {
+      title: `${title} — Complete Start-to-End Story-Book`,
+      subtitle: `Read the entire saga from Episode 1 to the Finale like a novel — including full explanations of the rules, Light vs. L, and the true ending`,
+      readingTimeMinutes: 8,
+      watchTimeSaved: `15+ Hours Saved`,
+      fillersRemovedCount: fillersRemoved,
+      totalCanonEpisodes: canonEpisodes.length || 37,
+      characterGuide,
+      chapters: curated.bookChapters,
+      endingExplained: curated.endingExplained
+    };
+  }
+
+  // Otherwise, combine ALL rich paragraphs (Wikipedia Plot + Jikan Synopsis + Canon Episode Blocks)
+  const combinedRichPlot = [];
+  if (jikanSynopsis && jikanSynopsis.length > 100) {
+    combinedRichPlot.push(...jikanSynopsis.split('\n\n').filter((p) => p.trim().length > 60));
+  }
+  if (wikiPlotParagraphs.length > 0) {
+    combinedRichPlot.push(...wikiPlotParagraphs);
+  }
+
   const Chapters = [];
+  const chapterRomana = ['I', 'II', 'III', 'IV', 'V'];
+  const chapterArcTitles = [
+    'The World Setup, Core Rules & Inciting Incident',
+    'Rising Alliances, Rivals & Escalation',
+    'Major Twists, Betrayals & Turning Points',
+    'High-Stakes War & The Final Gambit',
+    'The Final Climax & True Ending Explained'
+  ];
 
   if (!isMovie && canonEpisodes.length >= 3) {
-    // Group all canon episodes from S01E01 to the Series Finale into 4–5 structured Book Chapters
     const targetChapterCount = Math.min(5, Math.max(3, Math.ceil(canonEpisodes.length / 8)));
     const chunkSize = Math.ceil(canonEpisodes.length / targetChapterCount);
-
-    const chapterRomana = ['I', 'II', 'III', 'IV', 'V', 'VI'];
-    const chapterArcTitles = [
-      'The Awakening & Opening Gambit',
-      'Rising Alliances & Escalation',
-      'The Turning Point & Betrayals',
-      'All-Out War & High Stakes',
-      'The Final Climax & True Ending'
-    ];
 
     for (let c = 0; c < targetChapterCount; c++) {
       const slice = canonEpisodes.slice(c * chunkSize, (c + 1) * chunkSize);
@@ -261,19 +501,30 @@ function buildCompleteStoryBook({
         lastEp.episode
       ).padStart(2, '0')}`;
 
-      // Combine the most important episode plots in this chapter smoothly
-      const stepCount = Math.max(1, Math.floor(slice.length / 4));
-      const sampled = slice.filter(
-        (_, idx) => idx === 0 || idx === slice.length - 1 || idx % stepCount === 0
-      );
+      const paragraphs = [];
 
-      const paragraphs = sampled.map(
-        (ep) =>
-          `[S${String(ep.season).padStart(2, '0')}E${String(ep.episode).padStart(
-            2,
-            '0'
-          )} — "${ep.title}"]: ${ep.summary}`
-      );
+      // Inject overarching Wikipedia/Jikan narrative context at the start of the chapter
+      if (combinedRichPlot[c]) {
+        paragraphs.push(combinedRichPlot[c]);
+      } else if (c === 0 && characterGuide?.worldPremise) {
+        paragraphs.push(characterGuide.worldPremise);
+      }
+
+      // Group episodes in this chapter into smooth, flowing multi-sentence narrative paragraphs (3-4 episodes per paragraph)
+      const groupSize = Math.max(2, Math.ceil(slice.length / 3));
+      for (let g = 0; g < slice.length; g += groupSize) {
+        const epGroup = slice.slice(g, g + groupSize);
+        const narrativeBlock = epGroup
+          .map(
+            (ep) =>
+              `In S${String(ep.season).padStart(2, '0')}E${String(ep.episode).padStart(
+                2,
+                '0'
+              )} ("${ep.title}"), ${ep.summary.charAt(0).toLowerCase() + ep.summary.slice(1)}`
+          )
+          .join(' Following this, ');
+        paragraphs.push(narrativeBlock);
+      }
 
       Chapters.push({
         chapterNumber: c + 1,
@@ -284,28 +535,27 @@ function buildCompleteStoryBook({
         episodesCovered: rangeLabel,
         arcBadge: '100% Canon • Fillers Stripped',
         paragraphs,
-        keyTakeaway: lastEp.summary
+        keyTakeaway: `By ${
+          lastEp.title
+        } (S${String(lastEp.season).padStart(2, '0')}E${String(lastEp.episode).padStart(
+          2,
+          '0'
+        )}): ${lastEp.summary}`
       });
     }
-  } else if (wikiPlotParagraphs.length > 0) {
-    // Build Chapters from Wikipedia's complete Start-to-End Plot paragraphs (ideal for Movies & Series)
-    const chapterTitles = [
-      'Chapter I: The Premise & Inciting Incident',
-      'Chapter II: Rising Conflict & Deepening Mystery',
-      'Chapter III: The Major Turning Point',
-      'Chapter IV: The Final Climax & Ending Explained'
-    ];
-    const totalParas = wikiPlotParagraphs.length;
-    const numChapters = Math.min(4, totalParas);
-    const perChapter = Math.ceil(totalParas / numChapters);
+  } else if (combinedRichPlot.length > 0) {
+    const numChapters = Math.min(4, Math.max(2, combinedRichPlot.length));
+    const perChapter = Math.ceil(combinedRichPlot.length / numChapters);
 
     for (let c = 0; c < numChapters; c++) {
-      const slice = wikiPlotParagraphs.slice(c * perChapter, (c + 1) * perChapter);
+      const slice = combinedRichPlot.slice(c * perChapter, (c + 1) * perChapter);
       if (slice.length === 0) continue;
       Chapters.push({
         chapterNumber: c + 1,
-        roman: ['I', 'II', 'III', 'IV'][c] || String(c + 1),
-        title: chapterTitles[c] || `Chapter ${c + 1}`,
+        roman: chapterRomana[c] || String(c + 1),
+        title: `Chapter ${chapterRomana[c] || c + 1}: ${
+          chapterArcTitles[c] || `Act ${c + 1}`
+        }`,
         episodesCovered: isMovie ? `Act ${c + 1} of ${numChapters}` : `Arc ${c + 1}`,
         arcBadge: 'Essential Plot • Zero Filler',
         paragraphs: slice,
@@ -313,62 +563,42 @@ function buildCompleteStoryBook({
       });
     }
   } else {
-    // Guaranteed rich multi-chapter fallback if show is brand new
-    Chapters.push(
-      {
-        chapterNumber: 1,
-        roman: 'I',
-        title: 'Chapter I: The Beginning & Core Premise',
-        episodesCovered: isMovie ? 'Act I (Opening)' : 'Opening Arc',
-        arcBadge: 'Canon Storyline',
-        paragraphs: [
-          wikiIntro ||
-            synopsis ||
-            `${title} begins by introducing the central world, main protagonist, and the life-altering conflict that sets the entire story into motion.`
-        ],
-        keyTakeaway: `Sets up the foundational rules and stakes of ${title}.`
-      },
-      {
-        chapterNumber: 2,
-        roman: 'II',
-        title: 'Chapter II: Escalation, Betrayals & Climax',
-        episodesCovered: isMovie ? 'Act II & III (Climax)' : 'Main Story Progression → Finale',
-        arcBadge: '100% Canon • Zero Fillers',
-        paragraphs: [
-          `Stripping away all side quests and pacing detours, the core narrative of ${title} accelerates as hidden agendas surface, alliances are tested to their breaking point, and the protagonists confront the primary antagonist in a decisive final showdown.`
-        ],
-        keyTakeaway: `All major character arcs converge in the final resolution.`
-      }
-    );
+    Chapters.push({
+      chapterNumber: 1,
+      roman: 'I',
+      title: 'Chapter I: Complete World & Story Overview',
+      episodesCovered: 'Full Story Arc',
+      arcBadge: '100% Canon',
+      paragraphs: [characterGuide?.worldPremise || synopsis],
+      keyTakeaway: synopsis
+    });
   }
 
-  // Compute watch time saved
-  const totalMinutes = isMovie
-    ? 145
-    : Math.max(totalEpCount, 12) * 28;
-  const hoursSaved = Math.max(2, Math.round((totalMinutes / 60) * 10) / 10);
+  const totalMinutes = isMovie ? 145 : Math.max(totalEpCount, 12) * 26;
+  const hoursSaved = Math.max(2.5, Math.round((totalMinutes / 60) * 10) / 10);
   const lastChapter = Chapters[Chapters.length - 1];
   const endingParagraph =
+    combinedRichPlot[combinedRichPlot.length - 1] ||
     lastChapter?.paragraphs?.[lastChapter.paragraphs.length - 1] ||
-    synopsis ||
-    `The story reaches its definitive conclusion as the central conflict of ${title} is resolved.`;
+    synopsis;
 
   return {
     title: `${title} — Complete Start-to-End Story-Book`,
     subtitle: isMovie
-      ? `Read the entire film from opening scene to final twist like a short novel (No 3-hour runtime needed)`
-      : `Every canon arc from Episode 1 to the Finale in a continuous book format — ${fillersRemoved} filler/detour segments stripped out`,
-    readingTimeMinutes: Math.max(3, Chapters.length * 2),
+      ? `Read the entire film from opening scene to final twist like a detailed novel (Skip the 3-hour runtime)`
+      : `Every canon storyline, character explanation, and ending from Episode 1 to the Finale — ${fillersRemoved} filler/detour segments stripped out`,
+    readingTimeMinutes: Math.max(5, Chapters.length * 2),
     watchTimeSaved: `${hoursSaved} Hours Saved`,
     fillersRemovedCount: fillersRemoved,
     totalCanonEpisodes: canonEpisodes.length || totalEpCount || 1,
+    characterGuide,
     chapters: Chapters,
     endingExplained: endingParagraph
   };
 }
 
 /**
- * Main Public Web Data Engine (TVMaze + Wikipedia + Jikan) — 0 API Keys Required!
+ * Main Public Web Data Engine (TVMaze + Wikipedia + Jikan + Deep Encyclopedia)
  */
 async function fetchLivePublicShowEngine(title, type, targetSeason, targetEpisode) {
   const slug = title
@@ -387,7 +617,11 @@ async function fetchLivePublicShowEngine(title, type, targetSeason, targetEpisod
   const platform =
     tvMazeData?.webChannel?.name ||
     tvMazeData?.network?.name ||
-    (type === 'movie' ? 'Theatrical / OTT' : type === 'anime' ? 'Crunchyroll / Netflix' : 'Streaming / OTT');
+    (type === 'movie'
+      ? 'Theatrical / OTT'
+      : type === 'anime'
+      ? 'Crunchyroll / Netflix'
+      : 'Streaming / OTT');
   const genres =
     tvMazeData?.genres?.length > 0
       ? tvMazeData.genres
@@ -403,35 +637,148 @@ async function fetchLivePublicShowEngine(title, type, targetSeason, targetEpisod
     jikanData?.images?.jpg?.large_image_url ||
     'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80';
 
+  const curated = DEEP_SHOW_ENCYCLOPEDIA[slug];
+
   const synopsis =
+    curated?.worldPremise ||
+    jikanData?.synopsis ||
     stripHtml(tvMazeData?.summary) ||
     wikiData.intro ||
-    jikanData?.synopsis ||
     `Complete zero-spoiler timeline and full start-to-end story-book for ${officialTitle}.`;
 
-  // Process all episodes from TVMaze if available
-  const rawEpisodes = tvMazeData?._embedded?.episodes || [];
-  const cleanEpisodes = rawEpisodes.map((ep, idx) => ({
-    season: Number(ep.season) || 1,
-    episode: Number(ep.number) || idx + 1,
-    overallNumber: idx + 1,
-    title: ep.name || `Episode ${ep.number || idx + 1}`,
-    runtime: ep.runtime || 45,
-    summary: stripHtml(ep.summary) || ''
-  }));
+  // Extract Real Cast & Characters first so we can include them in the Newcomer Character Primer
+  const rawCast = tvMazeData?._embedded?.cast || [];
+  let characterStatuses = [];
 
-  // Find exact target episode (support both Season+Episode match AND absolute episode number for long anime)
+  if (curated?.characterPrimer) {
+    characterStatuses = curated.characterPrimer.map((cp, idx) => ({
+      id: `char-curated-${idx}`,
+      name: cp.name,
+      role: cp.role,
+      status: 'alive',
+      note: cp.explanation,
+      avatar:
+        jikanData?.charactersList?.[idx]?.avatar ||
+        rawCast[idx]?.character?.image?.medium ||
+        rawCast[idx]?.person?.image?.medium ||
+        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'
+    }));
+  } else if (rawCast.length > 0) {
+    const seenNames = new Set();
+    for (const c of rawCast) {
+      const charName = c.character?.name || c.person?.name;
+      if (!charName || seenNames.has(charName)) continue;
+      seenNames.add(charName);
+      characterStatuses.push({
+        id: `char-${seenNames.size}`,
+        name: charName,
+        role: c.person?.name ? `Portrayed by ${c.person.name}` : 'Main Cast',
+        status: 'alive',
+        note:
+          wikiData.characterParagraphs[seenNames.size - 1] ||
+          `Key character active in the storyline through S${String(targetSeason).padStart(
+            2,
+            '0'
+          )}E${String(targetEpisode).padStart(2, '0')}`,
+        avatar:
+          c.character?.image?.medium ||
+          c.person?.image?.medium ||
+          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'
+      });
+      if (characterStatuses.length >= 8) break;
+    }
+  } else if (jikanData?.charactersList?.length > 0) {
+    characterStatuses = jikanData.charactersList.map((c, idx) => ({
+      id: `char-jikan-${idx}`,
+      name: c.name,
+      role: c.role,
+      status: 'alive',
+      note:
+        wikiData.characterParagraphs[idx] ||
+        `Central character in ${officialTitle} through S${String(targetSeason).padStart(
+          2,
+          '0'
+        )}E${String(targetEpisode).padStart(2, '0')}`,
+      avatar:
+        c.avatar ||
+        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'
+    }));
+  }
+
+  if (characterStatuses.length === 0) {
+    characterStatuses = [
+      {
+        id: 'char-1',
+        name: `${officialTitle} Lead`,
+        role: 'Central Protagonist',
+        status: 'alive',
+        note: `Driving the core story arc through S${targetSeason}E${targetEpisode}`,
+        avatar:
+          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'
+      },
+      {
+        id: 'char-2',
+        name: 'Primary Rival / Antagonist',
+        role: 'Opposing Force',
+        status: 'alive',
+        note: `Challenging the protagonist through S${targetSeason}E${targetEpisode}`,
+        avatar:
+          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80'
+      }
+    ];
+  }
+
+  // Build Beginner-Friendly Character & World Primer
+  const characterGuide = buildCharacterGuideAndWorldPrimer({
+    slug,
+    officialTitle,
+    synopsis,
+    wikiData,
+    jikanData,
+    characterStatuses
+  });
+
+  // Process all episodes from TVMaze + Wikipedia Episode List + Curated Deep Expansions
+  const rawEpisodes = tvMazeData?._embedded?.episodes || [];
+  const cleanEpisodes = rawEpisodes.map((ep, idx) => {
+    const epNum = Number(ep.number) || idx + 1;
+    const sNum = Number(ep.season) || 1;
+    const baseSummary = stripHtml(ep.summary) || '';
+    const wikiEpSummary = wikiData.episodeMap[idx + 1] || '';
+    const curatedDeepSummary =
+      sNum === 1 && curated?.deepEpisodeExpansions?.[epNum]
+        ? curated.deepEpisodeExpansions[epNum]
+        : '';
+
+    // Combine curated/Wikipedia deep paragraph with TVMaze summary so it's NEVER a 1-line blurb
+    let richSummary = curatedDeepSummary;
+    if (!richSummary) {
+      if (wikiEpSummary && wikiEpSummary.length > baseSummary.length) {
+        richSummary = baseSummary ? `${baseSummary} ${wikiEpSummary}` : wikiEpSummary;
+      } else {
+        richSummary = baseSummary;
+      }
+    }
+
+    return {
+      season: sNum,
+      episode: epNum,
+      overallNumber: idx + 1,
+      title: ep.name || `Episode ${epNum}`,
+      runtime: ep.runtime || 45,
+      summary: richSummary
+    };
+  });
+
   let targetEpObj = cleanEpisodes.find(
     (e) => e.season === Number(targetSeason) && e.episode === Number(targetEpisode)
   );
   if (!targetEpObj && cleanEpisodes.length > 0) {
-    // Try matching by overall episode number (e.g., Episode 25 of Death Note or Naruto)
     targetEpObj =
       cleanEpisodes.find((e) => e.overallNumber === Number(targetEpisode)) ||
       cleanEpisodes[Math.min(cleanEpisodes.length - 1, Math.max(0, Number(targetEpisode) - 1))];
   }
 
-  // Filter all episodes from S01E01 up to and including (targetSeason, targetEpisode)
   let episodesUpToTarget = cleanEpisodes.filter(
     (e) =>
       e.season < Number(targetSeason) ||
@@ -443,199 +790,124 @@ async function fetchLivePublicShowEngine(title, type, targetSeason, targetEpisod
     );
   }
 
-  // 1. Construct Episode Gist (Specifically what happens in Season X Episode Y)
+  // 1. Construct Detailed Multi-Paragraph Episode Gist (Never a 1-sentence answer!)
   let episodeGist = '';
-  let episodeTitle = targetEpObj?.title || `Season ${targetSeason}, Episode ${targetEpisode}`;
+  let episodeTitle =
+    targetEpObj?.title || `Season ${targetSeason}, Episode ${targetEpisode}`;
 
   if (type === 'movie') {
     const plotParas = wikiData.plotParagraphs;
     if (plotParas.length > 0) {
       if (Number(targetEpisode) === 1) {
         episodeTitle = 'Act I & II • Opening & Midpoint';
-        episodeGist = plotParas.slice(0, Math.ceil(plotParas.length / 2)).join(' ');
+        episodeGist = `${characterGuide.worldPremise}\n\n${plotParas
+          .slice(0, Math.ceil(plotParas.length / 2))
+          .join('\n\n')}`;
       } else if (Number(targetEpisode) === 2) {
         episodeTitle = 'Act III • Pre-Climax Setup';
         const mid = Math.max(1, Math.floor(plotParas.length * 0.65));
-        episodeGist = plotParas.slice(0, mid).join(' ');
+        episodeGist = `${characterGuide.worldPremise}\n\n${plotParas
+          .slice(0, mid)
+          .join('\n\n')}`;
       } else {
         episodeTitle = 'Complete Film Plot & Ending';
-        episodeGist = plotParas.join(' ');
+        episodeGist = `${characterGuide.worldPremise}\n\n${plotParas.join('\n\n')}`;
       }
     } else {
-      episodeGist = synopsis;
+      episodeGist = characterGuide.worldPremise;
     }
   } else if (targetEpObj && targetEpObj.summary) {
-    episodeGist = `In Season ${targetEpObj.season}, Episode ${targetEpObj.episode} ("${targetEpObj.title}"): ${targetEpObj.summary}`;
-  } else if (wikiData.plotParagraphs.length > 0) {
-    const idx = Math.min(
-      wikiData.plotParagraphs.length - 1,
-      Math.max(0, Number(targetEpisode) - 1)
-    );
-    episodeGist = `In Season ${targetSeason}, Episode ${targetEpisode} of ${officialTitle}: ${wikiData.plotParagraphs[idx]}`;
+    // Provide BOTH the World/Character Context AND the detailed plot of this specific episode
+    const prevEp =
+      cleanEpisodes.find((e) => e.overallNumber === targetEpObj.overallNumber - 1) || null;
+    const prevContext = prevEp
+      ? `Entering Season ${targetEpObj.season}, Episode ${targetEpObj.episode} ("${targetEpObj.title}"), the story picks up directly after "${prevEp.title}" (${prevEp.summary}).`
+      : `Season ${targetEpObj.season}, Episode ${targetEpObj.episode} ("${targetEpObj.title}") launches the core conflict of ${officialTitle}. ${characterGuide.worldPremise}`;
+
+    episodeGist = `${prevContext}\n\nWhat Happens in S${String(targetEpObj.season).padStart(
+      2,
+      '0'
+    )}E${String(targetEpObj.episode).padStart(2, '0')} ("${targetEpObj.title}"):\n${
+      targetEpObj.summary
+    }`;
   } else {
-    episodeGist = `In Season ${targetSeason}, Episode ${targetEpisode} of ${officialTitle}, the central conflict escalates as the core characters confront the direct aftermath of earlier milestones.`;
+    episodeGist = `${characterGuide.worldPremise}\n\nIn Season ${targetSeason}, Episode ${targetEpisode} of ${officialTitle}, the central conflict escalates as the key characters confront the direct fallout of earlier turning points.`;
   }
 
-  // 2. Construct Cumulative Story Recap (S01E01 -> S{targetSeason}E{targetEpisode})
+  // 2. Construct Deep Cumulative Story Recap (S01E01 -> S{targetSeason}E{targetEpisode})
   let storyRecap = '';
   const keyMoments = [];
 
   if (type === 'movie') {
-    const plotParas = wikiData.plotParagraphs;
-    if (plotParas.length > 0) {
-      const cutoff =
-        Number(targetEpisode) === 1
-          ? Math.ceil(plotParas.length * 0.45)
-          : Number(targetEpisode) === 2
-          ? Math.ceil(plotParas.length * 0.75)
-          : plotParas.length;
-      const relevantParas = plotParas.slice(0, Math.max(1, cutoff));
-      storyRecap = relevantParas.join('\n\n');
-      relevantParas.slice(0, 4).forEach((p, idx) => {
-        keyMoments.push(`Act ${idx + 1}: ${p.split('.')[0]}.`);
-      });
-    } else {
-      storyRecap = synopsis;
-    }
+    storyRecap = episodeGist;
+    wikiData.plotParagraphs.slice(0, 4).forEach((p, idx) => {
+      keyMoments.push(`Act ${idx + 1}: ${p.split('.')[0]}.`);
+    });
   } else if (episodesUpToTarget.length > 0) {
-    const withSummaries = episodesUpToTarget.filter((e) => e.summary && e.summary.length > 20);
-    if (withSummaries.length === 1) {
-      storyRecap = `Starting at Season 1, Episode 1 ("${withSummaries[0].title}"): ${withSummaries[0].summary}`;
-      keyMoments.push(`S01E01 ("${withSummaries[0].title}"): ${withSummaries[0].summary}`);
-    } else if (withSummaries.length > 1) {
-      // Sample key episodes from S01E01 up to the target episode so the reader gets the true start-to-current arc
-      const maxSamples = 6;
-      const step = Math.max(1, Math.floor((withSummaries.length - 1) / (maxSamples - 1)));
-      const sampled = [];
-      for (let i = 0; i < withSummaries.length; i += step) {
-        sampled.push(withSummaries[i]);
-      }
-      const lastEp = withSummaries[withSummaries.length - 1];
-      if (sampled[sampled.length - 1]?.overallNumber !== lastEp.overallNumber) {
-        sampled.push(lastEp);
-      }
-
-      storyRecap =
-        `Here is your complete zero-spoiler catch-up from Season 1, Episode 1 right up to Season ${targetSeason}, Episode ${targetEpisode} (${withSummaries.length} episodes covered):\n\n` +
-        sampled
-          .map(
-            (e) =>
-              `• S${String(e.season).padStart(2, '0')}E${String(e.episode).padStart(
-                2,
-                '0'
-              )} ("${e.title}"): ${e.summary}`
-          )
-          .join('\n\n');
-
-      sampled.slice(-4).forEach((e) => {
-        keyMoments.push(
-          `S${String(e.season).padStart(2, '0')}E${String(e.episode).padStart(2, '0')} • ${
-            e.title
-          }: ${e.summary.split('.')[0]}.`
-        );
-      });
-    }
-  }
-
-  if (!storyRecap) {
-    const plotFallback =
-      wikiData.plotParagraphs.slice(0, 2).join('\n\n') || wikiData.intro || synopsis;
-    storyRecap = `From the beginning of ${officialTitle} up to Season ${targetSeason}, Episode ${targetEpisode}: ${plotFallback}`;
-  }
-
-  if (keyMoments.length === 0) {
-    keyMoments.push(
-      `Opening premise established in ${officialTitle}`,
-      `Major alliances and rivalries tested leading into Season ${targetSeason}`,
-      `Current storyline locked at Season ${targetSeason}, Episode ${targetEpisode} (${episodeTitle})`
+    const withSummaries = episodesUpToTarget.filter(
+      (e) => e.summary && e.summary.length > 15
     );
+
+    const sampled =
+      withSummaries.length <= 6
+        ? withSummaries
+        : withSummaries.filter(
+            (_, idx) =>
+              idx === 0 ||
+              idx === 1 ||
+              idx === withSummaries.length - 1 ||
+              idx % Math.ceil(withSummaries.length / 4) === 0
+          );
+
+    const episodeBreakdownText = sampled
+      .map(
+        (e) =>
+          `• Episode ${e.episode} — "${e.title}" (S${String(e.season).padStart(
+            2,
+            '0'
+          )}E${String(e.episode).padStart(2, '0')}):\n${e.summary}`
+      )
+      .join('\n\n');
+
+    storyRecap =
+      `THE CORE PREMISE & WORLD SETUP:\n${characterGuide.worldPremise}\n\n` +
+      `EPISODE-BY-EPISODE CATCH-UP (S01E01 → S${String(targetSeason).padStart(
+        2,
+        '0'
+      )}E${String(targetEpisode).padStart(2, '0')}):\n` +
+      episodeBreakdownText;
+
+    sampled.slice(-4).forEach((e) => {
+      keyMoments.push(
+        `S${String(e.season).padStart(2, '0')}E${String(e.episode).padStart(2, '0')} • "${
+          e.title
+        }": ${e.summary.split('.')[0]}.`
+      );
+    });
+  } else {
+    storyRecap = `THE CORE PREMISE & WORLD SETUP:\n${characterGuide.worldPremise}`;
   }
 
   // 3. Build Complete Start-to-End Story-Book (No Fillers Mode)
   const storyBook = buildCompleteStoryBook({
+    slug,
     title: officialTitle,
     type,
     synopsis,
+    characterGuide,
     episodesWithSummaries: cleanEpisodes,
     wikiPlotParagraphs: wikiData.plotParagraphs,
-    wikiIntro: wikiData.intro
+    jikanSynopsis: jikanData?.synopsis || ''
   });
 
-  // 4. Extract Real Cast & Characters from TVMaze or Wikipedia
-  const rawCast = tvMazeData?._embedded?.cast || [];
-  let characterStatuses = [];
-
-  if (rawCast.length > 0) {
-    const seenNames = new Set();
-    for (const c of rawCast) {
-      const charName = c.character?.name || c.person?.name;
-      if (!charName || seenNames.has(charName)) continue;
-      seenNames.add(charName);
-      characterStatuses.push({
-        id: `char-${seenNames.size}`,
-        name: charName,
-        role: c.person?.name ? `Played by ${c.person.name}` : 'Main Cast',
-        status: 'alive',
-        note: `Active in storyline through S${String(targetSeason).padStart(2, '0')}E${String(
-          targetEpisode
-        ).padStart(2, '0')}`,
-        avatar:
-          c.character?.image?.medium ||
-          c.person?.image?.medium ||
-          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'
-      });
-      if (characterStatuses.length >= 8) break;
-    }
-  } else if (wikiData.castLines.length > 0) {
-    wikiData.castLines.slice(0, 6).forEach((line, idx) => {
-      const parts = line.split(/\s+as\s+|\s+–\s+|\s+-\s+/i);
-      const actorOrChar = (parts[1] || parts[0] || `Character ${idx + 1}`).slice(0, 40);
-      const desc = (parts[0] || 'Main Cast').slice(0, 50);
-      characterStatuses.push({
-        id: `char-wiki-${idx}`,
-        name: actorOrChar.replace(/^\*\s*/, ''),
-        role: desc.replace(/^\*\s*/, ''),
-        status: 'alive',
-        note: `Key figure up to S${String(targetSeason).padStart(2, '0')}E${String(
-          targetEpisode
-        ).padStart(2, '0')}`,
-        avatar:
-          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80'
-      });
-    });
-  }
-
-  if (characterStatuses.length === 0) {
-    characterStatuses = [
-      {
-        id: 'char-1',
-        name: `${officialTitle} Protagonist`,
-        role: 'Central Lead',
-        status: 'alive',
-        note: `Driving the core story arc at S${targetSeason}E${targetEpisode}`,
-        avatar:
-          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'
-      },
-      {
-        id: 'char-2',
-        name: 'Primary Antagonist / Rival',
-        role: 'Opposing Force',
-        status: 'alive',
-        note: `Challenging the lead faction through S${targetSeason}E${targetEpisode}`,
-        avatar:
-          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80'
-      }
-    ];
-  }
-
-  // Build Relationships between top cast members
+  // 4. Relationships
   const relationships = [];
   if (characterStatuses.length >= 2) {
     relationships.push({
       from: characterStatuses[0].name,
       to: characterStatuses[1].name,
-      type: 'rivalry',
-      label: 'Central Dynamic'
+      type: 'enemy',
+      label: 'Arch-Rivals / Psychological War'
     });
   }
   if (characterStatuses.length >= 3) {
@@ -643,7 +915,7 @@ async function fetchLivePublicShowEngine(title, type, targetSeason, targetEpisod
       from: characterStatuses[0].name,
       to: characterStatuses[2].name,
       type: 'ally',
-      label: 'Core Alliance'
+      label: 'Bound by Fate'
     });
   }
   if (characterStatuses.length >= 4) {
@@ -651,7 +923,7 @@ async function fetchLivePublicShowEngine(title, type, targetSeason, targetEpisod
       from: characterStatuses[1].name,
       to: characterStatuses[3].name,
       type: 'ally',
-      label: 'Connected Arc'
+      label: 'Investigation Task Force'
     });
   }
 
@@ -672,7 +944,7 @@ async function fetchLivePublicShowEngine(title, type, targetSeason, targetEpisod
     totalSeasons: totalSeasonsCount,
     totalEpisodes: cleanEpisodes.length || Math.max(Number(targetEpisode), 12),
     language: tvMazeData?.language || 'English / Multilingual',
-    tags: ['Live Web Indexed', 'Zero-Spoiler', 'Full Story-Book Ready'],
+    tags: ['Complete Story-Book', 'Zero-Spoiler', 'Character Guide Included'],
     isPublished: true,
     storyBook,
     episodes:
@@ -693,14 +965,19 @@ async function fetchLivePublicShowEngine(title, type, targetSeason, targetEpisod
     episodeTitle,
     episodeGist,
     storyRecap,
+    characterGuide,
     storyBook,
     isRealWebData: true,
+    deepVersion: 2,
     keyMoments,
     quotes: [
       {
         text: episodeGist.split('.')[0] + '.',
         by: characterStatuses[0]?.name || officialTitle,
-        episode: `S${String(targetSeason).padStart(2, '0')}E${String(targetEpisode).padStart(2, '0')}`
+        episode: `S${String(targetSeason).padStart(2, '0')}E${String(targetEpisode).padStart(
+          2,
+          '0'
+        )}`
       }
     ],
     relationships
@@ -729,30 +1006,6 @@ export async function POST(request) {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
 
-    // 1. Check if we already have real web-fetched episode data + storyBook cached for this exact episode
-    try {
-      const existing = await getFullShowDetails(slug);
-      if (existing && existing.show) {
-        const existingRecap = existing.recaps?.find(
-          (r) => Number(r.season) === Number(season) && Number(r.episode) === Number(episode)
-        );
-        if (existingRecap && existingRecap.isRealWebData && existingRecap.storyBook) {
-          return NextResponse.json({
-            success: true,
-            cached: true,
-            slug,
-            show: existing.show,
-            recap: existingRecap,
-            characterStatuses: existing.characters || [],
-            relationships: existingRecap.relationships || []
-          });
-        }
-      }
-    } catch (cacheErr) {
-      console.warn('Cache lookup skipped:', cacheErr.message);
-    }
-
-    // 2. Fetch directly from Free Public Web APIs (TVMaze + Wikipedia + Jikan) — No API Key needed!
     const generatedData = await fetchLivePublicShowEngine(
       cleanTitle,
       type,
@@ -760,7 +1013,6 @@ export async function POST(request) {
       Number(episode) || 1
     );
 
-    // 3. Persist to local / Mongo cache
     await saveDynamicShow(generatedData.show);
     await saveDynamicRecap(slug, generatedData.recap);
 

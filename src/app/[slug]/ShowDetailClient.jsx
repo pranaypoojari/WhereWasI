@@ -433,6 +433,7 @@ export default function ShowDetailClient({ initialData }) {
                 nextEpisodeData={nextEpisodeData}
                 showTitle={show.title}
                 initialView={recapViewMode}
+                onStepEpisode={handleSliderChange}
               />
               {liveRecap?.quotes && liveRecap.quotes.length > 0 && (
                 <div className="mt-8">
