@@ -1,6 +1,8 @@
 import '@/styles/globals.css';
 import Navbar from '@/components/Navbar';
 import AuroraBackground from '@/components/reactbits/AuroraBackground';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/next';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://wherewasi.vercel.app';
 
@@ -112,6 +114,8 @@ export default function RootLayout({ children }) {
             </div>
           </footer>
         </AuroraBackground>
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
