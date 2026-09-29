@@ -1,0 +1,592 @@
+[
+  {
+    "eraId": "2011-04",
+    "year": 2011,
+    "month": 4,
+    "title": "April 2011 — Cricket World Cup Glory & Early Smartphone Era",
+    "tagline": "Dhoni finishes off in style, 9XM Bheegi Billi rules music, and ₹10 Maggi fuels midnight hostel study.",
+    "deviceSkin": "crttv-nokia",
+    "culturalSnapshot": {
+      "maggiPrice": "₹10",
+      "petrolPrice": "₹58 / Litre",
+      "movieTicket": "₹80 - ₹120",
+      "slang": ["Dhoni finishes off in style!", "Kolaveri Di prep", "Add me on Orkut/BBM", "Ping me"],
+      "viralMemes": [
+        "Sachin Tendulkar carried on shoulders at Wankhede Stadium",
+        "Vodafone Zoozoos during IPL commercial breaks",
+        "Angry Birds & Fruit Ninja on capacitive touchscreens"
+      ],
+      "topHeadlines": [
+        "India wins ICC Cricket World Cup after 28 years; MS Dhoni's match-winning six at Wankhede",
+        "Anna Hazare launches nationwide India Against Corruption hunger strike at Jantar Mantar",
+        "BlackBerry BBM Pin exchanges become the coolest college status symbol"
+      ]
+    },
+    "topSongs": [
+      {
+        "title": "Character Dheela",
+        "artist": "Neeraj Shridhar, Amrita Kak (Ready)",
+        "youtubeId": "b1836N18Gek",
+        "vibe": "Bollywood Party Anthem"
+      },
+      {
+        "title": "Mitwa (Lagaan) / World Cup Anthem",
+        "artist": "Shankar Mahadevan",
+        "youtubeId": "3o_j7s_J7lA",
+        "vibe": "Stadium Euphoria"
+      },
+      {
+        "title": "Bhaag D.K. Bose",
+        "artist": "Ram Sampath (Delhi Belly)",
+        "youtubeId": "9nfdp_V_r2M",
+        "vibe": "Youth Rebellion"
+      }
+    ],
+    "boxOfficeMovies": [
+      {
+        "title": "Singham",
+        "director": "Rohit Shetty",
+        "verdict": "Super Hit",
+        "poster": "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Bajirao Singham's roar takes over single screens across India."
+      },
+      {
+        "title": "Zindagi Na Milegi Dobara",
+        "director": "Zoya Akhtar",
+        "verdict": "Cult Blockbuster",
+        "poster": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Tomatina festival, skydiving in Spain, and 'Bagwati' become youth obsessions."
+      },
+      {
+        "title": "Delhi Belly",
+        "director": "Abhinay Deo",
+        "verdict": "Youth Cult Classic",
+        "poster": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Dark comedy revolutionizing Indian cinema dialogues."
+      }
+    ],
+    "nostalgiaTVClips": [
+      {
+        "channel": "9XM",
+        "title": "Bheegi Billi: Bakwaas Bandh Kar",
+        "youtubeId": "dQw4w9WgXcQ",
+        "badge": "9XM Nostalgia"
+      },
+      {
+        "channel": "Vodafone TV",
+        "title": "Iconic Vodafone Zoozoos IPL Ad",
+        "youtubeId": "3JZ_D3ELwOQ",
+        "badge": "Vintage Commercial"
+      },
+      {
+        "channel": "Sony MAX",
+        "title": "IPL 2011 Opening Ceremony & DLF Maximums",
+        "youtubeId": "kJQP7kiw5Fk",
+        "badge": "Cricket Fever"
+      }
+    ],
+    "linkedShowsActive": [
+      {
+        "slug": "breaking-bad",
+        "title": "Breaking Bad",
+        "milestone": "Season 4 Airing — Heisenberg vs Gus Fring",
+        "season": 4,
+        "episode": 1
+      }
+    ]
+  },
+  {
+    "eraId": "2013-05",
+    "year": 2013,
+    "month": 5,
+    "title": "May 2013 — The Aashiqui 2 Fever & Grand Summer Movies",
+    "tagline": "Arijit Singh's Tum Hi Ho plays in every auto-rickshaw, YJHD travel dreams ignite, and Temple Run 2 hits college phones.",
+    "deviceSkin": "iphone5s",
+    "culturalSnapshot": {
+      "maggiPrice": "₹12",
+      "petrolPrice": "₹63 / Litre",
+      "movieTicket": "₹120 - ₹180",
+      "slang": ["Badtameez Dil", "Tum Hi Ho", "Bunny jaisa life chahiye", "Subway Surfers score?"],
+      "viralMemes": [
+        "Aashiqui 2 jacket rain pose on Facebook profile pictures",
+        "Harlem Shake videos uploaded on early YouTube",
+        "Flappy Bird frustration spreading like wildfire"
+      ],
+      "topHeadlines": [
+        "Yeh Jawaani Hai Deewani breaks box office opening records across urban multiplexes",
+        "Arijit Singh crowned the undisputed voice of India after Aashiqui 2 album sells millions",
+        "Rockstar Games drops official GTA V trailers, internet breaks downloading gameplay"
+      ]
+    },
+    "topSongs": [
+      {
+        "title": "Tum Hi Ho",
+        "artist": "Arijit Singh, Mithoon (Aashiqui 2)",
+        "youtubeId": "Umqb9KENgmk",
+        "vibe": "National Love Anthem"
+      },
+      {
+        "title": "Badtameez Dil",
+        "artist": "Benny Dayal (Yeh Jawaani Hai Deewani)",
+        "youtubeId": "II2EO3NwUrQ",
+        "vibe": "Dance Floor Fire"
+      },
+      {
+        "title": "Lungi Dance",
+        "artist": "Yo Yo Honey Singh (Chennai Express)",
+        "youtubeId": "69CEiHfS_mc",
+        "vibe": "Honey Singh Dominance"
+      }
+    ],
+    "boxOfficeMovies": [
+      {
+        "title": "Yeh Jawaani Hai Deewani",
+        "director": "Ayan Mukerji",
+        "verdict": "All Time Blockbuster",
+        "poster": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Ranbir and Deepika make Manali treks and destination weddings the national dream."
+      },
+      {
+        "title": "Aashiqui 2",
+        "director": "Mohit Suri",
+        "verdict": "Blockbuster Musical",
+        "poster": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Rahul Jaykar and Aarohi's tragic romance sweeps every college campus."
+      },
+      {
+        "title": "Chennai Express",
+        "director": "Rohit Shetty",
+        "verdict": "Historic Hit",
+        "poster": "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Shah Rukh Khan and Deepika Padukone smash ₹200 crore box office barrier."
+      }
+    ],
+    "nostalgiaTVClips": [
+      {
+        "channel": "MTV India",
+        "title": "MTV Roadies X: Battle for Glory",
+        "youtubeId": "kJQP7kiw5Fk",
+        "badge": "MTV Golden Era"
+      },
+      {
+        "channel": "Pepsi TV",
+        "title": "Pepsi 'Change The Game' Commercial",
+        "youtubeId": "3JZ_D3ELwOQ",
+        "badge": "Vintage Commercial"
+      },
+      {
+        "channel": "Star Sports",
+        "title": "IPL 2013 Final: Mumbai Indians lift first trophy",
+        "youtubeId": "b1836N18Gek",
+        "badge": "Cricket Classic"
+      }
+    ],
+    "linkedShowsActive": [
+      {
+        "slug": "breaking-bad",
+        "title": "Breaking Bad",
+        "milestone": "Final Season (Season 5 Part 2) Premieres",
+        "season": 5,
+        "episode": 9
+      }
+    ]
+  },
+  {
+    "eraId": "2016-05",
+    "year": 2016,
+    "month": 5,
+    "title": "May 2016 — Virat Kohli's 973 Runs & The Free Jio 4G Revolution",
+    "tagline": "Queues for Reliance Jio SIM cards, Pokemon Go mania in parks, and everyone asking 'Why Kattappa killed Bahubali?'",
+    "deviceSkin": "iphone6",
+    "culturalSnapshot": {
+      "maggiPrice": "₹12",
+      "petrolPrice": "₹65 / Litre",
+      "movieTicket": "₹150 - ₹250",
+      "slang": ["Why Kattappa killed Bahubali?", "Dab pose", "Scenes kya hai?", "Jio SIM mila kya?"],
+      "viralMemes": [
+        "Catching Charizard on Pokemon Go in front of India Gate",
+        "Prisma art filter on every Instagram picture",
+        "The Kattappa murder conspiracy theories"
+      ],
+      "topHeadlines": [
+        "Virat Kohli scores historic 973 runs with 4 centuries in a single IPL season",
+        "Mukesh Ambani announces Reliance Jio free preview 4G data, revolutionizing Indian internet",
+        "Pokemon Go downloads overwhelm servers worldwide as players roam real streets"
+      ]
+    },
+    "topSongs": [
+      {
+        "title": "Kar Gayi Chull",
+        "artist": "Badshah, Neha Kakkar (Kapoor & Sons)",
+        "youtubeId": "NTHz9ephYTw",
+        "vibe": "House Party Anthem"
+      },
+      {
+        "title": "Channa Mereya",
+        "artist": "Arijit Singh (Ae Dil Hai Mushkil)",
+        "youtubeId": "284Ov7ysmfA",
+        "vibe": "Heartbreak Ballad"
+      },
+      {
+        "title": "Cheap Thrills",
+        "artist": "Sia ft. Sean Paul",
+        "youtubeId": "nYh-n7EOtMA",
+        "vibe": "Global Radio Sensation"
+      }
+    ],
+    "boxOfficeMovies": [
+      {
+        "title": "Dangal",
+        "director": "Nitesh Tiwari",
+        "verdict": "Highest Grossing Indian Film",
+        "poster": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Mahavir Singh Phogat and his daughters conquer world wrestling."
+      },
+      {
+        "title": "Sultan",
+        "director": "Ali Abbas Zafar",
+        "verdict": "Blockbuster",
+        "poster": "https://images.unsplash.com/photo-1546768292-fb12f6c92568?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Salman Khan's Eid spectacle shakes single screens."
+      },
+      {
+        "title": "Captain America: Civil War",
+        "director": "Russo Brothers",
+        "verdict": "Global Mega Hit",
+        "poster": "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Iron Man and Captain America tear the Avengers apart."
+      }
+    ],
+    "nostalgiaTVClips": [
+      {
+        "channel": "Sony MAX",
+        "title": "IPL 2016: Virat Kohli 113 off 50 balls with stitches",
+        "youtubeId": "3o_j7s_J7lA",
+        "badge": "IPL Masterpiece"
+      },
+      {
+        "channel": "TVF",
+        "title": "TVF Pitchers & Permanent Roommates Boom",
+        "youtubeId": "Umqb9KENgmk",
+        "badge": "Indian Web Revolution"
+      },
+      {
+        "channel": "Humour TV",
+        "title": "AIB (All India Bakchod) Honest Series",
+        "youtubeId": "284Ov7ysmfA",
+        "badge": "YouTube Golden Era"
+      }
+    ],
+    "linkedShowsActive": [
+      {
+        "slug": "panchayat",
+        "title": "TVF Universe Roots",
+        "milestone": "The rise of TVF creator storytelling in India",
+        "season": 1,
+        "episode": 1
+      }
+    ]
+  },
+  {
+    "eraId": "2018-11",
+    "year": 2018,
+    "month": 11,
+    "title": "November 2018 — The Indian OTT Explosion & PUBG Pochinki Nights",
+    "tagline": "Mirzapur & Sacred Games redefine Indian television forever, while 100-player PUBG mobile lobbies keep students awake till 4 AM.",
+    "deviceSkin": "darkmode-ott",
+    "culturalSnapshot": {
+      "maggiPrice": "₹12",
+      "petrolPrice": "₹77 / Litre",
+      "movieTicket": "₹200 - ₹350",
+      "slang": ["Ab humko chahiye full izzat", "Kahan drop lena hai? Pochinki!", "Balidan dena hoga", "Bhai revive de"],
+      "viralMemes": [
+        "Kaleen Bhaiya 'Darr ki yahi dikkat hai' dialogues everywhere",
+        "Winner Winner Chicken Dinner WhatsApp screenshots",
+        "Sacred Games Nawazuddin Siddiqui 'Kabhi kabhi lagta hai apun hi bhagwan hai'"
+      ],
+      "topHeadlines": [
+        "Mirzapur Season 1 premieres on Prime Video, becoming an overnight cultural phenomenon",
+        "PUBG Mobile surpasses 200 million downloads in India; college tournaments fill stadiums",
+        "Deepika-Ranveer & Priyanka-Nick wedding pictures break the Indian internet"
+      ]
+    },
+    "topSongs": [
+      {
+        "title": "Kamariya",
+        "artist": "Aastha Gill, Divya Kumar (Stree)",
+        "youtubeId": "kJQP7kiw5Fk",
+        "vibe": "Desi Horror Comedy Groove"
+      },
+      {
+        "title": "Apna Time Aayega (Teaser)",
+        "artist": "Ranveer Singh, Divine (Gully Boy)",
+        "youtubeId": "3JZ_D3ELwOQ",
+        "vibe": "Desi Hip Hop Awakening"
+      },
+      {
+        "title": "Proper Patola",
+        "artist": "Diljit Dosanjh, Badshah (Namaste England)",
+        "youtubeId": "b1836N18Gek",
+        "vibe": "Punjabi Pop"
+      }
+    ],
+    "boxOfficeMovies": [
+      {
+        "title": "Stree",
+        "director": "Amar Kaushik",
+        "verdict": "Super Hit Cult",
+        "poster": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "O Stree Kal Aana creates the iconic Indian horror-comedy universe."
+      },
+      {
+        "title": "Andhadhun",
+        "director": "Sriram Raghavan",
+        "verdict": "National Award Winner & Hit",
+        "poster": "https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Ayushmann Khurrana and Tabu in the greatest Indian thriller of the decade."
+      },
+      {
+        "title": "Sanju",
+        "director": "Rajkumar Hirani",
+        "verdict": "All Time Blockbuster",
+        "poster": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Ranbir Kapoor's uncanny portrayal of Sanjay Dutt smashes records."
+      }
+    ],
+    "nostalgiaTVClips": [
+      {
+        "channel": "Prime Video",
+        "title": "Mirzapur S1 Trailer & Guddu Bhaiya Introduction",
+        "youtubeId": "ZNeGF-PvRHY",
+        "badge": "OTT Milestone"
+      },
+      {
+        "channel": "Netflix India",
+        "title": "Sacred Games: Ganesh Gaitonde's Ascent",
+        "youtubeId": "284Ov7ysmfA",
+        "badge": "Noir Masterpiece"
+      },
+      {
+        "channel": "Tencent Gaming",
+        "title": "PUBG Mobile India Tour Finals",
+        "youtubeId": "NTHz9ephYTw",
+        "badge": "Esports Craze"
+      }
+    ],
+    "linkedShowsActive": [
+      {
+        "slug": "mirzapur",
+        "title": "Mirzapur",
+        "milestone": "Season 1 Premieres — The Wedding Massacre",
+        "season": 1,
+        "episode": 9
+      }
+    ]
+  },
+  {
+    "eraId": "2020-04",
+    "year": 2020,
+    "month": 4,
+    "title": "April 2020 — The Great Lockdown, Ramayan & Dalgona Coffee",
+    "tagline": "Streets are silent, 9 PM balcony claps, Ludo King crashes servers at 2 AM, and DD National shatters global TV viewership records.",
+    "deviceSkin": "lockdown-phone",
+    "culturalSnapshot": {
+      "maggiPrice": "₹12",
+      "petrolPrice": "₹70 / Litre",
+      "movieTicket": "Cinemas Closed (OTT Era)",
+      "slang": ["Stay Home Stay Safe", "Dalgona Coffee", "Bhai Ludo code bhej", "Among Us sus", "Work from Home"],
+      "viralMemes": [
+        "Whisking Dalgona coffee with a spoon for 45 minutes",
+        "Ludo King red token killed by green betrayal",
+        "Scam 1992 Harshad Mehta entry theme tune hummed everywhere"
+      ],
+      "topHeadlines": [
+        "Doordarshan's rebroadcast of 1987 Ramayan becomes world's most-watched entertainment show with 77 million viewers in a single day",
+        "Panchayat Season 1 quietly drops on Prime Video, becoming the soothing balm for locked-down India",
+        "Scam 1992 brings 90s Bombay Stock Exchange alive on SonyLIV"
+      ]
+    },
+    "topSongs": [
+      {
+        "title": "Scam 1992 Theme",
+        "artist": "Achint Thakkar",
+        "youtubeId": "b1836N18Gek",
+        "vibe": "Iconic Stock Market Groove"
+      },
+      {
+        "title": "Genda Phool",
+        "artist": "Badshah, Payal Dev",
+        "youtubeId": "SD4Z8dlZPd8",
+        "vibe": "Lockdown Dance Viral"
+      },
+      {
+        "title": "Muskurayega India",
+        "artist": "Vishal Mishra",
+        "youtubeId": "kJQP7kiw5Fk",
+        "vibe": "National Hope"
+      }
+    ],
+    "boxOfficeMovies": [
+      {
+        "title": "Paatal Lok (Direct to OTT)",
+        "director": "Avinash Arun, Prosit Roy",
+        "verdict": "OTT Masterpiece",
+        "poster": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Hathi Ram Chaudhary's gritty investigation into the underworld."
+      },
+      {
+        "title": "Scam 1992: The Harshad Mehta Story",
+        "director": "Hansal Mehta",
+        "verdict": "Highest Rated Indian Series Ever",
+        "poster": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Pratik Gandhi turns Harshad Mehta into an unforgettable icon."
+      },
+      {
+        "title": "Gulabo Sitabo",
+        "director": "Shoojit Sircar",
+        "verdict": "First Direct-To-Digital Bollywood Biggie",
+        "poster": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Amitabh Bachchan and Ayushmann Khurrana release directly on Prime Video."
+      }
+    ],
+    "nostalgiaTVClips": [
+      {
+        "channel": "DD National",
+        "title": "Ramayan 1987 Reruns on National Television",
+        "youtubeId": "Umqb9KENgmk",
+        "badge": "National Nostalgia"
+      },
+      {
+        "channel": "Prime Video",
+        "title": "Panchayat Season 1: Abhishek's Phulera Journey",
+        "youtubeId": "284Ov7ysmfA",
+        "badge": "Heartwarming Classic"
+      },
+      {
+        "channel": "SonyLIV",
+        "title": "Scam 1992: Risk Hai Toh Ishq Hai",
+        "youtubeId": "NTHz9ephYTw",
+        "badge": "Peak Dialogue"
+      }
+    ],
+    "linkedShowsActive": [
+      {
+        "slug": "panchayat",
+        "title": "Panchayat",
+        "milestone": "Season 1 Premieres — Welcome to Phulera",
+        "season": 1,
+        "episode": 8
+      },
+      {
+        "slug": "mirzapur",
+        "title": "Mirzapur",
+        "milestone": "Season 2 Drops (October 2020) — Crematorium Climax",
+        "season": 2,
+        "episode": 10
+      }
+    ]
+  },
+  {
+    "eraId": "2023-07",
+    "year": 2023,
+    "month": 7,
+    "title": "July 2023 — The Barbenheimer Mania & Bollywood's Historic Comeback",
+    "tagline": "Audiences wear pink and fedoras on the same day, Chandrayaan-3 launches towards the Moon, and Jawan prevue shatters YouTube records.",
+    "deviceSkin": "modern-oled",
+    "culturalSnapshot": {
+      "maggiPrice": "₹14",
+      "petrolPrice": "₹96 / Litre",
+      "movieTicket": "₹280 - ₹600",
+      "slang": ["Barbenheimer double feature", "Ready chief!", "Moye Moye", "Chandrayaan landing"],
+      "viralMemes": [
+        "Double bill: Watching Barbie at 11 AM and Oppenheimer at 3 PM in Mumbai IMAX",
+        "Shah Rukh Khan bald look bandage dance in Metro (Jawan prevue)",
+        "Asur Shubh vs DJ & Nikhil battle in Season 2"
+      ],
+      "topHeadlines": [
+        "Barbie and Oppenheimer create unprecedented global theatrical double-feature phenomenon",
+        "ISRO successfully launches Chandrayaan-3, on course for historic lunar south pole touchdown",
+        "Gadar 2 and Jawan kick off single screen revival across tier 2 and tier 3 India"
+      ]
+    },
+    "topSongs": [
+      {
+        "title": "Chaleya",
+        "artist": "Arijit Singh, Shilpa Rao (Jawan)",
+        "youtubeId": "VAdGW7QDJUI",
+        "vibe": "Smooth Romantic Breeze"
+      },
+      {
+        "title": "What Jhumka?",
+        "artist": "Arijit Singh, Jonita Gandhi (Rocky Aur Rani)",
+        "youtubeId": "87JIOAX3njM",
+        "vibe": "Retro Reimagined"
+      },
+      {
+        "title": "Main Nikla Gaddi Leke (2.0)",
+        "artist": "Udit Narayan, Mithoon (Gadar 2)",
+        "youtubeId": "kJQP7kiw5Fk",
+        "vibe": "Nostalgia Reborn"
+      }
+    ],
+    "boxOfficeMovies": [
+      {
+        "title": "Oppenheimer",
+        "director": "Christopher Nolan",
+        "verdict": "Historic IMAX Phenomenon",
+        "poster": "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Midnight IMAX shows sell out for weeks in Mumbai, Bangalore, and Delhi."
+      },
+      {
+        "title": "Jawan",
+        "director": "Atlee",
+        "verdict": "Highest Grossing Hindi Film (₹1150 Cr)",
+        "poster": "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Shah Rukh Khan rules box office as Captain Vikram Rathore."
+      },
+      {
+        "title": "Gadar 2",
+        "director": "Anil Sharma",
+        "verdict": "Historic Mass Blockbuster",
+        "poster": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=500&q=80",
+        "synopsis": "Tara Singh and the handpump return after 22 years to pack single screens."
+      }
+    ],
+    "nostalgiaTVClips": [
+      {
+        "channel": "JioCinema",
+        "title": "Asur Season 2: The Final Mythological Showdown",
+        "youtubeId": "284Ov7ysmfA",
+        "badge": "Psychological Thriller"
+      },
+      {
+        "channel": "Prime Video",
+        "title": "Farzi: Shahid Kapoor & Vijay Sethupathi Counterfeit Empire",
+        "youtubeId": "NTHz9ephYTw",
+        "badge": "Thriller Sensation"
+      },
+      {
+        "channel": "ISRO Live",
+        "title": "Chandrayaan-3 Historic Moon Landing",
+        "youtubeId": "DLA_64yz8Ss",
+        "badge": "National Pride"
+      }
+    ],
+    "linkedShowsActive": [
+      {
+        "slug": "panchayat",
+        "title": "Panchayat",
+        "milestone": "Season 3 Preparation & S2 Emotional Aftermath",
+        "season": 2,
+        "episode": 8
+      },
+      {
+        "slug": "mirzapur",
+        "title": "Mirzapur",
+        "milestone": "Season 3 Coronation Betrayals",
+        "season": 3,
+        "episode": 10
+      }
+    ]
+  }
+]

@@ -1,0 +1,104 @@
+{
+  "show": {
+    "slug": "attack-on-titan",
+    "title": "Attack on Titan",
+    "titleHindi": "अटैक ऑन टाइटन (Shingeki no Kyojin)",
+    "platform": "Crunchyroll / Netflix",
+    "type": "anime",
+    "genre": ["Anime", "Action", "Dark Fantasy", "Post-Apocalyptic"],
+    "posterUrl": "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80",
+    "bannerUrl": "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1600&q=80",
+    "synopsis": "After his hometown is destroyed and his mother is devoured by monstrous humanoids known as Titans, Eren Yeager vows to cleanse the earth of every single Titan alongside the Scout Regiment.",
+    "totalSeasons": 4,
+    "totalEpisodes": 89,
+    "language": "Japanese / English / Hindi",
+    "tags": ["Anime Legend", "Scout Regiment", "Zero Spoilers", "Dark Fantasy"],
+    "isPublished": true,
+    "episodes": [
+      { "season": 1, "episode": 1, "title": "To You, in 2000 Years: The Fall of Shiganshina, Part 1", "runtime": 24 },
+      { "season": 1, "episode": 5, "title": "First Battle: The Struggle for Trost, Part 1", "runtime": 24 },
+      { "season": 2, "episode": 6, "title": "Warrior", "runtime": 24 },
+      { "season": 3, "episode": 17, "title": "Hero", "runtime": 24 },
+      { "season": 4, "episode": 5, "title": "Declaration of War", "runtime": 24 }
+    ]
+  },
+  "characters": [
+    {
+      "id": "char-eren",
+      "name": "Eren Yeager",
+      "aliases": ["The Attack Titan"],
+      "role": "Scout Regiment Trainee",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Vows vengeance against all Titans after watching the Colossal Titan breach Wall Maria." },
+        { "season": 2, "episode": 6, "status": "alive", "note": "Betrayed by comrades who reveal themselves as the Armored and Colossal Titans." },
+        { "season": 4, "episode": 5, "status": "alive", "note": "Infiltrates Marley disguised as a wounded soldier and confronts Reiner under the stage." }
+      ]
+    },
+    {
+      "id": "char-mikasa",
+      "name": "Mikasa Ackerman",
+      "aliases": ["Scout Prodigy"],
+      "role": "Top Scout of the 104th",
+      "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Eren's adoptive sister and fiercest protector, wearing the red scarf he gave her." },
+        { "season": 4, "episode": 5, "status": "alive", "note": "Leads the Scout Regiment's aerial ambush on the Liberio festival." }
+      ]
+    },
+    {
+      "id": "char-levi",
+      "name": "Captain Levi Ackerman",
+      "aliases": ["Humanity's Strongest Soldier"],
+      "role": "Special Operations Squad Captain",
+      "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Renowned Scout captain patrolling outside the walls." },
+        { "season": 3, "episode": 17, "status": "alive", "note": "Slices through the Beast Titan in one of the most legendary Scout charges in history." }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "characterA": "char-eren",
+      "characterB": "char-mikasa",
+      "typeTimeline": [
+        { "season": 1, "episode": 1, "type": "Protective Family", "note": "Mikasa protects Eren at all costs." }
+      ]
+    },
+    {
+      "characterA": "char-eren",
+      "characterB": "char-levi",
+      "typeTimeline": [
+        { "season": 1, "episode": 1, "type": "Subordinate & Commander", "note": "Levi assumes custody of Eren in the Scout Regiment." }
+      ]
+    }
+  ],
+  "recaps": [
+    {
+      "season": 1,
+      "episode": 1,
+      "title": "To You, in 2000 Years: The Fall of Shiganshina, Part 1",
+      "safeSummary": "For 100 years, humanity lived in peaceful isolation behind three gigantic concentric walls: Maria, Rose, and Sheena. In the outer district of Shiganshina, young Eren Yeager dreams of seeing the outside world, frustrating his mother Carla. Suddenly, lightning strikes and a colossal 60-meter Titan kicks a catastrophic breach in Wall Maria. Titans swarm the town, and Eren watches helplessly as his mother is trapped and eaten, igniting his eternal pledge to wipe out every Titan.",
+      "bullets": [
+        "Humanity has lived sheltered behind 50-meter walls for a century believing they were safe.",
+        "The Colossal Titan appears out of thin air and shatters Wall Maria's front gate.",
+        "Titans flood into Shiganshina District.",
+        "Eren's mother Carla is trapped beneath their collapsed house and killed.",
+        "Hannes rescues Eren and Mikasa as they escape on the refugee evacuation boats."
+      ],
+      "majorEvents": [
+        "Wall Maria breached by the Colossal Titan",
+        "Tragic death of Carla Yeager",
+        "Eren's vow to eradicate all Titans"
+      ],
+      "whoDied": ["Carla Yeager", "Dozens of Shiganshina civilians"],
+      "whoJoined": [],
+      "unresolvedQuestions": [
+        "Where did the Colossal Titan come from and how did it appear without warning?",
+        "What is inside the basement that Eren's father Dr. Grisha Yeager hid?"
+      ],
+      "cliffhanger": "Eren looks back at the burning ruins of his home from the evacuation boat, sobbing with fury and swearing total vengeance."
+    }
+  ]
+}

@@ -1,0 +1,223 @@
+{
+  "show": {
+    "slug": "panchayat",
+    "title": "Panchayat",
+    "titleHindi": "पंचायत",
+    "platform": "Prime Video",
+    "type": "tv",
+    "genre": ["Comedy", "Drama", "Slice of Life"],
+    "posterUrl": "https://images.unsplash.com/photo-1546768292-fb12f6c92568?auto=format&fit=crop&w=800&q=80",
+    "bannerUrl": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80",
+    "synopsis": "An engineering graduate, Abhishek Tripathi, unable to find a corporate job matching his aspirations, reluctantly takes up the low-paying job of Panchayat Secretary (Sachiv) in the remote, eccentric village of Phulera, Uttar Pradesh. While preparing for the CAT exam to escape, he gets entangled in the quaint daily politics, quirks, and touching lives of the villagers.",
+    "totalSeasons": 3,
+    "totalEpisodes": 24,
+    "language": "Hindi",
+    "tags": ["Indian OTT", "TVF", "Village Life", "Feel Good", "Heartwarming"],
+    "isPublished": true,
+    "episodes": [
+      { "season": 1, "episode": 1, "title": "Gram Panchayat Phulera", "runtime": 36 },
+      { "season": 1, "episode": 2, "title": "Bhootha Ped", "runtime": 33 },
+      { "season": 1, "episode": 3, "title": "Chakke Wali Kursi", "runtime": 34 },
+      { "season": 1, "episode": 4, "title": "Hamara Neta Kaisa Ho?", "runtime": 38 },
+      { "season": 1, "episode": 5, "title": "Computer Nahi Monitor", "runtime": 32 },
+      { "season": 1, "episode": 6, "title": "Bahot Hua Samman", "runtime": 35 },
+      { "season": 1, "episode": 7, "title": "Ladka Tez Hai Lekin...", "runtime": 36 },
+      { "season": 1, "episode": 8, "title": "Jab Phulera Mein Baji Ghanti", "runtime": 42 },
+      { "season": 2, "episode": 1, "title": "Naach", "runtime": 37 },
+      { "season": 2, "episode": 2, "title": "Bol Chaal Band", "runtime": 35 },
+      { "season": 2, "episode": 3, "title": "Kranti", "runtime": 34 },
+      { "season": 2, "episode": 4, "title": "Tension", "runtime": 36 },
+      { "season": 2, "episode": 5, "title": "Jaise Ko Taisa", "runtime": 38 },
+      { "season": 2, "episode": 6, "title": "Aukaat", "runtime": 37 },
+      { "season": 2, "episode": 7, "title": "Dost", "runtime": 39 },
+      { "season": 2, "episode": 8, "title": "Parivaar", "runtime": 48 },
+      { "season": 3, "episode": 1, "title": "Rangbazi", "runtime": 38 },
+      { "season": 3, "episode": 2, "title": "Gadha", "runtime": 36 },
+      { "season": 3, "episode": 3, "title": "Ghar Ka Bhedi", "runtime": 41 },
+      { "season": 3, "episode": 4, "title": "Aandolan", "runtime": 35 },
+      { "season": 3, "episode": 5, "title": "Shikayat", "runtime": 39 },
+      { "season": 3, "episode": 6, "title": "Chunaav", "runtime": 40 },
+      { "season": 3, "episode": 7, "title": "Tamasha", "runtime": 43 },
+      { "season": 3, "episode": 8, "title": "Hisaab Kitaab", "runtime": 50 }
+    ]
+  },
+  "characters": [
+    {
+      "id": "char-abhishek",
+      "name": "Abhishek Tripathi",
+      "aliases": ["Sachiv Ji"],
+      "role": "Panchayat Secretary",
+      "avatar": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Frustrated city boy arrives in Phulera, dreams only of clearing CAT and leaving" },
+        { "season": 1, "episode": 8, "status": "alive", "note": "Fails CAT; climbs water tank and encounters Rinky, softening to the village" },
+        { "season": 2, "episode": 8, "status": "alive", "note": "Devastated by Rahul's death; firmly stands by Pradhan's family in grief" },
+        { "season": 3, "episode": 1, "status": "alive", "note": "Transferred away due to local political spite from MLA, but reinstated by public pressure" },
+        { "season": 3, "episode": 8, "status": "alive", "note": "Engages in full village brawl protecting Pradhan ji against Vidhayak's goons" }
+      ]
+    },
+    {
+      "id": "char-pradhan",
+      "name": "Brij Bhushan Dubey",
+      "aliases": ["Pradhan Ji"],
+      "role": "De-facto Village Head (Pradhan-Pati)",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Good-humored village patriarch who handles village administration on behalf of his elected wife" },
+        { "season": 2, "episode": 8, "status": "alive", "note": "Refuses MLA's dirty demands; leads village in mourning Rahul's martyrdom" },
+        { "season": 3, "episode": 8, "status": "injured", "note": "Injured during the chaotic showdown at the bus stop against Banrakas and Vidhayak's men" }
+      ]
+    },
+    {
+      "id": "char-manju",
+      "name": "Manju Devi",
+      "aliases": ["Pradhan"],
+      "role": "Official Sarpanch of Phulera",
+      "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Nominal elected Sarpanch who lets her husband run affairs while she commands the home" },
+        { "season": 1, "episode": 8, "status": "alive", "note": "Learns the National Anthem and personally unfurls the flag on Republic Day" },
+        { "season": 3, "episode": 8, "status": "alive", "note": "Fiercely steps up as political campaign leader to protect the village legacy" }
+      ]
+    },
+    {
+      "id": "char-vikas",
+      "name": "Vikas Kumar",
+      "aliases": ["Vikas"],
+      "role": "Gram Panchayat Assistant",
+      "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Loyal, earnest village assistant and Abhishek's chief confidant" },
+        { "season": 3, "episode": 8, "status": "alive", "note": "Becoming a father; stands shoulder to shoulder with Sachiv ji through thick and thin" }
+      ]
+    },
+    {
+      "id": "char-prahlad",
+      "name": "Prahlad Pandey",
+      "aliases": ["Up-Pradhan"],
+      "role": "Deputy Pradhan",
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Carefree, beer-loving deputy Pradhan whose pride is his army soldier son Rahul" },
+        { "season": 2, "episode": 8, "status": "alive", "note": "Son Rahul is martyred at the border; his soul is shattered in the emotional season finale" },
+        { "season": 3, "episode": 1, "status": "alive", "note": "Living in quiet, hollow loneliness; gradually finds warmth again with the panchayat team" },
+        { "season": 3, "episode": 8, "status": "alive", "note": "Delivers the decisive punch during the Phulera street brawl" }
+      ]
+    },
+    {
+      "id": "char-bhushan",
+      "name": "Bhushan",
+      "aliases": ["Banrakas"],
+      "role": "Opposition Rival / Antagonist",
+      "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Local villager constantly looking for reasons to complain about Pradhan ji" },
+        { "season": 2, "episode": 3, "status": "alive", "note": "Coins iconic village rebellions, nicknamed Banrakas by the Panchayat gang" },
+        { "season": 3, "episode": 1, "status": "alive", "note": "Allies with corrupt Vidhayak Chandrakishore Singh to run his wife Kranti Devi for Pradhan" },
+        { "season": 3, "episode": 8, "status": "alive", "note": "Orchestrates dirty tactics leading to the climax clash" }
+      ]
+    },
+    {
+      "id": "char-rinky",
+      "name": "Rinky Dubey",
+      "aliases": ["Rinky"],
+      "role": "Pradhan's Daughter",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 8, "status": "alive", "note": "Introduced meeting Abhishek on top of the water tank" },
+        { "season": 2, "episode": 4, "status": "alive", "note": "Developing subtle mutual feelings with Sachiv ji over chai and small encounters" },
+        { "season": 3, "episode": 8, "status": "alive", "note": "Firmly supports Abhishek when political transfer threats arise" }
+      ]
+    }
+  ],
+  "recaps": [
+    {
+      "season": 1,
+      "episode": 8,
+      "storyRecap": "Abhishek struggles through power outages, monitor theft, solar light disputes, and the dreaded ergonomic revolving chair fiasco. Preparing for his CAT exam under candlelight, he gives it his all but doesn't score enough. Dejected, he climbs Phulera's iconic water tank to clear his head, where he unexpectedly meets Pradhan ji's daughter, Rinky. Meanwhile, Manju Devi proudly learns and sings the National Anthem for Republic Day.",
+      "keyMoments": [
+        "The chaos over the revolving office chair (Chakke Wali Kursi)",
+        "Abhishek's CAT exam results come out disappointing",
+        "Manju Devi personally hoists the flag and sings the anthem",
+        "Abhishek meets Rinky Dubey on top of the village water tank"
+      ],
+      "quotes": [
+        { "text": "Dekh raha hai na Binod... kaise baaton ko ghumaya ja raha hai!", "by": "Bhushan (Banrakas)", "episode": "S02E03" },
+        { "text": "Do hazar saal pehle hum ladkiyon ko padhate the... aaj solar light ke liye lad rahe hain.", "by": "Abhishek Tripathi", "episode": "S01E04" }
+      ],
+      "characterStatuses": [
+        { "characterId": "char-abhishek", "status": "alive", "note": "Fails CAT; starting to see warmth in Phulera" },
+        { "characterId": "char-pradhan", "status": "alive", "note": "Affectionate local leader" },
+        { "characterId": "char-manju", "status": "alive", "note": "Successfully represented village on Republic Day" },
+        { "characterId": "char-vikas", "status": "alive", "note": "Faithful right hand of Sachiv ji" },
+        { "characterId": "char-prahlad", "status": "alive", "note": "Jovial and proud father" },
+        { "characterId": "char-bhushan", "status": "alive", "note": "Village troublemaker instigating petty complaints" },
+        { "characterId": "char-rinky", "status": "alive", "note": "Spark of romantic interest with Abhishek" }
+      ],
+      "relationships": [
+        { "from": "Abhishek", "to": "Pradhan", "type": "ally", "label": "Fatherly mentor and subordinate" },
+        { "from": "Abhishek", "to": "Vikas", "type": "ally", "label": "Best friends in the office" },
+        { "from": "Abhishek", "to": "Rinky", "type": "romantic", "label": "Budding unspoken chemistry" },
+        { "from": "Bhushan", "to": "Pradhan", "type": "enemy", "label": "Opposition rebel" }
+      ]
+    },
+    {
+      "season": 2,
+      "episode": 8,
+      "storyRecap": "A heartbreaking masterpiece of an episode. MLA Chandrakishore Singh disrespects Abhishek and Pradhan ji over village road construction, demanding Abhishek grovel. Pradhan ji stands up for Abhishek's dignity. But political tensions vanish in an instant when tragedy strikes: Prahlad's beloved son Rahul is martyred on the front lines. The entire village rallies in silence to support a devastated Prahlad, as Abhishek holds back tears.",
+      "keyMoments": [
+        "Pradhan ji defies the ruthless local MLA to safeguard Abhishek's self-respect",
+        "News arrives that Up-Pradhan Prahlad's son Rahul has died in military action",
+        "The village of Phulera sets aside all differences for Rahul's state funeral",
+        "A grieving Prahlad tells Abhishek that the house is now completely empty"
+      ],
+      "quotes": [
+        { "text": "Chale gaye Sachiv ji... akele chhod ke chale gaye.", "by": "Prahlad Pandey", "episode": "S02E08" },
+        { "text": "Aukaat ki baat mat kariyega Vidhayak ji!", "by": "Brij Bhushan Dubey", "episode": "S02E06" }
+      ],
+      "characterStatuses": [
+        { "characterId": "char-abhishek", "status": "alive", "note": "Deeply emotional; bonded irrevocably to Phulera family" },
+        { "characterId": "char-pradhan", "status": "alive", "note": "Grieving alongside his closest brother Prahlad" },
+        { "characterId": "char-manju", "status": "alive", "note": "Caring for Prahlad in his house of mourning" },
+        { "characterId": "char-vikas", "status": "alive", "note": "Heartbroken by Rahul's demise" },
+        { "characterId": "char-prahlad", "status": "alive", "note": "Grief-stricken father; lost his only son" },
+        { "characterId": "char-bhushan", "status": "alive", "note": "Temporarily pauses politics out of human decency" },
+        { "characterId": "char-rinky", "status": "alive", "note": "Comforting the family with Abhishek" }
+      ],
+      "relationships": [
+        { "from": "Prahlad", "to": "Pradhan", "type": "family", "label": "Brothers bound in grief" },
+        { "from": "Abhishek", "to": "Prahlad", "type": "family", "label": "Surrogate son figure" },
+        { "from": "Pradhan", "to": "Bhushan", "type": "enemy", "label": "Truce during tragedy" }
+      ]
+    },
+    {
+      "season": 3,
+      "episode": 8,
+      "storyRecap": "The gloves come off in Phulera! Vengeful Vidhayak Chandrakishore arranges Abhishek's punitive transfer, but the villagers protest fiercely to bring Sachiv ji back. Bhushan (Banrakas) fields his wife Kranti Devi for the upcoming Sarpanch election. The brewing animosity erupts at the Phulera bus stop into an epic, hilarious, full-blown rural brawl between Pradhan's crew and the Vidhayak's goons, leaving Pradhan ji hospitalized and Abhishek ready to fight for his village.",
+      "keyMoments": [
+        "Vidhayak's transfer order against Abhishek is overturned after public backlash",
+        "Prahlad gradually regains his spirited humor and donates his son's compensation",
+        "The climactic all-out lathi brawl at the Phulera bus stop",
+        "Pradhan ji is shot/injured, igniting season 4 election battle"
+      ],
+      "quotes": [
+        { "text": "Hum Phulera chhod ke kahin nahi ja rahe.", "by": "Abhishek Tripathi", "episode": "S03E08" },
+        { "text": "Samay aane pe batayenge ki Banrakas kya kar sakta hai!", "by": "Bhushan", "episode": "S03E06" }
+      ],
+      "characterStatuses": [
+        { "characterId": "char-abhishek", "status": "alive", "note": "Chose to stay in Phulera; fought physically for Pradhan ji" },
+        { "characterId": "char-pradhan", "status": "injured", "note": "Injured in the brawl, in hospital" },
+        { "characterId": "char-manju", "status": "alive", "note": "Ready to launch fierce election defense" },
+        { "characterId": "char-vikas", "status": "alive", "note": "Expecting baby; wounded in brawl" },
+        { "characterId": "char-prahlad", "status": "alive", "note": "Delivered justice with his own hands in the fight" },
+        { "characterId": "char-bhushan", "status": "alive", "note": "Fully exposed as Vidhayak's political puppet" },
+        { "characterId": "char-rinky", "status": "alive", "note": "Standing firmly by Abhishek at the hospital" }
+      ],
+      "relationships": [
+        { "from": "Bhushan", "to": "Pradhan", "type": "enemy", "label": "All-out election war" },
+        { "from": "Abhishek", "to": "Rinky", "type": "romantic", "label": "Deepening bond through crisis" },
+        { "from": "Abhishek", "to": "Pradhan", "type": "family", "label": "Willing to bleed for Phulera" }
+      ]
+    }
+  ]
+}

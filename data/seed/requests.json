@@ -1,0 +1,52 @@
+[
+  {
+    "id": "req-1",
+    "title": "Family Man (Season 3 Catch-up)",
+    "genre": "Spy / Action",
+    "platform": "Prime Video",
+    "requestedBy": "PurvanchalWatcher",
+    "votes": 142,
+    "status": "in-progress",
+    "createdAt": "2026-09-15T10:00:00.000Z"
+  },
+  {
+    "id": "req-2",
+    "title": "Sacred Games",
+    "genre": "Thriller / Neo-noir",
+    "platform": "Netflix",
+    "requestedBy": "SartajFan",
+    "votes": 98,
+    "status": "pending",
+    "createdAt": "2026-09-18T14:30:00.000Z"
+  },
+  {
+    "id": "req-3",
+    "title": "Attack on Titan (Final Season Part 3)",
+    "genre": "Anime / Dark Fantasy",
+    "platform": "Crunchyroll",
+    "requestedBy": "ErenYeager_01",
+    "votes": 85,
+    "status": "pending",
+    "createdAt": "2026-09-20T09:15:00.000Z"
+  },
+  {
+    "id": "req-4",
+    "title": "Asur: Welcome to Your Dark Side",
+    "genre": "Mythology / Crime",
+    "platform": "JioCinema",
+    "requestedBy": "NikhilNair",
+    "votes": 76,
+    "status": "pending",
+    "createdAt": "2026-09-22T16:45:00.000Z"
+  },
+  {
+    "id": "req-5",
+    "title": "Stranger Things (Season 5 Prep)",
+    "genre": "Sci-Fi / Horror",
+    "platform": "Netflix",
+    "requestedBy": "HawkinsHero",
+    "votes": 120,
+    "status": "pending",
+    "createdAt": "2026-09-25T11:20:00.000Z"
+  }
+]

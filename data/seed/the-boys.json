@@ -1,0 +1,101 @@
+{
+  "show": {
+    "slug": "the-boys",
+    "title": "The Boys",
+    "titleHindi": "द बॉयज़",
+    "platform": "Prime Video",
+    "type": "tv",
+    "genre": ["Action", "Superhero Satire", "Dark Comedy", "Drama"],
+    "posterUrl": "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80",
+    "bannerUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1600&q=80",
+    "synopsis": "A fun and irreverent take on what happens when superheroes—who are as popular as celebrities and influential as politicians—abuse their superpowers rather than use them for good.",
+    "totalSeasons": 4,
+    "totalEpisodes": 32,
+    "language": "English",
+    "tags": ["Vought", "Anti-Hero", "Homelander", "Dark Satire"],
+    "isPublished": true,
+    "episodes": [
+      { "season": 1, "episode": 1, "title": "The Name of the Game", "runtime": 60 },
+      { "season": 1, "episode": 8, "title": "You Found Me", "runtime": 66 },
+      { "season": 2, "episode": 8, "title": "What I Know", "runtime": 67 },
+      { "season": 3, "episode": 6, "title": "Herogasm", "runtime": 64 }
+    ]
+  },
+  "characters": [
+    {
+      "id": "char-billy",
+      "name": "Billy Butcher",
+      "aliases": ["Butcher"],
+      "role": "Leader of The Boys",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Former SAS operative bent on taking down Vought and Homelander; recruits Hughie Campbell." },
+        { "season": 1, "episode": 8, "status": "alive", "note": "Discovers his wife Becca is alive raising Homelander's biological son." }
+      ]
+    },
+    {
+      "id": "char-hughie",
+      "name": "Hughie Campbell",
+      "aliases": ["Wee Hughie"],
+      "role": "Reluctant Tech Whiz",
+      "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Traumatized after speedster superhero A-Train runs through his girlfriend Robin on the sidewalk." }
+      ]
+    },
+    {
+      "id": "char-homelander",
+      "name": "Homelander (John)",
+      "aliases": ["America's Hero", "The Golden Boy"],
+      "role": "Leader of The Seven",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Revered as the benevolent protector of the world, but secretly a terrifying narcissist." }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "characterA": "char-billy",
+      "characterB": "char-hughie",
+      "typeTimeline": [
+        { "season": 1, "episode": 1, "type": "Vengeful Mentor", "note": "Butcher harnesses Hughie's grief to infiltrate Vought International." }
+      ]
+    },
+    {
+      "characterA": "char-billy",
+      "characterB": "char-homelander",
+      "typeTimeline": [
+        { "season": 1, "episode": 1, "type": "Bitter Arch-Nemesis", "note": "Butcher blames Homelander for the rape and disappearance of his wife Becca." }
+      ]
+    }
+  ],
+  "recaps": [
+    {
+      "season": 1,
+      "episode": 1,
+      "title": "The Name of the Game",
+      "safeSummary": "AV electronics clerk Hughie Campbell's life is shattered when Vought superhero A-Train runs straight through his girlfriend Robin at supersonic speed. Disillusioned by Vought's hollow corporate apologies and non-disclosure settlements, Hughie is approached by Billy Butcher, an operative seeking revenge on reckless 'Supes'. Meanwhile, idealistic small-town hero Annie January (Starlight) joins The Seven, quickly discovering the dark, exploitative reality behind the hero facade.",
+      "bullets": [
+        "A-Train obliterates Hughie's girlfriend Robin in broad daylight with zero repercussions.",
+        "Billy Butcher recruits Hughie by revealing that superheroes are privately corrupt and reckless.",
+        "Annie January (Starlight) passes the audition for The Seven but is immediately coerced by The Deep.",
+        "Hughie plants a listening device inside The Seven's boardroom at Vought Tower.",
+        "Translucent tracks Hughie down; Butcher intervenes and they electrocute and capture him."
+      ],
+      "majorEvents": [
+        "Robin's tragic death on the street",
+        "Formation of The Boys alliance between Hughie and Butcher",
+        "Starlight joins The Seven",
+        "Capture of invisible Supe Translucent"
+      ],
+      "whoDied": ["Robin Ward (Hughie's girlfriend)"],
+      "whoJoined": ["Starlight joins The Seven", "Hughie joins Butcher's crusade"],
+      "unresolvedQuestions": [
+        "Why was A-Train moving so fast and what blue substance was he injecting?",
+        "What really happened to Butcher's wife Becca?"
+      ],
+      "cliffhanger": "Butcher and Hughie stand over the unconscious, diamond-skinned body of Translucent in Hughie's electronics shop."
+    }
+  ]
+}

@@ -1,0 +1,305 @@
+{
+  "the-boys": {
+    "show": {
+      "slug": "the-boys",
+      "title": "The Boys",
+      "platform": "Prime Video",
+      "type": "tv",
+      "genre": [
+        "Action",
+        "Satire",
+        "Superhero"
+      ],
+      "posterUrl": "https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=800&q=80",
+      "bannerUrl": "https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=800&q=80",
+      "synopsis": "A group of vigilantes set out to take down corrupt superheroes who abuse their superpowers under corporate giant Vought International.",
+      "totalSeasons": 4,
+      "totalEpisodes": 30,
+      "language": "Original",
+      "tags": [
+        "AI-Indexed",
+        "Zero-Spoiler",
+        "Community-Generated"
+      ],
+      "isPublished": true,
+      "episodes": [
+        {
+          "season": 1,
+          "episode": 1,
+          "title": "Episode 1",
+          "runtime": 50
+        },
+        {
+          "season": 1,
+          "episode": 2,
+          "title": "Episode 2",
+          "runtime": 50
+        },
+        {
+          "season": 1,
+          "episode": 3,
+          "title": "Episode 3",
+          "runtime": 50
+        },
+        {
+          "season": 1,
+          "episode": 4,
+          "title": "Episode 4",
+          "runtime": 50
+        },
+        {
+          "season": 1,
+          "episode": 5,
+          "title": "Episode 5",
+          "runtime": 50
+        },
+        {
+          "season": 1,
+          "episode": 6,
+          "title": "Episode 6",
+          "runtime": 50
+        },
+        {
+          "season": 1,
+          "episode": 7,
+          "title": "Episode 7",
+          "runtime": 50
+        },
+        {
+          "season": 1,
+          "episode": 8,
+          "title": "Episode 8",
+          "runtime": 50
+        },
+        {
+          "season": 1,
+          "episode": 9,
+          "title": "Episode 9",
+          "runtime": 50
+        },
+        {
+          "season": 1,
+          "episode": 10,
+          "title": "Episode 10",
+          "runtime": 50
+        },
+        {
+          "season": 2,
+          "episode": 1,
+          "title": "Episode 1",
+          "runtime": 50
+        },
+        {
+          "season": 2,
+          "episode": 2,
+          "title": "Episode 2",
+          "runtime": 50
+        },
+        {
+          "season": 2,
+          "episode": 3,
+          "title": "Episode 3",
+          "runtime": 50
+        },
+        {
+          "season": 2,
+          "episode": 4,
+          "title": "Episode 4",
+          "runtime": 50
+        },
+        {
+          "season": 2,
+          "episode": 5,
+          "title": "Episode 5",
+          "runtime": 50
+        },
+        {
+          "season": 2,
+          "episode": 6,
+          "title": "Episode 6",
+          "runtime": 50
+        },
+        {
+          "season": 2,
+          "episode": 7,
+          "title": "Episode 7",
+          "runtime": 50
+        },
+        {
+          "season": 2,
+          "episode": 8,
+          "title": "Episode 8",
+          "runtime": 50
+        },
+        {
+          "season": 2,
+          "episode": 9,
+          "title": "Episode 9",
+          "runtime": 50
+        },
+        {
+          "season": 2,
+          "episode": 10,
+          "title": "Episode 10",
+          "runtime": 50
+        },
+        {
+          "season": 3,
+          "episode": 1,
+          "title": "Episode 1",
+          "runtime": 50
+        },
+        {
+          "season": 3,
+          "episode": 2,
+          "title": "Episode 2",
+          "runtime": 50
+        },
+        {
+          "season": 3,
+          "episode": 3,
+          "title": "Episode 3",
+          "runtime": 50
+        },
+        {
+          "season": 3,
+          "episode": 4,
+          "title": "Episode 4",
+          "runtime": 50
+        },
+        {
+          "season": 3,
+          "episode": 5,
+          "title": "Episode 5",
+          "runtime": 50
+        },
+        {
+          "season": 3,
+          "episode": 6,
+          "title": "Milestone Episode 6",
+          "runtime": 50
+        },
+        {
+          "season": 3,
+          "episode": 7,
+          "title": "Episode 7",
+          "runtime": 50
+        },
+        {
+          "season": 3,
+          "episode": 8,
+          "title": "Episode 8",
+          "runtime": 50
+        },
+        {
+          "season": 3,
+          "episode": 9,
+          "title": "Episode 9",
+          "runtime": 50
+        },
+        {
+          "season": 3,
+          "episode": 10,
+          "title": "Episode 10",
+          "runtime": 50
+        }
+      ]
+    },
+    "characters": [],
+    "recaps": [
+      {
+        "season": 3,
+        "episode": 6,
+        "storyRecap": "Hughie Campbell's life is shattered when speedster A-Train obliterates his girlfriend Robin. Billy Butcher recruits Hughie into The Boys, an underground crew determined to expose Vought International and the Seven. Up to Season 3 Episode 6, The Boys have uncovered Compound V and pushed Homelander closer to unhinged psychotic rage.",
+        "keyMoments": [
+          "The pivotal opening conflicts establishing the core crisis",
+          "Key faction showdown leading into Season 3",
+          "The high-stakes developments culminating at Episode 6"
+        ],
+        "quotes": [
+          {
+            "text": "Every choice up to this point has led us here.",
+            "by": "The Boys Lead",
+            "episode": "S03E06"
+          }
+        ]
+      }
+    ]
+  },
+  "naruto": {
+    "show": {
+      "slug": "naruto",
+      "title": "Naruto",
+      "platform": "Crunchyroll / Netflix / Hulu",
+      "type": "anime",
+      "genre": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
+      "synopsis": "Naruto Uzumaki is a young ninja who seeks recognition from his peers and dreams of becoming the Hokage, the leader of his village. Despite being an outcast with a mysterious power sealed within him, he is determined to prove his worth through hard work and perseverance.",
+      "posterUrl": "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=800&q=80",
+      "totalSeasons": 1,
+      "totalEpisodes": 3,
+      "language": "Japanese / English",
+      "tags": [
+        "Popular",
+        "Binge-Worthy",
+        "Shonen"
+      ]
+    },
+    "characters": [],
+    "recaps": [
+      {
+        "season": 1,
+        "episode": 1,
+        "episodeTitle": "Enter: Naruto Uzumaki!",
+        "episodeGist": "Naruto fails his ninja graduation exam but is tricked by a traitorous teacher into stealing a forbidden scroll. After learning the truth about the demon fox sealed within him, Naruto protects his mentor Iruka and finally earns his status as a ninja.",
+        "storyRecap": "Welcome to the Hidden Leaf Village, where we meet Naruto Uzumaki, a loud-mouthed prankster who is desperate for any kind of attention. He starts off by painting graffiti all over the Great Stone Faces of the Hokage, the village leaders. Naruto is the class clown at the Ninja Academy, but he’s actually struggling; he fails his graduation exam for the third time because he can't master the basic Clone Jutsu. While he's feeling down, a teacher named Mizuki tricks him into stealing the Forbidden Scroll of Sealing, promising it's a secret way to pass. Things get intense when another teacher, Iruka Umino, tracks Naruto down. Mizuki reveals himself as a traitor and drops a massive bombshell: twelve years ago, the Fourth Hokage sealed the Nine-Tailed Fox—the demon that nearly destroyed the village—inside Naruto. This is why everyone in town has been shunning him. Mizuki tries to finish Naruto off, but Iruka puts his life on the line to protect him, confessing that he relates to Naruto’s loneliness. Moved by Iruka’s kindness, Naruto taps into the scroll’s power and unleashes a massive Multi-Shadow Clone Jutsu, completely overwhelming Mizuki. By the end of the day, Iruka gives Naruto his own headband, officially promoting him to a ninja. It’s the start of a long road to becoming Hokage!",
+        "keyMoments": [
+          "Naruto defaces the Hokage Rock and is scolded by Iruka Umino.",
+          "Mizuki reveals that the Nine-Tailed Spirit Fox is sealed inside Naruto.",
+          "Naruto masters the Multi-Shadow Clone Jutsu from the Forbidden Scroll to defeat Mizuki."
+        ],
+        "whoDied": [],
+        "whoJoined": [
+          "Naruto Uzumaki (Officially becomes a Genin)"
+        ],
+        "cliffhanger": "Naruto officially graduates as a ninja and celebrates with Iruka at Ichiraku Ramen, unaware of the challenges his new life will bring.",
+        "quotes": [
+          {
+            "text": "If you ever lay a hand on my sensei, I'll kill you!",
+            "by": "Naruto Uzumaki",
+            "episode": "S01E01"
+          }
+        ]
+      },
+      {
+        "season": 1,
+        "episode": 3,
+        "episodeTitle": "Sasuke and Sakura: Friends or Foes?",
+        "episodeGist": "Naruto is officially assigned to a three-person ninja squad alongside his rival Sasuke Uchiha and his crush Sakura Haruno. After a series of comedic mishaps involving a transformation prank and some expired milk, the trio finally meets their new Jonin instructor, Kakashi Hatake.",
+        "storyRecap": "It's been a wild start for Naruto! After failing his graduation exam multiple times, he finally proved himself by mastering the forbidden Multi-Shadow Clone Jutsu to save Iruka-sensei from the traitorous Mizuki. Having earned his official ninja headband, Naruto briefly mentored the Third Hokage's grandson, Konohamaru, teaching him that there are no shortcuts to becoming a leader. Now, the real work begins. In this episode, the new Genin are being sorted into teams. Naruto is thrilled to be paired with Sakura, but he's absolutely miserable about being on the same team as the class prodigy and 'cool guy,' Sasuke. To try and get an edge, Naruto ambushes Sasuke and uses the Transformation Jutsu to pose as him, hoping to get a kiss from Sakura. However, a bad case of diarrhea from drinking expired milk ruins his plan. The episode wraps up with the three students waiting hours for their new teacher, Kakashi, who makes a very unimpressed entrance after falling for a simple chalkboard eraser prank.",
+        "keyMoments": [
+          "The formation of Team 7 consisting of Naruto, Sasuke, and Sakura.",
+          "Naruto's failed attempt to impersonate Sasuke to get closer to Sakura.",
+          "The first meeting with their Jonin sensei, Kakashi Hatake."
+        ],
+        "whoDied": [],
+        "whoJoined": [
+          "Sasuke Uchiha",
+          "Sakura Haruno",
+          "Kakashi Hatake"
+        ],
+        "cliffhanger": "Kakashi introduces himself and tells the trio that his first impression of them is that they are a group of idiots.",
+        "quotes": [
+          {
+            "text": "My first impression of this group... you're a bunch of idiots.",
+            "by": "Kakashi Hatake",
+            "episode": "S01E03"
+          }
+        ]
+      }
+    ]
+  }
+}

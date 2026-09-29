@@ -1,0 +1,309 @@
+{
+  "show": {
+    "slug": "mirzapur",
+    "title": "Mirzapur",
+    "titleHindi": "मिर्ज़ापुर",
+    "platform": "Prime Video",
+    "type": "tv",
+    "genre": ["Crime", "Thriller", "Action", "Drama"],
+    "posterUrl": "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=800&q=80",
+    "bannerUrl": "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1600&q=80",
+    "synopsis": "The iron-fisted Akhandanand Tripathi is a carpet exporter and the undisputed mafia don of Mirzapur. His ambitious, power-hungry son Munna stops at nothing to inherit his father's legacy, until an altercation with two upright brothers, Guddu and Bablu, triggers a bloody turf war that engulfs the Purvanchal underworld.",
+    "totalSeasons": 3,
+    "totalEpisodes": 29,
+    "language": "Hindi",
+    "tags": ["Indian OTT", "Gangster", "Purvanchal", "Revenge", "Cult Classic"],
+    "isPublished": true,
+    "episodes": [
+      { "season": 1, "episode": 1, "title": "Jhandu", "runtime": 54 },
+      { "season": 1, "episode": 2, "title": "Gooda", "runtime": 48 },
+      { "season": 1, "episode": 3, "title": "Wafadar", "runtime": 43 },
+      { "season": 1, "episode": 4, "title": "Virginity", "runtime": 50 },
+      { "season": 1, "episode": 5, "title": "Bhadkal", "runtime": 46 },
+      { "season": 1, "episode": 6, "title": "Barfi", "runtime": 44 },
+      { "season": 1, "episode": 7, "title": "Lions of Mirzapur", "runtime": 52 },
+      { "season": 1, "episode": 8, "title": "Tandav", "runtime": 47 },
+      { "season": 1, "episode": 9, "title": "Yogeshwar", "runtime": 56 },
+      { "season": 2, "episode": 1, "title": "Dhenkul", "runtime": 55 },
+      { "season": 2, "episode": 2, "title": "Khargosh", "runtime": 51 },
+      { "season": 2, "episode": 3, "title": "Viklang Quota", "runtime": 49 },
+      { "season": 2, "episode": 4, "title": "Bhaymukt", "runtime": 50 },
+      { "season": 2, "episode": 5, "title": "Langda", "runtime": 53 },
+      { "season": 2, "episode": 6, "title": "Ankush", "runtime": 48 },
+      { "season": 2, "episode": 7, "title": "Ood Bilaw", "runtime": 52 },
+      { "season": 2, "episode": 8, "title": "Chauchak", "runtime": 46 },
+      { "season": 2, "episode": 9, "title": "Butterscotch", "runtime": 54 },
+      { "season": 2, "episode": 10, "title": "Dheere Dheere Se", "runtime": 62 },
+      { "season": 3, "episode": 1, "title": "Tetua", "runtime": 58 },
+      { "season": 3, "episode": 2, "title": "Gaddi", "runtime": 54 },
+      { "season": 3, "episode": 3, "title": "Pratishodh", "runtime": 50 },
+      { "season": 3, "episode": 4, "title": "Khoon Ka Badla", "runtime": 52 },
+      { "season": 3, "episode": 5, "title": "Chakravyuh", "runtime": 55 },
+      { "season": 3, "episode": 6, "title": "Bhasmasur", "runtime": 51 },
+      { "season": 3, "episode": 7, "title": "Satta", "runtime": 49 },
+      { "season": 3, "episode": 8, "title": "Sandhi", "runtime": 53 },
+      { "season": 3, "episode": 9, "title": "Vishwasghat", "runtime": 57 },
+      { "season": 3, "episode": 10, "title": "Punarutthan", "runtime": 65 }
+    ]
+  },
+  "characters": [
+    {
+      "id": "char-guddu",
+      "name": "Guddu Pandit",
+      "aliases": ["Guddu Bhaiya"],
+      "role": "Protagonist / Muscle turned Crime Lord",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Ambitious bodybuilder, son of honest lawyer Ramakant Pandit" },
+        { "season": 1, "episode": 9, "status": "injured", "note": "Crippled and shot in leg during Munna's wedding massacre; watches Bablu & Sweety die" },
+        { "season": 2, "episode": 1, "status": "alive", "note": "Recuperating in hiding, plotting ruthless revenge on the Tripathis with Golu" },
+        { "season": 2, "episode": 10, "status": "alive", "note": "Kills Munna Tripathi at the crematorium and claims the throne of Mirzapur" },
+        { "season": 3, "episode": 1, "status": "alive", "note": "King of Mirzapur, struggling with opium addiction and escalating paranoia" },
+        { "season": 3, "episode": 10, "status": "alive", "note": "Jailed then rescued in dramatic prison break by Golu" }
+      ]
+    },
+    {
+      "id": "char-bablu",
+      "name": "Bablu Pandit",
+      "aliases": ["Bablu Bhaiya"],
+      "role": "The Brains of Pandit Brothers",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "College topper, reluctant mastermind managing Kaleen Bhaiya's illegal arms accounts" },
+        { "season": 1, "episode": 9, "status": "dead", "note": "Brutally shot in the head by Munna Tripathi at the Gorakhpur wedding massacre" }
+      ]
+    },
+    {
+      "id": "char-kaleen",
+      "name": "Akhandanand Tripathi",
+      "aliases": ["Kaleen Bhaiya", "King of Mirzapur"],
+      "role": "Mafia Don of Mirzapur",
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Undisputed mafia don of Mirzapur, cold, calculating and diplomatic" },
+        { "season": 2, "episode": 10, "status": "injured", "note": "Critically shot by Guddu and Golu; rescued alive by Sharad Shukla in the nick of time" },
+        { "season": 3, "episode": 1, "status": "missing", "note": "Presumed dead by Purvanchal underworld; hidden in comatose state by Sharad in Jaunpur" },
+        { "season": 3, "episode": 10, "status": "alive", "note": "Regains consciousness and executes masterstroke to reclaim dominance" }
+      ]
+    },
+    {
+      "id": "char-munna",
+      "name": "Phoolchand Tripathi",
+      "aliases": ["Munna Bhaiya", "The Prince"],
+      "role": "Impulsive Heir to the Throne",
+      "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Reckless, trigger-happy son of Kaleen Bhaiya obsessed with taking over Mirzapur" },
+        { "season": 1, "episode": 9, "status": "alive", "note": "Executes the brutal wedding massacre, murdering Bablu and pregnant Sweety" },
+        { "season": 2, "episode": 1, "status": "alive", "note": "Married to CM's daughter Madhuri Yadav to gain political immunity" },
+        { "season": 2, "episode": 10, "status": "dead", "note": "Shot multiple times in chest and head by Guddu and Golu at the crematorium" }
+      ]
+    },
+    {
+      "id": "char-golu",
+      "name": "Gajgamini Gupta",
+      "aliases": ["Golu"],
+      "role": "Student President turned Armed Rebel",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Book-smart college student leader, sister of Sweety" },
+        { "season": 1, "episode": 9, "status": "alive", "note": "Survives wedding massacre; takes up arms after seeing sister and Bablu killed" },
+        { "season": 2, "episode": 1, "status": "alive", "note": "Forms lethal syndicate with Guddu, managing business and strategic executions" },
+        { "season": 3, "episode": 5, "status": "missing", "note": "Abducted during Jaunpur ambush; believed killed until daring comeback" },
+        { "season": 3, "episode": 10, "status": "alive", "note": "Orchestrates Guddu's jailbreak" }
+      ]
+    },
+    {
+      "id": "char-sweety",
+      "name": "Swaragini Gupta",
+      "aliases": ["Sweety"],
+      "role": "Guddu's Wife & Munna's Obsession",
+      "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Daughter of police officer Parshuram, chooses Guddu over Munna" },
+        { "season": 1, "episode": 9, "status": "dead", "note": "Shot point-blank by Munna at Dimpy's friend's wedding while pregnant" }
+      ]
+    },
+    {
+      "id": "char-beena",
+      "name": "Beena Tripathi",
+      "aliases": ["Choti Bahu"],
+      "role": "Kaleen Bhaiya's Second Wife & Mastermind",
+      "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Sexually frustrated second wife of Kaleen Bhaiya" },
+        { "season": 1, "episode": 9, "status": "betrayed", "note": "Brutally abused by Bauji (Satyanand) after affair with Raja is uncovered" },
+        { "season": 2, "episode": 5, "status": "alive", "note": "Gives birth to a son; secretly leaks Tripathi inner secrets to Guddu & Golu" },
+        { "season": 2, "episode": 10, "status": "alive", "note": "Paves way for Guddu's coup to protect her infant son's future" },
+        { "season": 3, "episode": 1, "status": "alive", "note": "Resides inside Tripathi mansion under Guddu's protection while playing both sides" }
+      ]
+    },
+    {
+      "id": "char-sharad",
+      "name": "Sharad Shukla",
+      "aliases": ["Jaunpur King"],
+      "role": "Don of Jaunpur",
+      "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Son of Rati Shankar Shukla, keeps away from crime initially" },
+        { "season": 1, "episode": 8, "status": "alive", "note": "Shaves head and swears vengeance against Guddu for father's death" },
+        { "season": 2, "episode": 10, "status": "alive", "note": "Saves wounded Kaleen Bhaiya from death to puppet him for Mirzapur throne" },
+        { "season": 3, "episode": 10, "status": "dead", "note": "Betrayed and eliminated at the Purvanchal coronation meeting" }
+      ]
+    }
+  ],
+  "recaps": [
+    {
+      "season": 1,
+      "episode": 1,
+      "storyRecap": "Welcome to Mirzapur, where Kaleen Bhaiya rules with an iron grip. His hot-headed son Munna crashes a wedding, accidentally kills the groom with celebratory gunfire, and threatens local lawyer Ramakant Pandit. When Ramakant's sons Guddu and Bablu beat Munna to a pulp, Kaleen Bhaiya summons them — and rather than killing them, offers them a job in his arms trade.",
+      "keyMoments": [
+        "Munna's reckless firing at a baraat kills the groom",
+        "Guddu & Bablu overpower Munna and his goons at their home",
+        "Kaleen Bhaiya surprises everyone by hiring the Pandit brothers"
+      ],
+      "quotes": [
+        { "text": "Darr ki yahi dikkat hai, kabhi bhi khatam ho sakta hai.", "by": "Kaleen Bhaiya", "episode": "S01E01" },
+        { "text": "Shuru majboori mein kiye the, ab maza aa raha hai!", "by": "Guddu Pandit", "episode": "S01E01" }
+      ],
+      "characterStatuses": [
+        { "characterId": "char-guddu", "status": "alive", "note": "Impulsive student, stepping into crime" },
+        { "characterId": "char-bablu", "status": "alive", "note": "Accounting genius, reluctantly assisting" },
+        { "characterId": "char-kaleen", "status": "alive", "note": "Absolute king of Mirzapur" },
+        { "characterId": "char-munna", "status": "alive", "note": "Humiliated by Pandit brothers, plotting revenge" },
+        { "characterId": "char-golu", "status": "alive", "note": "College student focused on studies" },
+        { "characterId": "char-sweety", "status": "alive", "note": "Courted by both Munna and Guddu" },
+        { "characterId": "char-beena", "status": "alive", "note": "Living under the repressive Tripathi household" },
+        { "characterId": "char-sharad", "status": "alive", "note": "Mind-first youth in Jaunpur" }
+      ],
+      "relationships": [
+        { "from": "Guddu", "to": "Bablu", "type": "family", "label": "Devoted brothers" },
+        { "from": "Guddu", "to": "Munna", "type": "enemy", "label": "Bitter street rivalry" },
+        { "from": "Kaleen", "to": "Munna", "type": "family", "label": "Disappointed father" },
+        { "from": "Guddu", "to": "Kaleen", "type": "ally", "label": "Newly recruited enforcers" }
+      ]
+    },
+    {
+      "season": 1,
+      "episode": 9,
+      "storyRecap": "The catastrophic turning point of Mirzapur. Munna's resentment boils over after Kaleen Bhaiya appears to favor Guddu and Bablu. In Gorakhpur at a wedding, Munna arrives with machine guns. In a horrifying massacre, Munna ruthlessly executes Bablu Pandit and pregnant Sweety in front of Guddu. Guddu, shot and crippled in the leg, barely manages to escape with Golu and Dimpy.",
+      "keyMoments": [
+        "Munna corners the Pandit family and friends at Gorakhpur wedding",
+        "Bablu Pandit is shot in the head point blank",
+        "Pregnant Sweety is murdered by Munna",
+        "Crippled Guddu, Golu, and Dimpy flee into the night"
+      ],
+      "quotes": [
+        { "text": "Tumhare Bablu ko hum maare... aur Sweety ko bhi hum maare.", "by": "Munna Tripathi", "episode": "S01E09" },
+        { "text": "Ab humko badla nahi, Mirzapur chahiye.", "by": "Guddu Pandit", "episode": "S01E09" }
+      ],
+      "characterStatuses": [
+        { "characterId": "char-guddu", "status": "injured", "note": "Shot in leg, grief-stricken and hunted" },
+        { "characterId": "char-bablu", "status": "dead", "note": "Murdered by Munna Tripathi" },
+        { "characterId": "char-kaleen", "status": "alive", "note": "Believes Munna went too far but covers it up" },
+        { "characterId": "char-munna", "status": "alive", "note": "Drunk on power after Gorakhpur slaughter" },
+        { "characterId": "char-golu", "status": "alive", "note": "Shattered by sister's death; picks up gun" },
+        { "characterId": "char-sweety", "status": "dead", "note": "Killed by Munna while pregnant" },
+        { "characterId": "char-beena", "status": "betrayed", "note": "Violated by Bauji, plotting silent war from inside" },
+        { "characterId": "char-sharad", "status": "alive", "note": "Vows to destroy Mirzapur from Jaunpur" }
+      ],
+      "relationships": [
+        { "from": "Guddu", "to": "Munna", "type": "enemy", "label": "Blood feud / Unforgivable massacre" },
+        { "from": "Guddu", "to": "Golu", "type": "ally", "label": "Bound in blood and vengeance" },
+        { "from": "Sharad", "to": "Guddu", "type": "enemy", "label": "Avenging father Rati Shankar" },
+        { "from": "Beena", "to": "Kaleen", "type": "betrayed", "label": "Internal sabotage brewing" }
+      ]
+    },
+    {
+      "season": 2,
+      "episode": 4,
+      "storyRecap": "Guddu has spent months healing his shattered knee and training relentlessly with Golu in an isolated safehouse. Rather than directly charging the Tripathi fortress, they hit Kaleen Bhaiya's supply chains, hijacking opium consignments. Meanwhile, Munna is politically married to widow Madhuri Yadav by Kaleen Bhaiya to lock in state protection, while Beena secretly sends intel to Guddu.",
+      "keyMoments": [
+        "Guddu begins walking without crutches and starts gun ambushes",
+        "Munna reluctantly marries Madhuri Yadav to forge political clout",
+        "Beena forms a backchannel spy alliance with Guddu & Golu"
+      ],
+      "quotes": [
+        { "text": "Zakhmi sher ki saansein uski dahad se zyada khatarnak hoti hain.", "by": "Guddu Pandit", "episode": "S02E04" },
+        { "text": "Netagiri aur gundagardi jab milti hai, tab banta hai system.", "by": "Munna Tripathi", "episode": "S02E04" }
+      ],
+      "characterStatuses": [
+        { "characterId": "char-guddu", "status": "alive", "note": "Regained strength, running guerilla war against Tripathis" },
+        { "characterId": "char-bablu", "status": "dead", "note": "Deceased" },
+        { "characterId": "char-kaleen", "status": "alive", "note": "Under threat from disappearing revenue" },
+        { "characterId": "char-munna", "status": "alive", "note": "Married to Madhuri Yadav; still arrogant" },
+        { "characterId": "char-golu", "status": "alive", "note": "Strategic brain behind the supply hijackings" },
+        { "characterId": "char-sweety", "status": "dead", "note": "Deceased" },
+        { "characterId": "char-beena", "status": "alive", "note": "Pregnant; secretly feeding Tripathi movements to Guddu" },
+        { "characterId": "char-sharad", "status": "alive", "note": "Playing double agent between Munna and Kaleen" }
+      ],
+      "relationships": [
+        { "from": "Guddu", "to": "Golu", "type": "ally", "label": "Full partners in crime and war" },
+        { "from": "Beena", "to": "Guddu", "type": "ally", "label": "Secret mole inside the palace" },
+        { "from": "Munna", "to": "Guddu", "type": "enemy", "label": "Death match impending" },
+        { "from": "Sharad", "to": "Munna", "type": "ally", "label": "Superficial friendship masking takeover" }
+      ]
+    },
+    {
+      "season": 2,
+      "episode": 10,
+      "storyRecap": "The Season 2 climax at the burning ghats! Guddu and Golu orchestrate an all-out assault as Kaleen Bhaiya and Munna perform funeral rites. Surrounded and outgunned, Munna is gunned down in a hail of bullets by Guddu and Golu, avenging Bablu and Sweety. As Guddu prepares to deliver the fatal bullet to a bleeding Kaleen Bhaiya, Sharad Shukla speeds in and rescues Kaleen away. Guddu limps into the Tripathi mansion and sits on the throne.",
+      "keyMoments": [
+        "Bauji is murdered by Maqbool and Beena inside the haveli",
+        "Guddu & Golu corner Kaleen Bhaiya and Munna at the crematorium",
+        "Munna Tripathi is killed by Guddu and Golu",
+        "Sharad rescues wounded Kaleen Bhaiya in getaway SUV",
+        "Guddu Pandit takes the seat of Mirzapur"
+      ],
+      "quotes": [
+        { "text": "Jo aaya hai, wo jaayega bhi... bas marzi hamari hogi.", "by": "Guddu Pandit", "episode": "S02E10" },
+        { "text": "Hum amar hain be!", "by": "Munna Tripathi (Final words)", "episode": "S02E10" }
+      ],
+      "characterStatuses": [
+        { "characterId": "char-guddu", "status": "alive", "note": "New King of Mirzapur; finally got his revenge on Munna" },
+        { "characterId": "char-bablu", "status": "dead", "note": "Avenged" },
+        { "characterId": "char-kaleen", "status": "injured", "note": "Shot multiple times; smuggled away unconscious by Sharad" },
+        { "characterId": "char-munna", "status": "dead", "note": "Shot dead by Guddu and Golu at the ghat" },
+        { "characterId": "char-golu", "status": "alive", "note": "Shot Munna in the chest; now co-ruler with Guddu" },
+        { "characterId": "char-sweety", "status": "dead", "note": "Avenged" },
+        { "characterId": "char-beena", "status": "alive", "note": "Secured her newborn baby's life by crowning Guddu" },
+        { "characterId": "char-sharad", "status": "alive", "note": "Holds the living body of Kaleen Bhaiya as his trump card" }
+      ],
+      "relationships": [
+        { "from": "Guddu", "to": "Kaleen", "type": "enemy", "label": "Hunted rival king" },
+        { "from": "Sharad", "to": "Kaleen", "type": "ally", "label": "Savior holding Kaleen hostage/ally" },
+        { "from": "Guddu", "to": "Beena", "type": "ally", "label": "Shared pact in the haveli" },
+        { "from": "Guddu", "to": "Sharad", "type": "enemy", "label": "Battle for Purvanchal leadership" }
+      ]
+    },
+    {
+      "season": 3,
+      "episode": 10,
+      "storyRecap": "The explosive finale of Season 3! CM Madhuri Yadav uses state power to crack down on all Purvanchal syndicates. Sharad Shukla gathers the regional dons for the grand coronation to be declared the undisputed Don of Purvanchal. Just as Sharad is about to be crowned, Kaleen Bhaiya reappears in a stunning reveal and shoots Sharad dead! Meanwhile, Golu breaks Guddu out of jail in a daring high-octane escape.",
+      "keyMoments": [
+        "Kaleen Bhaiya betrays and executes Sharad Shukla at the summit",
+        "CM Madhuri Yadav dismantles the criminal-politician nexus",
+        "Golu orchestrates a bloody prison break to free Guddu",
+        "Kaleen Bhaiya returns to the throne under political patronage"
+      ],
+      "quotes": [
+        { "text": "Gaddi pe chahe hum rahein ya na rahein, niyam wahi rahenge.", "by": "Kaleen Bhaiya", "episode": "S03E10" }
+      ],
+      "characterStatuses": [
+        { "characterId": "char-guddu", "status": "alive", "note": "Escaped prison with Golu, on the run" },
+        { "characterId": "char-bablu", "status": "dead", "note": "Deceased" },
+        { "characterId": "char-kaleen", "status": "alive", "note": "Back in absolute command after eliminating Sharad" },
+        { "characterId": "char-munna", "status": "dead", "note": "Deceased" },
+        { "characterId": "char-golu", "status": "alive", "note": "Successfully executed Guddu's jailbreak" },
+        { "characterId": "char-sweety", "status": "dead", "note": "Deceased" },
+        { "characterId": "char-beena", "status": "alive", "note": "Still maneuvering to safeguard her son" },
+        { "characterId": "char-sharad", "status": "dead", "note": "Shot dead by Kaleen Bhaiya at the summit" }
+      ],
+      "relationships": [
+        { "from": "Kaleen", "to": "Sharad", "type": "betrayed", "label": "Killed him at the coronation" },
+        { "from": "Guddu", "to": "Golu", "type": "ally", "label": "Fugitive partners escaping the law" },
+        { "from": "Kaleen", "to": "Guddu", "type": "enemy", "label": "Final war reignited" }
+      ]
+    }
+  ]
+}

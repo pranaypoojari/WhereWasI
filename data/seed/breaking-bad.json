@@ -1,0 +1,150 @@
+{
+  "show": {
+    "slug": "breaking-bad",
+    "title": "Breaking Bad",
+    "titleHindi": "ब्रेकिंग बैड",
+    "platform": "Netflix",
+    "type": "tv",
+    "genre": ["Crime", "Drama", "Thriller"],
+    "posterUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
+    "bannerUrl": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1600&q=80",
+    "synopsis": "A mild-mannered high school chemistry teacher diagnosed with terminal lung cancer partners with his former student to manufacture and sell crystal meth, spiraling into a monstrous drug kingpin known as Heisenberg.",
+    "totalSeasons": 5,
+    "totalEpisodes": 62,
+    "language": "English",
+    "tags": ["Global Hit", "Antihero", "Drug Empire", "Masterpiece"],
+    "isPublished": true,
+    "episodes": [
+      { "season": 1, "episode": 1, "title": "Pilot", "runtime": 58 },
+      { "season": 1, "episode": 7, "title": "A No-Rough-Stuff-Type Deal", "runtime": 47 },
+      { "season": 2, "episode": 12, "title": "Phoenix", "runtime": 48 },
+      { "season": 2, "episode": 13, "title": "ABQ", "runtime": 47 },
+      { "season": 3, "episode": 10, "title": "Fly", "runtime": 47 },
+      { "season": 3, "episode": 13, "title": "Full Measure", "runtime": 47 },
+      { "season": 4, "episode": 11, "title": "Crawl Space", "runtime": 47 },
+      { "season": 4, "episode": 13, "title": "Face Off", "runtime": 51 },
+      { "season": 5, "episode": 8, "title": "Gliding Over All", "runtime": 48 },
+      { "season": 5, "episode": 14, "title": "Ozymandias", "runtime": 48 },
+      { "season": 5, "episode": 16, "title": "Felina", "runtime": 55 }
+    ]
+  },
+  "characters": [
+    {
+      "id": "char-walter",
+      "name": "Walter White",
+      "aliases": ["Heisenberg"],
+      "role": "High School Chemist turned Drug Lord",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Meek chemistry teacher diagnosed with stage III lung cancer" },
+        { "season": 2, "episode": 12, "status": "alive", "note": "Allows Jane to choke on her own vomit to control Jesse" },
+        { "season": 4, "episode": 13, "status": "alive", "note": "Assassinated Gus Fring at the nursing home ('I won')" },
+        { "season": 5, "episode": 14, "status": "alive", "note": "Lost family, empire crumbled in the desert; Hank killed" },
+        { "season": 5, "episode": 16, "status": "dead", "note": "Dies in the neo-Nazi lab after freeing Jesse" }
+      ]
+    },
+    {
+      "id": "char-jesse",
+      "name": "Jesse Pinkman",
+      "aliases": ["Cap'n Cook"],
+      "role": "Cook & Partner",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Small-time meth manufacturer recruited by Mr. White" },
+        { "season": 2, "episode": 12, "status": "alive", "note": "Devastated by Jane's overdose death" },
+        { "season": 4, "episode": 13, "status": "alive", "note": "Allied back with Walter after Brock was poisoned" },
+        { "season": 5, "episode": 14, "status": "missing", "note": "Enslaved by Jack's white supremacist gang to cook 96% pure meth" },
+        { "season": 5, "episode": 16, "status": "alive", "note": "Freed by Walter; drives off screaming into freedom" }
+      ]
+    },
+    {
+      "id": "char-hank",
+      "name": "Hank Schrader",
+      "aliases": ["ASAC Schrader"],
+      "role": "DEA Special Agent in Charge",
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Boisterous DEA agent hunting the mysterious blue meth" },
+        { "season": 5, "episode": 8, "status": "alive", "note": "Discovers Leaves of Grass in Walt's bathroom with Gale's inscription" },
+        { "season": 5, "episode": 14, "status": "dead", "note": "Executed by Uncle Jack in the To'hajiilee desert" }
+      ]
+    },
+    {
+      "id": "char-gus",
+      "name": "Gustavo Fring",
+      "aliases": ["The Chicken Brother"],
+      "role": "Southwest Meth Distributor / Los Pollos Hermanos Boss",
+      "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 2, "episode": 11, "status": "alive", "note": "Ultra-meticulous drug kingpin operating through fast-food front" },
+        { "season": 4, "episode": 13, "status": "dead", "note": "Blown up by Hector Salamanca's wheelchair bomb orchestrated by Walt" }
+      ]
+    },
+    {
+      "id": "char-saul",
+      "name": "Saul Goodman",
+      "aliases": ["Jimmy McGill"],
+      "role": "Criminal Defense Lawyer",
+      "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 2, "episode": 8, "status": "alive", "note": "Slick lawyer who launders Walt and Jesse's millions" },
+        { "season": 5, "episode": 14, "status": "alive", "note": "Contacts the disappearer to start over in Omaha as Gene Takavic" }
+      ]
+    }
+  ],
+  "recaps": [
+    {
+      "season": 4,
+      "episode": 13,
+      "storyRecap": "The apex battle between Heisenberg and Gus Fring. After Gus threatens to kill Walt's entire family, Walt strikes an unthinkable deal with Gus's mortal cartel enemy, Hector Salamanca. Hector agrees to act as a suicide bomber at Casa Tranquila nursing home. When Gus arrives to finish off Hector, Hector rings his bell, triggering the pipe bomb that rips Gus's face in half. Walter calls Skyler with three words: 'I won.'",
+      "keyMoments": [
+        "Walt convinces Hector Salamanca to exact his ultimate revenge on Gus",
+        "The wheelchair bomb detonates at Casa Tranquila",
+        "Gus Fring walks out adjusting his tie before collapsing dead",
+        "Walt burns down the superlab and frees Jesse"
+      ],
+      "quotes": [
+        { "text": "I won.", "by": "Walter White", "episode": "S04E13" },
+        { "text": "I am not in danger, Skyler. I AM the danger.", "by": "Walter White", "episode": "S04E06" }
+      ],
+      "characterStatuses": [
+        { "characterId": "char-walter", "status": "alive", "note": "King of the Southwest; completely embraced Heisenberg" },
+        { "characterId": "char-jesse", "status": "alive", "note": "Believes Walt saved him and Brock" },
+        { "characterId": "char-hank", "status": "alive", "note": "Vindicated that the superlab and Gus were real" },
+        { "characterId": "char-gus", "status": "dead", "note": "Killed in Hector Salamanca's suicide explosion" },
+        { "characterId": "char-saul", "status": "alive", "note": "Nervously celebrating their survival" }
+      ],
+      "relationships": [
+        { "from": "Walter", "to": "Gus", "type": "enemy", "label": "Fatal duel ended in assassination" },
+        { "from": "Walter", "to": "Jesse", "type": "ally", "label": "Toxic master-apprentice bond intact" },
+        { "from": "Hank", "to": "Gus", "type": "enemy", "label": "Case cracked" }
+      ]
+    },
+    {
+      "season": 5,
+      "episode": 14,
+      "storyRecap": "Regarded as one of the greatest television episodes in history. Hank finally arrests Walt in the desert, but Uncle Jack and his neo-Nazi militia arrive despite Walt's desperate calls to call them off. A brutal shootout leaves Gomez dead and Hank executed in the sand. Jack steals $69 million of Walt's money, Jesse is taken as an enslaved meth cook, and Walt flees home only for Skyler and Walter Jr. to pull a knife on him.",
+      "keyMoments": [
+        "Hank Schrader is executed by Uncle Jack in the desert",
+        "Walt reveals to Jesse that he watched Jane choke to death",
+        "Walt Jr. protects his mother from Walt; Walt kidnaps baby Holly before returning her",
+        "Walt sits by the highway waiting for the Disappearer's van"
+      ],
+      "quotes": [
+        { "text": "You're the smartest guy I ever met... but you're too stupid to see he made up his mind 10 minutes ago.", "by": "Hank Schrader", "episode": "S05E14" },
+        { "text": "We're a family!", "by": "Walter White", "episode": "S05E14" }
+      ],
+      "characterStatuses": [
+        { "characterId": "char-walter", "status": "alive", "note": "Complete ruins: family shattered, Hank dead, running for his life" },
+        { "characterId": "char-jesse", "status": "missing", "note": "Chained in a concrete pit by neo-Nazis" },
+        { "characterId": "char-hank", "status": "dead", "note": "Died with his boots on in the To'hajiilee desert" },
+        { "characterId": "char-gus", "status": "dead", "note": "Deceased" },
+        { "characterId": "char-saul", "status": "alive", "note": "Packing bags for the vacuum repair man" }
+      ],
+      "relationships": [
+        { "from": "Walter", "to": "Jesse", "type": "betrayed", "label": "Handed him over to Jack to be murdered" },
+        { "from": "Walter", "to": "Hank", "type": "family", "label": "Grieving the brother-in-law he couldn't save" }
+      ]
+    }
+  ]
+}

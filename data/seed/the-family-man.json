@@ -1,0 +1,98 @@
+{
+  "show": {
+    "slug": "the-family-man",
+    "title": "The Family Man",
+    "titleHindi": "द फैमिली मैन",
+    "platform": "Prime Video",
+    "type": "tv",
+    "genre": ["Action", "Espionage", "Thriller", "Comedy", "Drama"],
+    "posterUrl": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80",
+    "bannerUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1600&q=80",
+    "synopsis": "A middle-class man secretly working as an intelligence officer for the National Investigation Agency must constantly balance his covert anti-terror missions with the chaos of everyday middle-class suburban family life.",
+    "totalSeasons": 2,
+    "totalEpisodes": 19,
+    "language": "Hindi / English / Tamil",
+    "tags": ["TASC Agent", "Indian Thriller", "Manoj Bajpayee", "Zero Spoilers"],
+    "isPublished": true,
+    "episodes": [
+      { "season": 1, "episode": 1, "title": "The Family Man", "runtime": 48 },
+      { "season": 1, "episode": 10, "title": "The Bomb", "runtime": 53 },
+      { "season": 2, "episode": 9, "title": "The Final Showdown", "runtime": 59 }
+    ]
+  },
+  "characters": [
+    {
+      "id": "char-srikant",
+      "name": "Srikant Tiwari",
+      "aliases": ["Sri", "The Family Man"],
+      "role": "Senior Analyst / TASC Field Agent",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Pretends to work as an unremarkable desk clerk at a government office while leading TASC anti-terror squads." }
+      ]
+    },
+    {
+      "id": "char-suchitra",
+      "name": "Suchitra Tiwari",
+      "aliases": ["Suchi"],
+      "role": "Srikant's Wife / College Professor",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Frustrated with Srikant's mysterious absences and low salary, considers a corporate career transition." }
+      ]
+    },
+    {
+      "id": "char-jk",
+      "name": "JK Talpade",
+      "aliases": ["JK"],
+      "role": "Srikant's Loyal TASC Partner",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Srikant's witty, fiercely dependable best friend and field wingman." }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "characterA": "char-srikant",
+      "characterB": "char-suchitra",
+      "typeTimeline": [
+        { "season": 1, "episode": 1, "type": "Strained Marriage", "note": "Suchi wants stability while Srikant juggles secret national security crises." }
+      ]
+    },
+    {
+      "characterA": "char-srikant",
+      "characterB": "char-jk",
+      "typeTimeline": [
+        { "season": 1, "episode": 1, "type": "Best Friends & Partners", "note": "Brothers in arms at TASC who trust each other with their lives." }
+      ]
+    }
+  ],
+  "recaps": [
+    {
+      "season": 1,
+      "episode": 1,
+      "title": "The Family Man",
+      "safeSummary": "Srikant Tiwari struggles with school principal reprimands, loan payments, and morning traffic in Mumbai, masquerading as a drab clerk at the Department of Records. In reality, he is a seasoned operative in T.A.S.C. (Threat Analysis and Surveillance Cell). When the Coast Guard intercepts three ISIS operatives off the coast of Kochi, Srikant and JK fly south to interrogate one of the surviving radicals, uncovering the nascent threads of a catastrophic biological attack called 'Mission Zulfiqar'.",
+      "bullets": [
+        "Srikant balances chaotic school drop-offs and home loan payments with covert missions.",
+        "Indian Coast Guard detains armed militants on a boat in the Arabian Sea.",
+        "Srikant and JK interrogate the captured militant in Kochi hospital.",
+        "A cryptic clue reveals the imminent planning of 'Mission Zulfiqar'.",
+        "Srikant has to abandon an urgent hospital interrogation to attend a family dinner with Suchi."
+      ],
+      "majorEvents": [
+        "Introduction to Srikant's double life",
+        "Interception of ISIS sea vessel",
+        "Uncovering of the name 'Mission Zulfiqar'"
+      ],
+      "whoDied": [],
+      "whoJoined": [],
+      "unresolvedQuestions": [
+        "Who is the mastermind behind Mission Zulfiqar?",
+        "Will Suchitra discover Srikant's real job?"
+      ],
+      "cliffhanger": "Srikant answers an urgent satellite phone call while smiling reassuringly at his wife across the dinner table."
+    }
+  ]
+}

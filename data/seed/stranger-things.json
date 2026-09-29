@@ -1,0 +1,143 @@
+{
+  "show": {
+    "slug": "stranger-things",
+    "title": "Stranger Things",
+    "titleHindi": "स्ट्रेंजर थिंग्स",
+    "platform": "Netflix",
+    "type": "tv",
+    "genre": ["Sci-Fi", "Horror", "Mystery", "Drama"],
+    "posterUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
+    "bannerUrl": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1600&q=80",
+    "synopsis": "In 1980s Indiana, a group of young friends witness supernatural forces, secret government experiments, and a strange psychokinetic girl after their friend Will Byers mysteriously vanishes into the Upside Down.",
+    "totalSeasons": 4,
+    "totalEpisodes": 34,
+    "language": "English",
+    "tags": ["Global Hit", "80s Nostalgia", "Upside Down", "Sci-Fi Cult"],
+    "isPublished": true,
+    "episodes": [
+      { "season": 1, "episode": 1, "title": "The Vanishing of Will Byers", "runtime": 48 },
+      { "season": 1, "episode": 8, "title": "The Upside Down", "runtime": 55 },
+      { "season": 2, "episode": 9, "title": "The Gate", "runtime": 62 },
+      { "season": 3, "episode": 8, "title": "The Battle of Starcourt", "runtime": 77 },
+      { "season": 4, "episode": 4, "title": "Dear Billy", "runtime": 78 },
+      { "season": 4, "episode": 7, "title": "The Massacre at Hawkins Lab", "runtime": 98 },
+      { "season": 4, "episode": 9, "title": "The Piggyback", "runtime": 142 }
+    ]
+  },
+  "characters": [
+    {
+      "id": "char-eleven",
+      "name": "Eleven (Jane)",
+      "aliases": ["El", "011"],
+      "role": "Psychokinetic Heroine",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Escapes Hawkins National Laboratory in hospital gown; found in woods by Mike, Dustin, and Lucas." },
+        { "season": 1, "episode": 8, "status": "missing", "note": "Disintegrates the Demogorgon at Hawkins Middle School and vanishes into the Upside Down." },
+        { "season": 2, "episode": 9, "status": "alive", "note": "Returns from hiding with Hopper to seal the subterranean Gate." },
+        { "season": 4, "episode": 9, "status": "alive", "note": "Battles Vecna via psychic piggyback from a sensory deprivation tank." }
+      ]
+    },
+    {
+      "id": "char-mike",
+      "name": "Mike Wheeler",
+      "aliases": ["Paladin"],
+      "role": "The Leader & Heart of the Party",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Devastated by best friend Will's disappearance; secretly shelters Eleven in his basement." },
+        { "season": 4, "episode": 9, "status": "alive", "note": "Confesses his undying love to Eleven, giving her strength to fight Vecna." }
+      ]
+    },
+    {
+      "id": "char-hopper",
+      "name": "Jim Hopper",
+      "aliases": ["Chief Hopper"],
+      "role": "Chief of Hawkins Police",
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Grief-stricken sheriff investigating Will Byers's impossible disappearance." },
+        { "season": 3, "episode": 8, "status": "missing", "note": "Presumed incinerated in the Russian laser explosion beneath Starcourt Mall." },
+        { "season": 4, "episode": 9, "status": "alive", "note": "Survives Kamchatka prison in Russia; decapitates a Demogorgon with a sword." }
+      ]
+    },
+    {
+      "id": "char-will",
+      "name": "Will Byers",
+      "aliases": ["Will the Wise"],
+      "role": "The Boy Who Was Taken",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "missing", "note": "Cornered by a faceless creature and pulled into the dark parallel realm of the Upside Down." },
+        { "season": 1, "episode": 8, "status": "alive", "note": "Rescued from the Upside Down by Joyce and Hopper, but coughs up a slug in secret." }
+      ]
+    },
+    {
+      "id": "char-vecna",
+      "name": "Vecna",
+      "aliases": ["Henry Creel", "One"],
+      "role": "The Mastermind of the Upside Down",
+      "avatar": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "missing", "note": "Undiscovered entity controlling Hawkins dark occurrences from the shadows." },
+        { "season": 4, "episode": 7, "status": "alive", "note": "Revealed as Dr. Brenner's first test subject (001), banished to the Upside Down by Eleven." },
+        { "season": 4, "episode": 9, "status": "injured", "note": "Burned with Molotovs and shot out a window by Steve, Nancy, and Robin; body disappears." }
+      ]
+    }
+  ],
+  "recaps": [
+    {
+      "season": 1,
+      "episode": 1,
+      "storyRecap": "November 6, 1983, in Hawkins, Indiana. After an evening playing Dungeons & Dragons, 12-year-old Will Byers vanishes into thin air while cycling home near the top-secret Hawkins National Laboratory. The next morning, his distraught mother Joyce demands Police Chief Jim Hopper launch a manhunt. Meanwhile, Will's friends Mike, Dustin, and Lucas sneak into Mirkwood forest to search for him, only to stumble upon a terrified girl with a shaved head and hospital gown.",
+      "keyMoments": [
+        "Will Byers is pursued by a monster and vanishes in the night",
+        "Chief Hopper begins investigating Hawkins National Laboratory",
+        "Mike, Dustin, and Lucas discover Eleven in the woods"
+      ],
+      "quotes": [
+        { "text": "Mornings are for coffee and contemplation.", "by": "Chief Hopper", "episode": "S01E01" },
+        { "text": "Something is coming. Something hungry for blood.", "by": "Mike Wheeler", "episode": "S01E01" }
+      ],
+      "characterStatuses": [
+        { "characterId": "char-eleven", "status": "alive", "note": "Escaped lab, hiding in Mike's basement" },
+        { "characterId": "char-mike", "status": "alive", "note": "Sheltering Eleven, determined to find Will" },
+        { "characterId": "char-hopper", "status": "alive", "note": "Hawkins Police Chief leading the search" },
+        { "characterId": "char-will", "status": "missing", "note": "Vanished into the Upside Down" },
+        { "characterId": "char-vecna", "status": "missing", "note": "Shadow ruler of the Upside Down" }
+      ],
+      "relationships": [
+        { "from": "Mike", "to": "Eleven", "type": "ally", "label": "Secret protector" },
+        { "from": "Mike", "to": "Will", "type": "family", "label": "Lifelong best friend" },
+        { "from": "Hopper", "to": "Will", "type": "ally", "label": "Investigating disappearance" }
+      ]
+    },
+    {
+      "season": 4,
+      "episode": 9,
+      "storyRecap": "The gargantuan Season 4 finale! The Hawkins squad launches a synchronized four-phase strike on Vecna. While Max volunteers as psychic bait at the Creel House, Steve, Nancy, and Robin infiltrate the Upside Down with shotguns and Molotov cocktails. In Nevada, Eleven projects her consciousness across 2,000 miles to battle Vecna inside Max's mind. Though Vecna is wounded and pushed back, the four massive gates rip through Hawkins, plunging the town into apocalyptic smoke.",
+      "keyMoments": [
+        "Eddie Munson performs Metallica's Master of Puppets in the Upside Down",
+        "Max Mayfield is temporarily blinded and critically injured by Vecna",
+        "Steve, Nancy, and Robin set Vecna on fire in the Creel attic",
+        "The Upside Down fissures split Hawkins wide open"
+      ],
+      "quotes": [
+        { "text": "I didn't run away this time, right?", "by": "Eddie Munson", "episode": "S04E09" },
+        { "text": "You have already lost.", "by": "Vecna", "episode": "S04E09" }
+      ],
+      "characterStatuses": [
+        { "characterId": "char-eleven", "status": "alive", "note": "Exhausted from psychic duel; reunited with Hopper" },
+        { "characterId": "char-mike", "status": "alive", "note": "Back in Hawkins standing by Eleven" },
+        { "characterId": "char-hopper", "status": "alive", "note": "Escaped Russia, returned home to Eleven and Joyce" },
+        { "characterId": "char-will", "status": "alive", "note": "Feels Vecna's presence at the back of his neck" },
+        { "characterId": "char-vecna", "status": "injured", "note": "Wounded and missing after Hawkins gate eruption" }
+      ],
+      "relationships": [
+        { "from": "Eleven", "to": "Vecna", "type": "enemy", "label": "Psychic arch-rivals" },
+        { "from": "Hopper", "to": "Eleven", "type": "family", "label": "Father and daughter" },
+        { "from": "Mike", "to": "Eleven", "type": "romantic", "label": "Anchor of love" }
+      ]
+    }
+  ]
+}

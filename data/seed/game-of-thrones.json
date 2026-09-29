@@ -1,0 +1,96 @@
+{
+  "show": {
+    "slug": "game-of-thrones",
+    "title": "Game of Thrones",
+    "titleHindi": "गेम ऑफ थ्रोन्स",
+    "platform": "JioCinema / HBO",
+    "type": "tv",
+    "genre": ["Action", "Adventure", "Fantasy", "Drama"],
+    "posterUrl": "https://images.unsplash.com/photo-1514533450685-4493e01d1fdc?auto=format&fit=crop&w=800&q=80",
+    "bannerUrl": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1600&q=80",
+    "synopsis": "Nine noble families fight for control over the lands of Westeros, while an ancient enemy returns after being dormant for millennia beyond the icy Wall.",
+    "totalSeasons": 8,
+    "totalEpisodes": 73,
+    "language": "English",
+    "tags": ["Westeros", "Iron Throne", "Dragons", "Epic Fantasy"],
+    "isPublished": true,
+    "episodes": [
+      { "season": 1, "episode": 1, "title": "Winter Is Coming", "runtime": 62 },
+      { "season": 1, "episode": 9, "title": "Baelor", "runtime": 57 },
+      { "season": 2, "episode": 9, "title": "Blackwater", "runtime": 55 },
+      { "season": 3, "episode": 9, "title": "The Rains of Castamere", "runtime": 51 },
+      { "season": 4, "episode": 2, "title": "The Lion and the Rose", "runtime": 52 },
+      { "season": 6, "episode": 9, "title": "Battle of the Bastards", "runtime": 60 }
+    ]
+  },
+  "characters": [
+    {
+      "id": "char-ned",
+      "name": "Ned Stark",
+      "aliases": ["Lord of Winterfell", "Hand of the King"],
+      "role": "Warden of the North",
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Executes a Night's Watch deserter; accepts King Robert Baratheon's offer to become Hand of the King." },
+        { "season": 1, "episode": 9, "status": "dead", "note": "Beheaded on the steps of the Great Sept of Baelor by order of King Joffrey Baratheon." }
+      ]
+    },
+    {
+      "id": "char-jon",
+      "name": "Jon Snow",
+      "aliases": ["The Bastard of Winterfell", "Lord Commander"],
+      "role": "Night's Watch Recruit",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Ned Stark's bastard son; claims an albino direwolf pup (Ghost) and prepares to take the black." }
+      ]
+    },
+    {
+      "id": "char-daenerys",
+      "name": "Daenerys Targaryen",
+      "aliases": ["Khaleesi", "Mother of Dragons"],
+      "role": "Exiled Targaryen Princess",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80",
+      "statusTimeline": [
+        { "season": 1, "episode": 1, "status": "alive", "note": "Married off to Dothraki warlord Khal Drogo by her brother Viserys in exchange for an army." }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "characterA": "char-ned",
+      "characterB": "char-jon",
+      "typeTimeline": [
+        { "season": 1, "episode": 1, "type": "Father & Bastard Son", "note": "Ned loves Jon dearly but guards the secret of his true mother." }
+      ]
+    }
+  ],
+  "recaps": [
+    {
+      "season": 1,
+      "episode": 1,
+      "title": "Winter Is Coming",
+      "safeSummary": "Beyond the colossal icy Wall, rangers of the Night's Watch encounter mythical White Walkers. In Winterfell, Lord Eddard 'Ned' Stark receives a royal visit from his longtime brother-in-arms, King Robert Baratheon, who asks Ned to serve as the new Hand of the King following the suspicious death of Jon Arryn. Across the Narrow Sea in Pentos, exiled prince Viserys Targaryen arranges the arranged marriage of his younger sister Daenerys to Dothraki horselord Khal Drogo. Back at Winterfell, young Bran Stark climbs a derelict tower and accidentally witnesses Queen Cersei Lannister in an incestuous tryst with her twin brother Jaime, who pushes Bran out of the tower window.",
+      "bullets": [
+        "White Walkers slaughter Night's Watch rangers beyond the Wall; Ned Stark executes the lone deserter.",
+        "The Stark children discover an orphaned litter of direwolf pups, one for each child.",
+        "King Robert arrives at Winterfell and asks Ned to become Hand of the King.",
+        "In Essos, Daenerys is gifted three petrified dragon eggs at her wedding to Khal Drogo.",
+        "Bran Stark climbs the old tower, witnesses Queen Cersei and Jaime Lannister, and is shoved from the window."
+      ],
+      "majorEvents": [
+        "First sighting of the White Walkers in millennia",
+        "King Robert names Ned Stark Hand of the King",
+        "Marriage of Daenerys to Khal Drogo",
+        "Jaime Lannister pushes Bran Stark out the tower window"
+      ],
+      "whoDied": ["Night's Watch Rangers Waymar Royce & Gared"],
+      "whoJoined": [],
+      "unresolvedQuestions": [
+        "Did Bran survive the fall from the high tower?",
+        "Who really poisoned previous Hand Jon Arryn in King's Landing?"
+      ],
+      "cliffhanger": "Jaime says 'The things I do for love' before casually shoving ten-year-old Bran Stark backward into the void."
+    }
+  ]
+}
