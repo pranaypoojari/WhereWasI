@@ -38,7 +38,8 @@ export async function POST(request) {
       console.warn('Cache lookup skipped:', cacheErr.message);
     }
 
-    const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+    const rawKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || '';
+    const apiKey = rawKey.trim().replace(/^["']|["']$/g, '');
 
     let generatedData = null;
 

@@ -1,8 +1,15 @@
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import clientPromise from './mongodb';
 
 const SEED_DIR = path.join(process.cwd(), 'data', 'seed');
+const TMP_GEN_PATH = path.join(os.tmpdir(), 'wherewasi_generated_shows.json');
+
+// Global in-memory cache for serverless warm instances
+if (!globalThis.__WHEREWASI_MEM_CACHE__) {
+  globalThis.__WHEREWASI_MEM_CACHE__ = {};
+}
 
 function readLocalSeed(filename) {
   try {
@@ -16,37 +23,64 @@ function readLocalSeed(filename) {
   }
 }
 
+function readGeneratedCache() {
+  const combined = { ...(readLocalSeed('generated_shows.json') || {}) };
+  try {
+    if (fs.existsSync(TMP_GEN_PATH)) {
+      const tmpData = JSON.parse(fs.readFileSync(TMP_GEN_PATH, 'utf-8'));
+      Object.assign(combined, tmpData);
+    }
+  } catch (e) {
+    // Ignore tmp read errors
+  }
+  Object.assign(combined, globalThis.__WHEREWASI_MEM_CACHE__);
+  return combined;
+}
+
+function writeGeneratedCache(genData) {
+  globalThis.__WHEREWASI_MEM_CACHE__ = genData;
+  try {
+    const genPath = path.join(SEED_DIR, 'generated_shows.json');
+    fs.writeFileSync(genPath, JSON.stringify(genData, null, 2), 'utf-8');
+  } catch (err) {
+    // Expected on read-only serverless filesystems (e.g., Vercel); fallback to os.tmpdir()
+    try {
+      fs.writeFileSync(TMP_GEN_PATH, JSON.stringify(genData, null, 2), 'utf-8');
+    } catch (tmpErr) {
+      // In-memory cache still holds it
+    }
+  }
+}
+
 function writeLocalRequests(requests) {
   try {
     const filePath = path.join(SEED_DIR, 'requests.json');
     fs.writeFileSync(filePath, JSON.stringify(requests, null, 2), 'utf-8');
   } catch (err) {
-    console.error('Error writing requests.json:', err);
+    // Read-only filesystem safe ignore
   }
 }
 
 function getAllLocalShows() {
   const shows = [];
   try {
-    if (!fs.existsSync(SEED_DIR)) return shows;
-    const files = fs.readdirSync(SEED_DIR);
-    for (const file of files) {
-      if (!file.endsWith('.json') || file === 'requests.json') continue;
-      if (file === 'generated_shows.json') {
-        const genData = readLocalSeed(file);
-        if (genData) {
-          Object.values(genData).forEach(item => {
-            if (item && item.show && !shows.some(s => s.slug === item.show.slug)) {
-              shows.push(item.show);
-            }
-          });
+    if (fs.existsSync(SEED_DIR)) {
+      const files = fs.readdirSync(SEED_DIR);
+      for (const file of files) {
+        if (!file.endsWith('.json') || file === 'requests.json' || file === 'generated_shows.json') continue;
+        const data = readLocalSeed(file);
+        if (data && data.show && !shows.some(s => s.slug === data.show.slug)) {
+          shows.push(data.show);
         }
-        continue;
       }
-      const data = readLocalSeed(file);
-      if (data && data.show && !shows.some(s => s.slug === data.show.slug)) {
-        shows.push(data.show);
-      }
+    }
+    const genData = readGeneratedCache();
+    if (genData) {
+      Object.values(genData).forEach(item => {
+        if (item && item.show && !shows.some(s => s.slug === item.show.slug)) {
+          shows.push(item.show);
+        }
+      });
     }
   } catch (err) {
     console.error('Error reading local seed directory:', err);
@@ -59,8 +93,8 @@ function getLocalShowData(slug) {
   const exactFile = readLocalSeed(`${slug}.json`);
   if (exactFile && exactFile.show) return exactFile;
 
-  // Check generated_shows.json
-  const genData = readLocalSeed('generated_shows.json');
+  // Check generated cache (local + tmp + memory)
+  const genData = readGeneratedCache();
   if (genData && genData[slug]) {
     return genData[slug];
   }
@@ -98,18 +132,13 @@ export async function saveDynamicShow(show) {
     }
   }
 
-  // Also save to data/seed/generated_shows.json
   try {
-    const genPath = path.join(SEED_DIR, 'generated_shows.json');
-    let genData = {};
-    if (fs.existsSync(genPath)) {
-      genData = JSON.parse(fs.readFileSync(genPath, 'utf-8'));
-    }
+    const genData = readGeneratedCache();
     genData[show.slug] = genData[show.slug] || { show, characters: [], recaps: [] };
     genData[show.slug].show = show;
-    fs.writeFileSync(genPath, JSON.stringify(genData, null, 2), 'utf-8');
+    writeGeneratedCache(genData);
   } catch (err) {
-    console.error('Failed saving generated show locally:', err);
+    console.error('Failed saving generated show:', err);
   }
 }
 
@@ -129,11 +158,7 @@ export async function saveDynamicRecap(showSlug, recapData) {
   }
 
   try {
-    const genPath = path.join(SEED_DIR, 'generated_shows.json');
-    let genData = {};
-    if (fs.existsSync(genPath)) {
-      genData = JSON.parse(fs.readFileSync(genPath, 'utf-8'));
-    }
+    const genData = readGeneratedCache();
     if (genData[showSlug]) {
       const existingIdx = genData[showSlug].recaps.findIndex(
         r => r.season === recapData.season && r.episode === recapData.episode
@@ -143,7 +168,7 @@ export async function saveDynamicRecap(showSlug, recapData) {
       } else {
         genData[showSlug].recaps.push(recapData);
       }
-      fs.writeFileSync(genPath, JSON.stringify(genData, null, 2), 'utf-8');
+      writeGeneratedCache(genData);
     }
   } catch (err) {
     console.error('Failed updating local generated recap:', err);

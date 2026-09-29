@@ -2,8 +2,21 @@ import '@/styles/globals.css';
 import Navbar from '@/components/Navbar';
 import AuroraBackground from '@/components/reactbits/AuroraBackground';
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://wherewasi.vercel.app';
+
+export const viewport = {
+  themeColor: '#f43f5e',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export const metadata = {
-  title: 'WhereWasI — Zero-Spoiler Catch-Up Engine for Series, Movies & Anime',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'WhereWasI — Zero-Spoiler Catch-Up Engine for Series, Movies & Anime',
+    template: '%s | WhereWasI — Zero Spoilers'
+  },
   description: 'Forgot who died before the new season? Scrub to where you paused and catch up on Stranger Things, Attack on Titan, The Boys, Inception, Mirzapur & more with 100% zero spoilers.',
   keywords: [
     'zero spoiler recap',
@@ -12,15 +25,35 @@ export const metadata = {
     'anime recap',
     'movie recap',
     'character death tracker',
+    'episode summary without spoilers',
     'stranger things recap',
     'attack on titan recap',
     'mirzapur recap',
-    'the boys recap'
+    'the boys recap',
+    'game of thrones recap',
+    'naruto recap'
   ],
   authors: [{ name: 'WhereWasI Team' }],
+  creator: 'Pranay Poojari',
+  publisher: 'WhereWasI',
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     title: 'WhereWasI — Zero-Spoiler Recap Engine',
     description: 'Catch up on your favorite series, anime, and movies without accidental spoilers. Drag the episode slider to see who was alive, who betrayed who, and get refreshed.',
+    url: SITE_URL,
     type: 'website',
     locale: 'en_US',
     siteName: 'WhereWasI'
@@ -33,8 +66,31 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'WhereWasI',
+    alternateName: 'WhereWasI Zero-Spoiler Recap Engine',
+    url: SITE_URL,
+    description: 'Zero-spoiler episode recap engine, character alive/dead tracker, and relationship web for TV series, anime, and movies.',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${SITE_URL}/generate?title={search_term_string}&season=1&episode=1`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  };
+
   return (
     <html lang="en" className="dark">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="bg-cinema-black text-slate-100 antialiased min-h-screen selection:bg-brand-500 selection:text-white">
         <AuroraBackground>
           <Navbar />
