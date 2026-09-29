@@ -63,19 +63,44 @@ export async function GET(request) {
 
     const allLocalItems = Array.from(corpusMap.values());
 
-    // 3. Fuzzy search local corpus
+    // 3. Fuzzy search local corpus (prioritize title strongly over genre/tags)
     const fuse = new Fuse(allLocalItems, {
       keys: [
-        { name: 'title', weight: 0.5 },
-        { name: 'titleHindi', weight: 0.3 },
-        { name: 'genre', weight: 0.1 },
-        { name: 'tag', weight: 0.1 }
+        { name: 'title', weight: 0.75 },
+        { name: 'titleHindi', weight: 0.2 },
+        { name: 'tag', weight: 0.03 },
+        { name: 'genre', weight: 0.02 }
       ],
-      threshold: 0.38,
+      threshold: 0.34,
       includeScore: true
     });
 
-    let localMatches = fuse.search(query).map(r => r.item);
+    const lowerQuery = query.toLowerCase();
+
+    // Filter out weak fuzzy hits that only matched a genre word (like "Dea" matching "Drama")
+    let localMatches = fuse
+      .search(query)
+      .filter(r => {
+        const t = (r.item.title || '').toLowerCase();
+        const th = (r.item.titleHindi || '').toLowerCase();
+        const hasTitleSubstring = t.includes(lowerQuery) || th.includes(lowerQuery);
+        // Keep if it matches the title/Hindi title directly, or has a strong Fuse score (< 0.25)
+        return hasTitleSubstring || (r.score !== undefined && r.score < 0.25);
+      })
+      .map(r => ({
+        ...r.item,
+        _fuseScore: r.score ?? 0.5
+      }));
+
+    // Also ensure any direct substring match in allLocalItems is included even if Fuse missed it
+    const matchedTitlesSet = new Set(localMatches.map(m => m.title.toLowerCase()));
+    for (const item of allLocalItems) {
+      const t = item.title.toLowerCase();
+      if (!matchedTitlesSet.has(t) && t.includes(lowerQuery)) {
+        localMatches.push({ ...item, _fuseScore: 0.05 });
+        matchedTitlesSet.add(t);
+      }
+    }
 
     // Apply category filter if requested
     if (category !== 'all') {
@@ -102,7 +127,7 @@ export async function GET(request) {
           liveTVMatches = (tvData || [])
             .map(item => item.show)
             .filter(show => show && !existingTitles.has(show.name.toLowerCase()))
-            .slice(0, 3)
+            .slice(0, 4)
             .map(show => ({
               title: show.name,
               slug: null,
@@ -173,13 +198,45 @@ export async function GET(request) {
       }
     }
 
-    // Merge and rank: Catalog shows first, then local media matches, then live public matches
-    const finalResults = [
-      ...localMatches.filter(m => m.inCatalog),
-      ...localMatches.filter(m => !m.inCatalog),
+    // 6. Compute deterministic title-first relevance score so exact/prefix matches ALWAYS rank #1
+    const computeRank = (item) => {
+      const t = (item.title || '').toLowerCase();
+      const th = (item.titleHindi || '').toLowerCase();
+      let score = 0;
+
+      if (t === lowerQuery || th === lowerQuery) {
+        score += 1000; // Exact title match
+      } else if (t.startsWith(lowerQuery) || th.startsWith(lowerQuery)) {
+        score += 600; // Starts with query (e.g., "Dea" -> "Death Note")
+      } else if (t.split(/[\s:,-]+/).some(word => word.startsWith(lowerQuery))) {
+        score += 400; // Word in title starts with query
+      } else if (t.includes(lowerQuery) || th.includes(lowerQuery)) {
+        score += 250; // Substring match in title
+      }
+
+      // Small tie-breaker bonus for inCatalog shows (never overrides a title prefix/substring match)
+      if (item.inCatalog) {
+        score += 25;
+      }
+
+      // Fuse similarity bonus
+      if (typeof item._fuseScore === 'number') {
+        score += Math.round((1 - item._fuseScore) * 40);
+      }
+
+      return score;
+    };
+
+    const allCandidates = [
+      ...localMatches,
       ...liveTVMatches,
       ...liveMovieMatches
-    ].slice(0, 8);
+    ];
+
+    const finalResults = allCandidates
+      .sort((a, b) => computeRank(b) - computeRank(a))
+      .slice(0, 8)
+      .map(({ _fuseScore, ...cleanItem }) => cleanItem);
 
     return NextResponse.json({
       success: true,

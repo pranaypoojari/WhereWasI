@@ -33,12 +33,12 @@ export default function SearchBar({
   const fuseCatalog = useRef(
     new Fuse(shows, {
       keys: [
-        { name: 'title', weight: 0.5 },
-        { name: 'titleHindi', weight: 0.3 },
-        { name: 'genre', weight: 0.1 },
-        { name: 'tags', weight: 0.1 }
+        { name: 'title', weight: 0.75 },
+        { name: 'titleHindi', weight: 0.2 },
+        { name: 'tags', weight: 0.03 },
+        { name: 'genre', weight: 0.02 }
       ],
-      threshold: 0.35
+      threshold: 0.32
     })
   );
 
@@ -73,15 +73,19 @@ export default function SearchBar({
     }
 
     // Client fallback if network API fails or slow
-    const clientMatches = fuseCatalog.current.search(searchQuery).map(r => ({
-      title: r.item.title,
-      titleHindi: r.item.titleHindi,
-      slug: r.item.slug,
-      type: r.item.type || 'tv',
-      platform: r.item.platform,
-      genre: Array.isArray(r.item.genre) ? r.item.genre.join(', ') : r.item.genre,
-      inCatalog: true
-    }));
+    const lowerQ = searchQuery.trim().toLowerCase();
+    const clientMatches = fuseCatalog.current
+      .search(searchQuery)
+      .filter(r => (r.item.title || '').toLowerCase().includes(lowerQ))
+      .map(r => ({
+        title: r.item.title,
+        titleHindi: r.item.titleHindi,
+        slug: r.item.slug,
+        type: r.item.type || 'tv',
+        platform: r.item.platform,
+        genre: Array.isArray(r.item.genre) ? r.item.genre.join(', ') : r.item.genre,
+        inCatalog: true
+      }));
     setSuggestions(clientMatches);
   }, []);
 
@@ -267,11 +271,11 @@ export default function SearchBar({
             suggestions.map((item, idx) => {
               const isSelected = selectedIndex === idx;
               return (
-                <button
+                <div
                   key={`${item.title}-${idx}`}
                   onClick={() => handleSelect(item)}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`w-full px-4 sm:px-5 py-3 flex items-center justify-between text-left transition group border-b border-cinema-border/25 last:border-b-0 ${
+                  className={`w-full px-4 sm:px-5 py-3 flex items-center justify-between text-left transition group border-b border-cinema-border/25 last:border-b-0 cursor-pointer ${
                     isSelected ? 'bg-rose-500/15' : 'hover:bg-white/5'
                   }`}
                 >
@@ -298,7 +302,7 @@ export default function SearchBar({
                           </span>
                         ) : (
                           <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-400 border border-sky-500/30 shrink-0 font-medium">
-                            ⚡ Autofill
+                            ⚡ Live Web Fetch
                           </span>
                         )}
                       </div>
@@ -309,13 +313,35 @@ export default function SearchBar({
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-1 text-xs text-slate-400 group-hover:text-rose-400 shrink-0 transition group-hover:translate-x-1">
-                    <span className="hidden sm:inline font-medium">
-                      {item.inCatalog ? 'Open Timeline' : 'Synthesize'}
-                    </span>
-                    <ArrowRight className="w-4 h-4" />
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsOpen(false);
+                        setQuery('');
+                        const params = new URLSearchParams({
+                          title: item.title,
+                          type: item.type || 'tv',
+                          season: '1',
+                          episode: '1',
+                          mode: 'storybook'
+                        });
+                        router.push(`/generate?${params.toString()}`);
+                      }}
+                      title="Read entire Start-to-End Story-Book with 0% fillers"
+                      className="px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500 text-amber-300 hover:text-cinema-black border border-amber-500/30 text-[11px] font-bold transition flex items-center gap-1"
+                    >
+                      <span>📖 Book Mode</span>
+                    </button>
+                    <div className="flex items-center gap-1 text-xs text-slate-400 group-hover:text-rose-400 transition group-hover:translate-x-0.5">
+                      <span className="hidden md:inline font-medium">
+                        {item.inCatalog ? 'Timeline' : 'Recap'}
+                      </span>
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
                   </div>
-                </button>
+                </div>
               );
             })
           ) : !loading ? (
