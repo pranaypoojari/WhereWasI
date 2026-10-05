@@ -1,7 +1,14 @@
 import { NextResponse } from 'next/server';
+import dns from 'node:dns';
 import { getAllShows } from '@/lib/dataService';
 import { MEDIA_CATALOG } from '@/lib/mediaCatalog';
 import Fuse from 'fuse.js';
+
+try {
+  dns.setDefaultResultOrder('ipv4first');
+} catch (e) {
+  // Ignore in environments where not supported
+}
 
 export const dynamic = 'force-dynamic';
 
@@ -204,19 +211,22 @@ export async function GET(request) {
       const th = (item.titleHindi || '').toLowerCase();
       let score = 0;
 
+      const isShortAcronym = t.length <= 3 && !t.includes(' ');
+
       if (t === lowerQuery || th === lowerQuery) {
-        score += 1000; // Exact title match
+        // If query is <= 3 chars and matches an obscure 3-letter acronym (e.g. "DEA"), don't let it beat major titles like "Death Note"
+        score += (isShortAcronym && lowerQuery.length <= 3) ? 550 : 1000;
       } else if (t.startsWith(lowerQuery) || th.startsWith(lowerQuery)) {
-        score += 600; // Starts with query (e.g., "Dea" -> "Death Note")
+        score += 650; // Starts with query (e.g., "Dea" -> "Death Note" scores 650, beating 3-letter acronym DEA's 550)
       } else if (t.split(/[\s:,-]+/).some(word => word.startsWith(lowerQuery))) {
         score += 400; // Word in title starts with query
       } else if (t.includes(lowerQuery) || th.includes(lowerQuery)) {
         score += 250; // Substring match in title
       }
 
-      // Small tie-breaker bonus for inCatalog shows (never overrides a title prefix/substring match)
-      if (item.inCatalog) {
-        score += 25;
+      // Bonus for catalog items or recognized anime/series
+      if (item.inCatalog || item.type === 'anime' || item.year) {
+        score += 40;
       }
 
       // Fuse similarity bonus
@@ -233,10 +243,17 @@ export async function GET(request) {
       ...liveMovieMatches
     ];
 
-    const finalResults = allCandidates
-      .sort((a, b) => computeRank(b) - computeRank(a))
-      .slice(0, 8)
-      .map(({ _fuseScore, ...cleanItem }) => cleanItem);
+    const seenTitles = new Set();
+    const finalResults = [];
+    for (const item of allCandidates.sort((a, b) => computeRank(b) - computeRank(a))) {
+      const lower = item.title.toLowerCase();
+      if (!seenTitles.has(lower)) {
+        seenTitles.add(lower);
+        const { _fuseScore, ...cleanItem } = item;
+        finalResults.push(cleanItem);
+      }
+      if (finalResults.length >= 8) break;
+    }
 
     return NextResponse.json({
       success: true,
