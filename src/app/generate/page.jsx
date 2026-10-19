@@ -9,6 +9,8 @@ import RelationshipWeb from '@/components/RelationshipWeb';
 import QuoteCarousel from '@/components/QuoteCarousel';
 import ShareCardModal from '@/components/ShareCardModal';
 import confetti from 'canvas-confetti';
+import Link from 'next/link';
+import useKeyboardShortcuts from '@/lib/useKeyboardShortcuts';
 import {
   Wand2,
   ShieldCheck,
@@ -100,7 +102,7 @@ function GeneratePageContent() {
     const qSeason = searchParams.get('season');
     const qEpisode = searchParams.get('episode');
     const qType = searchParams.get('type') || 'tv';
-    const qMode = searchParams.get('mode'); // 'storybook' | null
+    const qMode = searchParams.get('mode'); // 'storybook' | 'book' | null
 
     if (qTitle) {
       const s = Number(qSeason) || 1;
@@ -109,7 +111,7 @@ function GeneratePageContent() {
       setType(qType);
       setSeason(s);
       setEpisode(ep);
-      const viewMode = qMode === 'storybook' ? 'storybook' : 'cumulative';
+      const viewMode = qMode === 'storybook' || qMode === 'book' ? 'storybook' : 'cumulative';
       setInitialRecapView(viewMode);
       runGeneration(qTitle, qType, s, ep, viewMode);
     }
@@ -177,8 +179,72 @@ function GeneratePageContent() {
     };
   }, [result]);
 
+  const hasResult = Boolean(result?.recap);
+  useKeyboardShortcuts(
+    {
+      ArrowRight: () => {
+        if (loading || !result?.recap) return;
+        handleStepEpisode(
+          nextEpisodeInfo?.season || result.recap.season,
+          nextEpisodeInfo?.episode || Number(result.recap.episode) + 1
+        );
+      },
+      ArrowLeft: () => {
+        if (loading || !result?.recap) return;
+        if (Number(result.recap.season) <= 1 && Number(result.recap.episode) <= 1) return;
+        handleStepEpisode(result.recap.season, Math.max(1, Number(result.recap.episode) - 1));
+      },
+      b: () => {
+        setActiveTab('recap');
+        setInitialRecapView((v) => (v === 'storybook' ? 'cumulative' : 'storybook'));
+      }
+    },
+    hasResult
+  );
+
+  // Shareable link back into this exact generated guide (the /[slug] page may not exist yet on
+  // another serverless instance, so deep links point at /generate which can rebuild it).
+  const shareBasePath = useMemo(() => {
+    if (!result?.show) return '/generate';
+    const params = new URLSearchParams({
+      title: result.show.title,
+      type: result.show.type || type,
+      season: String(result.recap?.season || 1),
+      episode: String(result.recap?.episode || 1),
+      mode: 'book'
+    });
+    return `/generate?${params.toString()}`;
+  }, [result, type]);
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+      {/* Breadcrumb */}
+      <nav aria-label="Breadcrumb" className="-mb-6">
+        <ol className="flex flex-wrap items-center gap-2 text-xs font-mono text-slate-400">
+          <li>
+            <Link href="/" className="hover:text-white transition">
+              Home
+            </Link>
+          </li>
+          <li aria-hidden="true">
+            <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+          </li>
+          <li className={result ? '' : 'text-rose-400 font-semibold'} aria-current={result ? undefined : 'page'}>
+            Story Guide
+          </li>
+          {result?.show && (
+            <>
+              <li aria-hidden="true">
+                <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+              </li>
+              <li className="text-rose-400 font-semibold" aria-current="page">
+                {result.show.title}
+              </li>
+            </>
+          )}
+        </ol>
+      </nav>
+
       {/* Header */}
       <div className="text-center space-y-4 max-w-3xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-mono font-bold">
@@ -514,7 +580,10 @@ function GeneratePageContent() {
                 season={result.recap.season}
                 episode={result.recap.episode}
                 showTitle={result.show.title}
-                initialView={initialRecapView}
+                slug={result.slug || result.show.slug}
+                shareBasePath={shareBasePath}
+                view={initialRecapView}
+                onViewChange={setInitialRecapView}
                 nextEpisodeData={nextEpisodeInfo}
                 onStepEpisode={handleStepEpisode}
               />

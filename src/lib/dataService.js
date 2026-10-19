@@ -117,7 +117,7 @@ function getLocalShowData(slug) {
   return null;
 }
 
-export async function saveDynamicShow(show) {
+export async function saveDynamicShow(show, characters = null) {
   if (clientPromise) {
     try {
       const client = await clientPromise;
@@ -127,6 +127,17 @@ export async function saveDynamicShow(show) {
         { $set: show },
         { upsert: true }
       );
+      if (Array.isArray(characters) && characters.length > 0) {
+        await db.collection('characters').bulkWrite(
+          characters.map((c) => ({
+            updateOne: {
+              filter: { showSlug: show.slug, id: c.id },
+              update: { $set: { ...c, showSlug: show.slug } },
+              upsert: true
+            }
+          }))
+        );
+      }
     } catch (err) {
       console.warn('MongoDB saveDynamicShow failed, saving locally:', err.message);
     }
@@ -136,6 +147,9 @@ export async function saveDynamicShow(show) {
     const genData = readGeneratedCache();
     genData[show.slug] = genData[show.slug] || { show, characters: [], recaps: [] };
     genData[show.slug].show = show;
+    if (Array.isArray(characters) && characters.length > 0) {
+      genData[show.slug].characters = characters;
+    }
     writeGeneratedCache(genData);
   } catch (err) {
     console.error('Failed saving generated show:', err);

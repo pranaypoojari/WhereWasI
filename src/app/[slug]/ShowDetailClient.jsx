@@ -1,5 +1,5 @@
 'use client';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import EpisodeSlider from '@/components/EpisodeSlider';
@@ -12,8 +12,11 @@ import SpotlightCard from '@/components/reactbits/SpotlightCard';
 import {
   computeCharacterStatuses,
   computeRelationships,
+  filterRelationshipsByEpisode,
   getRecapForEpisode
 } from '@/lib/timelineUtils';
+import { formatEpisodeCode } from '@/lib/storyBookUtils';
+import useKeyboardShortcuts from '@/lib/useKeyboardShortcuts';
 
 import {
   BookOpen,
@@ -26,17 +29,26 @@ import {
   ShieldCheck,
   ChevronRight,
   Library,
-  Loader2
+  Loader2,
+  Keyboard
 } from 'lucide-react';
 
-export default function ShowDetailClient({ initialData }) {
-  const { show, characters, recaps: initialRecaps = [] } = initialData;
+export default function ShowDetailClient({
+  initialData,
+  initialSeason = 1,
+  initialEpisode = 1,
+  initialMode = 'cumulative'
+}) {
+  const { show, characters = [], recaps: initialRecaps = [] } = initialData;
 
-  const [currentSeason, setCurrentSeason] = useState(1);
-  const [currentEpisode, setCurrentEpisode] = useState(1);
+  const [currentSeason, setCurrentSeason] = useState(initialSeason);
+  const [currentEpisode, setCurrentEpisode] = useState(initialEpisode);
 
   const [activeTab, setActiveTab] = useState('recap'); // 'recap', 'characters', 'web', 'quotes'
-  const [recapViewMode, setRecapViewMode] = useState('cumulative'); // 'cumulative' | 'gist' | 'storybook'
+  const [recapViewMode, setRecapViewMode] = useState(initialMode); // 'cumulative' | 'gist' | 'storybook'
+  // Live-generated shows may have been cached without characters; the API response fills them in.
+  const [characterSource, setCharacterSource] = useState(characters);
+  const attemptedFetchKeys = useRef(new Set());
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [posterError, setPosterError] = useState(false);
 
@@ -64,7 +76,13 @@ export default function ShowDetailClient({ initialData }) {
         ep.summary.length > 20
     );
 
-    if (hasExactRecap || catalogEp) return;
+    const needsCharacters = characterSource.length === 0;
+    if ((hasExactRecap || catalogEp) && !needsCharacters) return;
+
+    // Never re-request the same checkpoint (the API clamps e.g. movie acts, which would loop forever).
+    const fetchKey = `${currentSeason}:${currentEpisode}`;
+    if (attemptedFetchKeys.current.has(fetchKey)) return;
+    attemptedFetchKeys.current.add(fetchKey);
 
     let isCancelled = false;
     async function fetchLiveEpisodeRecap() {
@@ -85,6 +103,9 @@ export default function ShowDetailClient({ initialData }) {
         if (data.success && !isCancelled) {
           if (data.show?.episodes?.length > 0) {
             setLiveEpisodeCatalog(data.show.episodes);
+          }
+          if (Array.isArray(data.characters) && data.characters.length > 0) {
+            setCharacterSource((prev) => (prev.length > 0 ? prev : data.characters));
           }
           if (data.recap?.storyBook) {
             setGlobalStoryBook(data.recap.storyBook);
@@ -113,7 +134,7 @@ export default function ShowDetailClient({ initialData }) {
     return () => {
       isCancelled = true;
     };
-  }, [currentSeason, currentEpisode, show.title, show.type, dynamicRecaps, liveEpisodeCatalog]);
+  }, [currentSeason, currentEpisode, show.title, show.type, dynamicRecaps, liveEpisodeCatalog, characterSource]);
 
   // Compute live state derived from slider (never repeats the same sentence across different episodes!)
   const liveRecap = useMemo(() => {
@@ -196,11 +217,15 @@ export default function ShowDetailClient({ initialData }) {
   }, [dynamicRecaps, liveEpisodeCatalog, currentSeason, currentEpisode, globalStoryBook]);
 
   const liveCharacters = useMemo(() => {
-    return computeCharacterStatuses(characters, currentSeason, currentEpisode);
-  }, [characters, currentSeason, currentEpisode]);
+    return computeCharacterStatuses(characterSource, currentSeason, currentEpisode);
+  }, [characterSource, currentSeason, currentEpisode]);
 
   const liveRelationships = useMemo(() => {
-    return computeRelationships(dynamicRecaps, currentSeason, currentEpisode);
+    return filterRelationshipsByEpisode(
+      computeRelationships(dynamicRecaps, currentSeason, currentEpisode),
+      currentSeason,
+      currentEpisode
+    );
   }, [dynamicRecaps, currentSeason, currentEpisode]);
 
   // Next episode calculation for CTA
@@ -217,10 +242,53 @@ export default function ShowDetailClient({ initialData }) {
     return null;
   }, [liveEpisodeCatalog, show.episodes, currentSeason, currentEpisode]);
 
-  const handleSliderChange = (season, episode) => {
-    setCurrentSeason(season);
-    setCurrentEpisode(episode);
-  };
+  const episodeList = liveEpisodeCatalog.length > 0 ? liveEpisodeCatalog : show.episodes || [];
+
+  const handleSliderChange = useCallback((season, episode) => {
+    setCurrentSeason(Number(season) || 1);
+    setCurrentEpisode(Number(episode) || 1);
+  }, []);
+
+  const stepEpisode = useCallback(
+    (direction) => {
+      const idx = episodeList.findIndex(
+        (ep) => Number(ep.season) === Number(currentSeason) && Number(ep.episode) === Number(currentEpisode)
+      );
+      const target = idx >= 0 ? episodeList[idx + direction] : null;
+      if (target) {
+        handleSliderChange(target.season, target.episode);
+      } else if (direction > 0) {
+        handleSliderChange(currentSeason, Number(currentEpisode) + 1);
+      } else if (Number(currentEpisode) > 1) {
+        handleSliderChange(currentSeason, Number(currentEpisode) - 1);
+      }
+    },
+    [episodeList, currentSeason, currentEpisode, handleSliderChange]
+  );
+
+  useKeyboardShortcuts({
+    ArrowRight: () => stepEpisode(1),
+    ArrowLeft: () => stepEpisode(-1),
+    b: () => {
+      setActiveTab('recap');
+      setRecapViewMode((v) => (v === 'storybook' ? 'cumulative' : 'storybook'));
+    }
+  });
+
+  // Keep the address bar shareable (?s=2&e=10&mode=book) without adding history entries.
+  const lastSynced = useRef(`${initialSeason}:${initialEpisode}:${initialMode}`);
+  useEffect(() => {
+    const key = `${currentSeason}:${currentEpisode}:${recapViewMode}`;
+    if (key === lastSynced.current) return;
+    lastSynced.current = key;
+    const params = new URLSearchParams(window.location.search);
+    params.set('s', String(currentSeason));
+    params.set('e', String(currentEpisode));
+    if (recapViewMode === 'storybook') params.set('mode', 'book');
+    else params.delete('mode');
+    const hash = recapViewMode === 'storybook' ? window.location.hash : '';
+    window.history.replaceState(window.history.state, '', `${window.location.pathname}?${params.toString()}${hash}`);
+  }, [currentSeason, currentEpisode, recapViewMode]);
 
   const tabs = [
     { id: 'recap', label: 'Story Recap & Book Mode', icon: BookOpen },
@@ -242,17 +310,45 @@ export default function ShowDetailClient({ initialData }) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
-        <Link href="/" className="hover:text-white transition">
-          Home
-        </Link>
-        <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
-        <Link href="/browse" className="hover:text-white transition">
-          Shows
-        </Link>
-        <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
-        <span className="text-rose-400 font-semibold">{show.title}</span>
-      </div>
+      <nav aria-label="Breadcrumb" className="flex flex-wrap items-center justify-between gap-3">
+        <ol className="flex flex-wrap items-center gap-2 text-xs font-mono text-slate-400">
+          <li>
+            <Link href="/" className="hover:text-white transition">
+              Home
+            </Link>
+          </li>
+          <li aria-hidden="true">
+            <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+          </li>
+          <li>
+            <Link href="/browse" className="hover:text-white transition">
+              Shows
+            </Link>
+          </li>
+          <li aria-hidden="true">
+            <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+          </li>
+          <li>
+            <Link href={`/${show.slug}`} className="text-rose-400 font-semibold hover:text-rose-300 transition">
+              {show.title}
+            </Link>
+          </li>
+          <li aria-hidden="true">
+            <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+          </li>
+          <li aria-current="page" className="text-slate-200">
+            {recapViewMode === 'storybook' ? 'Story-Book' : formatEpisodeCode(currentSeason, currentEpisode)}
+          </li>
+        </ol>
+        <p className="hidden md:flex items-center gap-1.5 text-[11px] font-mono text-slate-500">
+          <Keyboard className="w-3.5 h-3.5" />
+          <kbd className="px-1.5 rounded bg-white/5 border border-white/10 text-slate-300">←</kbd>
+          <kbd className="px-1.5 rounded bg-white/5 border border-white/10 text-slate-300">→</kbd>
+          episodes
+          <kbd className="ml-2 px-1.5 rounded bg-white/5 border border-white/10 text-slate-300">B</kbd>
+          book mode
+        </p>
+      </nav>
 
       {/* Hero Show Header */}
       <SpotlightCard
@@ -373,7 +469,7 @@ export default function ShowDetailClient({ initialData }) {
       {/* THE HERO INTERACTION: Episode Slider */}
       <section className="space-y-4">
         <EpisodeSlider
-          episodes={liveEpisodeCatalog.length > 0 ? liveEpisodeCatalog : show.episodes || []}
+          episodes={episodeList}
           currentSeason={currentSeason}
           currentEpisode={currentEpisode}
           onChange={handleSliderChange}
@@ -432,7 +528,10 @@ export default function ShowDetailClient({ initialData }) {
                 episode={currentEpisode}
                 nextEpisodeData={nextEpisodeData}
                 showTitle={show.title}
-                initialView={recapViewMode}
+                slug={show.slug}
+                shareBasePath={`/${show.slug}?mode=book`}
+                view={recapViewMode}
+                onViewChange={setRecapViewMode}
                 onStepEpisode={handleSliderChange}
               />
               {liveRecap?.quotes && liveRecap.quotes.length > 0 && (

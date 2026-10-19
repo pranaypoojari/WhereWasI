@@ -3,43 +3,73 @@
  * No fs or database dependencies.
  */
 
+function isOnOrBefore(item, season, episode) {
+  const s = Number(item.season);
+  const e = Number(item.episode);
+  return s < season || (s === season && e <= episode);
+}
+
 /**
  * Returns character statuses accurately computed up to a given season and episode.
  * If a status entry occurred on or before (targetSeason, targetEpisode), the latest one wins.
+ *
+ * Spoiler shield rules:
+ * - Characters whose first timeline entry is AFTER the target point are hidden entirely
+ *   (their mere existence would be a spoiler).
+ * - `futureFate` holds the first later entry whose status differs from the current one.
+ *   The UI keeps it blurred until the user explicitly reveals it.
+ * - `hasTimeline` tells the UI whether this character has fate data at all, so the shield
+ *   can be shown for every tracked character (showing it only for those who change would leak).
  */
 export function computeCharacterStatuses(characters, season, episode) {
   if (!characters) return [];
+  const targetSeason = Number(season) || 1;
+  const targetEpisode = Number(episode) || 1;
 
-  return characters.map((char) => {
-    const relevantStatuses = (char.statusTimeline || []).filter((item) => {
-      if (item.season < season) return true;
-      if (item.season === season && item.episode <= episode) return true;
-      return false;
-    });
-
-    if (relevantStatuses.length === 0) {
-      return {
+  return characters
+    .map((char) => {
+      const timeline = Array.isArray(char.statusTimeline) ? char.statusTimeline : [];
+      const base = {
         id: char.id,
         name: char.name,
         aliases: char.aliases,
         role: char.role,
         avatar: char.avatar,
-        status: "alive",
-        note: "Initial introduction"
+        primer: char.primer || char.explanation || null,
+        hasTimeline: timeline.length > 0
       };
-    }
 
-    const latest = relevantStatuses[relevantStatuses.length - 1];
-    return {
-      id: char.id,
-      name: char.name,
-      aliases: char.aliases,
-      role: char.role,
-      avatar: char.avatar,
-      status: latest.status,
-      note: latest.note
-    };
-  });
+      if (timeline.length === 0) {
+        return {
+          ...base,
+          status: char.status || 'alive',
+          note: char.note || 'Initial introduction',
+          futureFate: null
+        };
+      }
+
+      const relevant = timeline.filter((item) => isOnOrBefore(item, targetSeason, targetEpisode));
+      if (relevant.length === 0) return null;
+
+      const latest = relevant[relevant.length - 1];
+      const future = timeline.filter((item) => !isOnOrBefore(item, targetSeason, targetEpisode));
+      const fateChange = future.find((item) => item.status !== latest.status) || null;
+
+      return {
+        ...base,
+        status: latest.status,
+        note: latest.note,
+        futureFate: fateChange
+          ? {
+              status: fateChange.status,
+              season: Number(fateChange.season),
+              episode: Number(fateChange.episode),
+              note: fateChange.note
+            }
+          : null
+      };
+    })
+    .filter(Boolean);
 }
 
 /**
@@ -63,6 +93,16 @@ export function computeRelationships(recaps, season, episode) {
 }
 
 /**
+ * Filters relationships that carry their own `since` marker ({ season, episode }).
+ * Relationships without a marker are always visible.
+ */
+export function filterRelationshipsByEpisode(relationships = [], season, episode) {
+  const targetSeason = Number(season) || 1;
+  const targetEpisode = Number(episode) || 1;
+  return relationships.filter((rel) => !rel.since || isOnOrBefore(rel.since, targetSeason, targetEpisode));
+}
+
+/**
  * Finds or interpolates cumulative recap for exact or nearest preceding episode boundary.
  */
 export function getRecapForEpisode(recaps, season, episode) {
@@ -81,5 +121,3 @@ export function getRecapForEpisode(recaps, season, episode) {
 
   return recaps[0];
 }
-
-

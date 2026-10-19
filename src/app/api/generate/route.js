@@ -4,14 +4,64 @@ import {
   saveDynamicShow,
   saveDynamicRecap
 } from '@/lib/dataService';
+import { computeCharacterStatuses, filterRelationshipsByEpisode } from '@/lib/timelineUtils';
+import { countWords, formatEpisodeCode, minutesForWords, normalizeStoryBook } from '@/lib/storyBookUtils';
 
+// Some hosts resolve AAAA records first and then hang on broken IPv6 routes to TVMaze/Jikan.
+// setDefaultResultOrder only exists on Node >= 16.4 / 17, so feature-detect before calling it.
 try {
-  dns.setDefaultResultOrder('ipv4first');
-} catch (e) {
-  // Ignore in environments where not supported
+  if (typeof dns.setDefaultResultOrder === 'function') {
+    dns.setDefaultResultOrder('ipv4first');
+  }
+} catch {
+  // Not supported in this runtime; default resolution order is fine.
 }
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+export const maxDuration = 30;
+
+const ALLOWED_TYPES = new Set(['tv', 'anime', 'movie', 'movie_franchise']);
+const MAX_TITLE_LENGTH = 120;
+const MIN_PREMISE_WORDS = 150;
+const DEFAULT_RUNTIME_MINUTES = { tv: 45, anime: 24, movie: 140, movie_franchise: 140 };
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * JSON fetch with a hard timeout and exponential backoff on 429 / 5xx (honours Retry-After).
+ * Returns null instead of throwing so every source in the cascade can fail independently.
+ */
+async function fetchJson(url, { headers = {}, timeoutMs = 8000, retries = 0, backoffMs = 800 } = {}) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const res = await fetch(url, { headers, signal: AbortSignal.timeout(timeoutMs) });
+      if (res.status === 429 || res.status >= 500) {
+        if (attempt < retries) {
+          const retryAfter = Number(res.headers.get('retry-after'));
+          const wait =
+            Number.isFinite(retryAfter) && retryAfter > 0
+              ? Math.min(retryAfter * 1000, 5000)
+              : backoffMs * 2 ** attempt;
+          await sleep(wait);
+          continue;
+        }
+        return null;
+      }
+      if (!res.ok) return null;
+      const text = (await res.text()).trim();
+      if (!text.startsWith('{') && !text.startsWith('[')) return null;
+      return JSON.parse(text);
+    } catch {
+      if (attempt < retries) {
+        await sleep(backoffMs * 2 ** attempt);
+        continue;
+      }
+      return null;
+    }
+  }
+  return null;
+}
 
 /**
  * Strip HTML tags from TVMaze / web summaries cleanly
@@ -33,23 +83,180 @@ function stripHtml(html = '') {
 }
 
 /**
- * Detect whether an episode is likely a filler / recap / clip-show episode
+ * Detect whether an episode is likely a filler / recap / clip-show episode.
+ * Titles are matched on single keywords; summaries only on unambiguous phrases, because words
+ * like "special" or "recap" appear in ordinary plot synopses ("a special agent arrives").
  */
-function isFillerEpisode(epTitle = '', epSummary = '') {
-  const combined = `${epTitle} ${epSummary}`.toLowerCase();
-  const fillerKeywords = [
-    'recap',
-    'clip show',
-    'special episode',
-    'behind the scenes',
-    'making of',
-    'side story',
-    'bonus episode',
-    'filler',
-    'omake',
-    'summary of'
+const FILLER_TITLE_PATTERNS = [
+  /\brecap\b/i,
+  /\bclip show\b/i,
+  /\bspecial\b/i,
+  /\bfiller\b/i,
+  /\bomake\b/i,
+  /\bcompilation\b/i,
+  /\bretrospective\b/i,
+  /\bbehind the scenes\b/i,
+  /\bmaking of\b/i,
+  /\bbonus episode\b/i
+];
+const FILLER_SUMMARY_PATTERNS = [
+  /\brecap (episode|special)\b/i,
+  /\bclip show\b/i,
+  /\bfiller (episode|arc|story)\b/i,
+  /\bnon-canon\b/i,
+  /\bside story\b/i,
+  /\blooks back (at|on) (the|previous|past)\b/i,
+  /\bbehind[- ]the[- ]scenes\b/i,
+  /\bmaking of\b/i,
+  /\bcompilation of (scenes|clips|footage|highlights)\b/i,
+  /\bsummar(y|ises|izes) (of )?the (story|events|series|season) so far\b/i
+];
+
+function isFillerEpisode(epTitle = '', epSummary = '', tvMazeType = '') {
+  if (tvMazeType === 'insignificant_special') return true;
+  return (
+    FILLER_TITLE_PATTERNS.some((re) => re.test(epTitle)) ||
+    FILLER_SUMMARY_PATTERNS.some((re) => re.test(epSummary))
+  );
+}
+
+function formatTimeSaved(minutes) {
+  if (minutes < 60) return `${Math.max(1, Math.round(minutes))} Minutes Saved`;
+  const hours = Math.round((minutes / 60) * 10) / 10;
+  return `${hours} Hours Saved`;
+}
+
+function splitParagraphs(text = '') {
+  return String(text)
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+}
+
+function splitSentences(text = '') {
+  return String(text).match(/[^.!?]+[.!?]+["'”’)]*|[^.!?]+$/g)?.map((x) => x.trim()).filter(Boolean) || [];
+}
+
+/**
+ * Guarantees the World Premise clears MIN_PREMISE_WORDS using only spoiler-safe sources
+ * (synopsis, article lead, MAL background), then factual metadata. Never pulls later plot sections.
+ */
+function ensureWorldPremise(premise, { officialTitle, type, platform, genres, totalSeasons, totalEpisodes, wikiIntro, jikanBackground, synopsis }) {
+  const parts = splitParagraphs(premise);
+  const seen = (text) => parts.some((p) => p.includes(text.slice(0, 80)) || text.includes(p.slice(0, 80)));
+  const wordTotal = () => countWords(parts.join(' '));
+
+  for (const candidate of [synopsis, wikiIntro, jikanBackground]) {
+    for (const para of splitParagraphs(candidate)) {
+      if (wordTotal() >= MIN_PREMISE_WORDS) break;
+      if (para.length > 60 && !seen(para)) parts.push(para);
+    }
+  }
+
+  if (wordTotal() < MIN_PREMISE_WORDS) {
+    const noun = type === 'anime' ? 'anime series' : type === 'movie' || type === 'movie_franchise' ? 'film' : 'series';
+    const genreText = genres?.length ? genres.slice(0, 3).join(', ').toLowerCase() : 'drama';
+    const scope =
+      type === 'movie' || type === 'movie_franchise'
+        ? 'told across three acts'
+        : `spanning ${totalSeasons} season${totalSeasons === 1 ? '' : 's'} and ${totalEpisodes} episodes`;
+    parts.push(
+      `${officialTitle} is a ${genreText} ${noun} ${scope}, available on ${platform}. ` +
+        `The story is driven by its central characters, the goals that put them on a collision course, and the ` +
+        `consequences of every alliance and betrayal along the way. If you are new to it, start with the Who's Who ` +
+        `guide below: it explains each major character's role and motivation in plain language, so names and ` +
+        `relationships make sense from the very first chapter.`
+    );
+  }
+
+  if (wordTotal() < MIN_PREMISE_WORDS) {
+    parts.push(
+      `Everything on this page is locked to the checkpoint you choose. The recap, the character status board and ` +
+        `the relationship web only reflect events up to that episode, and any later fates stay hidden behind an ` +
+        `explicit spoiler warning. Move the checkpoint forward one episode at a time, or switch to the Story-Book ` +
+        `to read the whole canon storyline as a novel with filler episodes removed.`
+    );
+  }
+
+  return parts.join('\n\n');
+}
+
+/**
+ * Guarantees the episode gist has at least two paragraphs by appending spoiler-safe context.
+ */
+function ensureMinParagraphs(text, extras = [], min = 2) {
+  const parts = splitParagraphs(text);
+  for (const extra of extras) {
+    if (parts.length >= min) break;
+    const clean = (extra || '').trim();
+    if (clean && !parts.some((p) => p.includes(clean.slice(0, 80)))) parts.push(clean);
+  }
+  return parts.join('\n\n');
+}
+
+const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+
+/**
+ * Guarantees at least two chapters, splitting a single long chapter at a paragraph or
+ * sentence boundary so every Story-Book has a beginning and an end.
+ */
+function ensureMinChapters(chapters, { isMovie }) {
+  if (chapters.length >= 2) return chapters;
+  const only = chapters[0];
+  if (!only) return chapters;
+
+  let first = only.paragraphs;
+  let second = [];
+  if (only.paragraphs.length >= 2) {
+    const mid = Math.ceil(only.paragraphs.length / 2);
+    first = only.paragraphs.slice(0, mid);
+    second = only.paragraphs.slice(mid);
+  } else {
+    const sentences = splitSentences(only.paragraphs[0] || '');
+    if (sentences.length < 2) return chapters;
+    const mid = Math.ceil(sentences.length / 2);
+    first = [sentences.slice(0, mid).join(' ')];
+    second = [sentences.slice(mid).join(' ')];
+  }
+
+  const labels = isMovie ? ['Act 1 of 2', 'Act 2 of 2'] : ['First half', 'Second half'];
+  return [
+    {
+      ...only,
+      chapterNumber: 1,
+      roman: 'I',
+      title: 'Chapter I: The World Setup, Core Rules & Inciting Incident',
+      episodesCovered: only.episodesCovered && !isMovie ? `${only.episodesCovered} (${labels[0]})` : labels[0],
+      paragraphs: first,
+      keyTakeaway: splitSentences(first[first.length - 1]).slice(-1)[0] || only.keyTakeaway
+    },
+    {
+      ...only,
+      chapterNumber: 2,
+      roman: 'II',
+      title: 'Chapter II: Turning Points & The Road to the Climax',
+      episodesCovered: only.episodesCovered && !isMovie ? `${only.episodesCovered} (${labels[1]})` : labels[1],
+      paragraphs: second,
+      keyTakeaway: only.keyTakeaway
+    }
   ];
-  return fillerKeywords.some((kw) => combined.includes(kw));
+}
+
+/**
+ * Picks the best avatar for a curated character by name instead of list position
+ * (Jikan / TVMaze order rarely matches the primer order, which mismatched faces).
+ */
+function matchAvatarByName(primerName, candidates = []) {
+  const parts = primerName
+    .replace(/["“”]/g, '')
+    .split(/[()&]/)
+    .map((p) => p.trim().toLowerCase())
+    .filter(Boolean);
+  const hit = candidates.find((c) => {
+    const n = (c.name || '').toLowerCase();
+    return n && parts.some((p) => n === p || n.startsWith(`${p} `));
+  });
+  return hit?.avatar || '';
 }
 
 /**
@@ -97,6 +304,44 @@ const DEEP_SHOW_ENCYCLOPEDIA = {
         explanation:
           'Two young geniuses raised at Wammy’s House (an orphanage for prodigies founded by L’s handler Watari) who step forward in the second half of the saga to finish L’s war against Kira.'
       }
+    ],
+    // Status changes keyed by primer name. Only entries on/before the user's checkpoint are shown;
+    // the first later change is the blurred "future fate" behind the spoiler shield.
+    fateTimelines: {
+      'Light Yagami ("Kira")': [
+        { season: 1, episode: 1, status: 'alive', note: 'Finds the Death Note and begins executing criminals worldwide as "Kira".' },
+        { season: 1, episode: 26, status: 'alive', note: 'Operates as both Kira and the new "L" at the head of the Task Force.' },
+        { season: 1, episode: 37, status: 'dead', note: 'Exposed at the Yellow Box Warehouse; Ryuk writes his name in his own Death Note.' }
+      ],
+      'L (L Lawliet)': [
+        { season: 1, episode: 1, status: 'alive', note: 'The faceless detective Interpol turns to once the Kira killings begin.' },
+        { season: 1, episode: 2, status: 'alive', note: 'Pins Kira to the Kanto region with the Lind L. Tailor broadcast trap.' },
+        { season: 1, episode: 25, status: 'dead', note: 'Dies of a heart attack after Rem writes his true name to protect Misa.' }
+      ],
+      Ryuk: [
+        { season: 1, episode: 1, status: 'alive', note: 'Drops his spare Death Note into the human world purely out of boredom.' }
+      ],
+      'Soichiro Yagami': [
+        { season: 1, episode: 1, status: 'alive', note: 'Leads the police investigation into the Kira killings.' },
+        { season: 1, episode: 29, status: 'dead', note: "Dies from wounds suffered in the raid on Mello's hideout." }
+      ],
+      'Misa Amane ("The Second Kira")': [
+        { season: 1, episode: 11, status: 'alive', note: 'Sends the "Second Kira" videotapes to Sakura TV.' },
+        { season: 1, episode: 13, status: 'alive', note: 'Tracks Light down and pledges herself to Kira.' }
+      ],
+      'Near & Mello': [
+        { season: 1, episode: 26, status: 'alive', note: "Wammy's House prodigies who step forward to finish L's case." },
+        { season: 1, episode: 35, status: 'alive', note: 'Mello dies after kidnapping Kiyomi Takada; Near carries the case alone.' }
+      ]
+    },
+    relationships: [
+      { from: 'Light Yagami ("Kira")', to: 'L (L Lawliet)', type: 'enemy', label: 'Rival • Hunter vs. Hunted', since: { season: 1, episode: 2 } },
+      { from: 'Light Yagami ("Kira")', to: 'Ryuk', type: 'ally', label: 'Notebook owner & Shinigami', since: { season: 1, episode: 1 } },
+      { from: 'Light Yagami ("Kira")', to: 'Soichiro Yagami', type: 'family', label: 'Father & son', since: { season: 1, episode: 1 } },
+      { from: 'Light Yagami ("Kira")', to: 'Misa Amane ("The Second Kira")', type: 'ally', label: 'Ally / Pawn', since: { season: 1, episode: 13 } },
+      { from: 'L (L Lawliet)', to: 'Soichiro Yagami', type: 'ally', label: 'Kira Task Force', since: { season: 1, episode: 2 } },
+      { from: 'Near & Mello', to: 'L (L Lawliet)', type: 'ally', label: "L's chosen successors", since: { season: 1, episode: 26 } },
+      { from: 'Near & Mello', to: 'Light Yagami ("Kira")', type: 'enemy', label: 'Closing in on Kira', since: { season: 1, episode: 26 } }
     ],
     deepEpisodeExpansions: {
       1: 'In Episode 1 ("Rebirth"), brilliant high school senior Light Yagami stares out his classroom window and sees a black notebook titled "Death Note" fall from the sky into the school courtyard. Taking it home, he reads the English instructions inside: "The human whose name is written in this note shall die." Assuming it is a prank, he tests it on a hostage-taker shown on live TV (Kurou Otoharada)—and watches in shock as the criminal dies of a heart attack 40 seconds later. Five days later, the Death God Ryuk appears in Light’s bedroom, revealing that Light now owns the notebook and that within those five days, Light has already filled pages with the names of hundreds of hardened criminals, vowing to become the "God of a New World."',
@@ -184,17 +429,7 @@ const WIKI_HEADERS = {
   'User-Agent': 'WhereWasI/1.0 (https://wherewasi.vercel.app; contact: 159417361+pranaypoojari@users.noreply.github.com)'
 };
 
-async function safeJsonFetch(url) {
-  try {
-    const res = await fetch(url, { headers: WIKI_HEADERS });
-    if (!res.ok) return null;
-    const text = await res.text();
-    if (!text.trim().startsWith('{') && !text.trim().startsWith('[')) return null;
-    return JSON.parse(text);
-  } catch {
-    return null;
-  }
-}
+const safeJsonFetch = (url) => fetchJson(url, { headers: WIKI_HEADERS, retries: 1 });
 
 /**
  * Fetch full Wikipedia article plain text & extract Plot / Synopsis / Overview sections
@@ -206,7 +441,8 @@ async function fetchWikipediaPlotAndInfo(title, type) {
     plotParagraphs: [],
     characterParagraphs: [],
     episodeMap: {}, // key: overallEpisodeNumber or "S1E1" -> detailed episode paragraph
-    castLines: []
+    castLines: [],
+    imageUrl: ''
   };
 
   try {
@@ -254,7 +490,7 @@ async function fetchWikipediaPlotAndInfo(title, type) {
     const cleanBaseTitle = bestPageTitle.replace(/\s*\([^)]*\)\s*$/, '');
     const epListTitle = `List of ${cleanBaseTitle} episodes`;
 
-    const [eData, epData] = await Promise.all([
+    const [eData, epData, summaryData] = await Promise.all([
       safeJsonFetch(
         `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&titles=${encodeURIComponent(
           bestPageTitle
@@ -266,8 +502,16 @@ async function fetchWikipediaPlotAndInfo(title, type) {
               epListTitle
             )}&redirects=1&format=json`
           )
-        : Promise.resolve(null)
+        : Promise.resolve(null),
+      // REST summary: lead image (used as the movie poster, since TVMaze has no films) + short extract
+      safeJsonFetch(
+        `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(
+          bestPageTitle.replace(/ /g, '_')
+        )}`
+      )
     ]);
+
+    result.imageUrl = summaryData?.originalimage?.source || summaryData?.thumbnail?.source || '';
 
     if (eData) {
       const pages = eData?.query?.pages || {};
@@ -341,20 +585,10 @@ async function fetchWikipediaPlotAndInfo(title, type) {
       }
     }
 
-    // Fallback: If Wikipedia action query returned 0 plot paragraphs, query Wikipedia REST summary API
-    if (result.plotParagraphs.length === 0) {
-      try {
-        const restUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(
-          bestPageTitle || title
-        )}`;
-        const rData = await safeJsonFetch(restUrl);
-        if (rData && rData.extract && rData.extract.length > 50) {
-          result.intro = rData.extract;
-          result.plotParagraphs = [rData.extract];
-        }
-      } catch (restErr) {
-        // graceful ignore
-      }
+    // Fallback: if the action API returned no plot paragraphs, use the REST summary extract
+    if (result.plotParagraphs.length === 0 && summaryData?.extract && summaryData.extract.length > 50) {
+      result.intro = result.intro || summaryData.extract;
+      result.plotParagraphs = [summaryData.extract];
     }
   } catch (err) {
     console.warn('Wikipedia fetch warning:', err.message);
@@ -367,53 +601,36 @@ async function fetchWikipediaPlotAndInfo(title, type) {
  * Fetch TVMaze show + all embedded episodes + cast in a single zero-key request
  */
 async function fetchTVMazeShowAndEpisodes(title) {
-  try {
-    const url = `https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(
-      title
-    )}&embed[]=episodes&embed[]=cast`;
-    const res = await fetch(url, {
-      headers: { 'User-Agent': 'WhereWasI-StoryEngine/3.0' }
-    });
-    if (!res.ok) return null;
-    return await res.json();
-  } catch {
-    return null;
-  }
+  const url = `https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(
+    title
+  )}&embed[]=episodes&embed[]=cast`;
+  // TVMaze allows ~20 calls / 10s per IP and answers 429 beyond that.
+  return fetchJson(url, { headers: { 'User-Agent': 'WhereWasI-StoryEngine/3.0' }, retries: 2 });
 }
 
 /**
- * Fetch Jikan / MyAnimeList metadata + top characters
+ * Fetch Jikan / MyAnimeList metadata + top characters.
+ * Jikan is limited to 3 req/s and 60 req/min, so both calls retry with backoff on 429.
  */
 async function fetchJikanAnimeData(title) {
-  try {
-    const url = `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(title)}&limit=1`;
-    const res = await fetch(url);
-    if (!res.ok) return null;
-    const data = await res.json();
-    const anime = data?.data?.[0];
-    if (!anime) return null;
+  const jikanOpts = { retries: 2, backoffMs: 1000, timeoutMs: 9000 };
+  const data = await fetchJson(
+    `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(title)}&limit=1`,
+    jikanOpts
+  );
+  const anime = data?.data?.[0];
+  if (!anime) return null;
 
-    let chars = [];
-    try {
-      const charRes = await fetch(
-        `https://api.jikan.moe/v4/anime/${anime.mal_id}/characters`
-      );
-      if (charRes.ok) {
-        const charJson = await charRes.json();
-        chars = (charJson?.data || []).slice(0, 6).map((c) => ({
-          name: c.character?.name ? c.character.name.split(', ').reverse().join(' ') : '',
-          role: c.role || 'Main Character',
-          avatar: c.character?.images?.jpg?.image_url || ''
-        }));
-      }
-    } catch {
-      // ignore
-    }
+  // Space the second call out so it doesn't trip the per-second limit right away.
+  await sleep(350);
+  const charJson = await fetchJson(`https://api.jikan.moe/v4/anime/${anime.mal_id}/characters`, jikanOpts);
+  const chars = (charJson?.data || []).slice(0, 12).map((c) => ({
+    name: c.character?.name ? c.character.name.split(', ').reverse().join(' ') : '',
+    role: c.role || 'Main Character',
+    avatar: c.character?.images?.jpg?.image_url || ''
+  }));
 
-    return { ...anime, charactersList: chars };
-  } catch {
-    return null;
-  }
+  return { ...anime, charactersList: chars };
 }
 
 /**
@@ -480,27 +697,44 @@ function buildCompleteStoryBook({
   const curated = DEEP_SHOW_ENCYCLOPEDIA[slug];
 
   const totalEpCount = episodesWithSummaries.length;
+  const fillerEpisodes = episodesWithSummaries.filter((ep) => ep.isFiller);
   const canonEpisodes = episodesWithSummaries.filter(
-    (ep) => !isFillerEpisode(ep.title, ep.summary) && ep.summary && ep.summary.length > 20
+    (ep) => !ep.isFiller && ep.summary && ep.summary.length > 20
   );
-  const fillersRemoved = Math.max(
-    2,
-    totalEpCount - canonEpisodes.length + Math.floor(totalEpCount * 0.08)
-  );
+  const fillersRemoved = fillerEpisodes.length;
 
-  // If we have a curated deep novel breakdown (e.g. Death Note), use its 5 rich chapters!
-  if (curated && curated.bookChapters) {
+  // Real watch time from per-episode runtimes; movies fall back to a typical feature length.
+  const fallbackRuntime = DEFAULT_RUNTIME_MINUTES[type] || 45;
+  const watchMinutes = isMovie
+    ? fallbackRuntime
+    : episodesWithSummaries.reduce((sum, ep) => sum + (Number(ep.runtime) || fallbackRuntime), 0) ||
+      12 * fallbackRuntime;
+
+  const finalize = (book) => {
+    const chapters = ensureMinChapters(book.chapters, { isMovie });
+    const normalized = normalizeStoryBook({ ...book, chapters, readingTimeMinutes: undefined });
+    const readingMinutes = minutesForWords(normalized.totalWords);
     return {
+      ...book,
+      chapters,
+      readingTimeMinutes: readingMinutes,
+      watchMinutes,
+      watchTimeSaved: formatTimeSaved(Math.max(0, watchMinutes - readingMinutes)),
+      fillersRemovedCount: fillersRemoved,
+      fillerEpisodes: fillerEpisodes.map((ep) => formatEpisodeCode(ep.season, ep.episode))
+    };
+  };
+
+  // If we have a curated deep novel breakdown (e.g. Death Note), use its rich chapters
+  if (curated && curated.bookChapters) {
+    return finalize({
       title: `${title} — Complete Start-to-End Story-Book`,
       subtitle: `Read the entire saga from Episode 1 to the Finale like a novel — including full explanations of the rules, Light vs. L, and the true ending`,
-      readingTimeMinutes: 8,
-      watchTimeSaved: `15+ Hours Saved`,
-      fillersRemovedCount: fillersRemoved,
-      totalCanonEpisodes: canonEpisodes.length || 37,
+      totalCanonEpisodes: canonEpisodes.length || totalEpCount,
       characterGuide,
       chapters: curated.bookChapters,
       endingExplained: curated.endingExplained
-    };
+    });
   }
 
   // Otherwise, combine ALL rich paragraphs (Wikipedia Plot + Jikan Synopsis + Canon Episode Blocks)
@@ -513,7 +747,7 @@ function buildCompleteStoryBook({
   }
 
   const Chapters = [];
-  const chapterRomana = ['I', 'II', 'III', 'IV', 'V'];
+  const chapterRomana = ROMAN;
   const chapterArcTitles = [
     'The World Setup, Core Rules & Inciting Incident',
     'Rising Alliances, Rivals & Escalation',
@@ -627,27 +861,26 @@ function buildCompleteStoryBook({
     );
   }
 
-  const totalMinutes = isMovie ? 145 : Math.max(totalEpCount, 12) * 26;
-  const hoursSaved = Math.max(2.5, Math.round((totalMinutes / 60) * 10) / 10);
   const lastChapter = Chapters[Chapters.length - 1];
-  const endingParagraph =
-    combinedRichPlot[combinedRichPlot.length - 1] ||
-    lastChapter?.paragraphs?.[lastChapter.paragraphs.length - 1] ||
-    synopsis;
+  const lastParagraph = lastChapter?.paragraphs?.[lastChapter.paragraphs.length - 1];
+  let endingCandidate = combinedRichPlot[combinedRichPlot.length - 1] || lastParagraph || synopsis;
+  let endingParagraph = endingCandidate;
+  if (!endingParagraph || endingParagraph === lastParagraph) {
+    endingParagraph = `In the final resolution of ${title}, the overarching conflicts reach their definitive climax as the surviving characters confront the long-term consequences of their choices, bringing the canon narrative to its conclusion.`;
+  }
 
-  return {
+  return finalize({
     title: `${title} — Complete Start-to-End Story-Book`,
     subtitle: isMovie
-      ? `Read the entire film from opening scene to final twist like a detailed novel (Skip the 3-hour runtime)`
-      : `Every canon storyline, character explanation, and ending from Episode 1 to the Finale — ${fillersRemoved} filler/detour segments stripped out`,
-    readingTimeMinutes: Math.max(5, Chapters.length * 2),
-    watchTimeSaved: `${hoursSaved} Hours Saved`,
-    fillersRemovedCount: fillersRemoved,
+      ? `Read the entire film from opening scene to final twist like a detailed novel`
+      : fillersRemoved > 0
+      ? `Every canon storyline, character explanation, and ending from Episode 1 to the Finale — ${fillersRemoved} filler/recap episode${fillersRemoved === 1 ? '' : 's'} stripped out`
+      : `Every canon storyline, character explanation, and ending from Episode 1 to the Finale`,
     totalCanonEpisodes: canonEpisodes.length || totalEpCount || 1,
     characterGuide,
     chapters: Chapters,
     endingExplained: endingParagraph
-  };
+  });
 }
 
 /**
@@ -694,6 +927,7 @@ async function fetchLivePublicShowEngine(title, type, rawSeason, rawEpisode) {
     tvMazeData?.image?.original ||
     tvMazeData?.image?.medium ||
     jikanData?.images?.jpg?.large_image_url ||
+    wikiData.imageUrl ||
     'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80';
 
   const curated = DEEP_SHOW_ENCYCLOPEDIA[slug];
@@ -705,22 +939,27 @@ async function fetchLivePublicShowEngine(title, type, rawSeason, rawEpisode) {
     wikiData.intro ||
     `Complete zero-spoiler timeline and full start-to-end story-book for ${officialTitle}.`;
 
-  // Extract Real Cast & Characters first so we can include them in the Newcomer Character Primer
+  // Extract Real Cast & Characters first so we can include them in the Newcomer Character Primer.
+  // `characters` is the raw form (with statusTimeline where curated) that gets persisted;
+  // `characterStatuses` is the spoiler-safe view computed for the requested checkpoint.
   const rawCast = tvMazeData?._embedded?.cast || [];
-  let characterStatuses = [];
+  const checkpointCode = formatEpisodeCode(targetSeason, targetEpisode);
+  let characters = [];
 
   if (curated?.characterPrimer) {
-    characterStatuses = curated.characterPrimer.map((cp, idx) => ({
+    const avatarCandidates = [
+      ...(jikanData?.charactersList || []),
+      ...rawCast.map((c) => ({ name: c.character?.name, avatar: c.character?.image?.medium || '' }))
+    ];
+    characters = curated.characterPrimer.map((cp, idx) => ({
       id: `char-curated-${idx}`,
       name: cp.name,
       role: cp.role,
+      primer: cp.explanation,
       status: 'alive',
       note: cp.explanation,
-      avatar:
-        jikanData?.charactersList?.[idx]?.avatar ||
-        rawCast[idx]?.character?.image?.medium ||
-        rawCast[idx]?.person?.image?.medium ||
-        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'
+      statusTimeline: curated.fateTimelines?.[cp.name] || [],
+      avatar: matchAvatarByName(cp.name, avatarCandidates)
     }));
   } else if (rawCast.length > 0) {
     const seenNames = new Set();
@@ -728,64 +967,52 @@ async function fetchLivePublicShowEngine(title, type, rawSeason, rawEpisode) {
       const charName = c.character?.name || c.person?.name;
       if (!charName || seenNames.has(charName)) continue;
       seenNames.add(charName);
-      characterStatuses.push({
+      characters.push({
         id: `char-${seenNames.size}`,
         name: charName,
         role: c.person?.name ? `Portrayed by ${c.person.name}` : 'Main Cast',
         status: 'alive',
         note:
           wikiData.characterParagraphs[seenNames.size - 1] ||
-          `Key character active in the storyline through S${String(targetSeason).padStart(
-            2,
-            '0'
-          )}E${String(targetEpisode).padStart(2, '0')}`,
-        avatar:
-          c.character?.image?.medium ||
-          c.person?.image?.medium ||
-          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'
+          `Key character active in the storyline through ${checkpointCode}`,
+        avatar: c.character?.image?.medium || c.person?.image?.medium || ''
       });
-      if (characterStatuses.length >= 8) break;
+      if (characters.length >= 8) break;
     }
   } else if (jikanData?.charactersList?.length > 0) {
-    characterStatuses = jikanData.charactersList.map((c, idx) => ({
+    characters = jikanData.charactersList.slice(0, 8).map((c, idx) => ({
       id: `char-jikan-${idx}`,
       name: c.name,
       role: c.role,
       status: 'alive',
       note:
-        wikiData.characterParagraphs[idx] ||
-        `Central character in ${officialTitle} through S${String(targetSeason).padStart(
-          2,
-          '0'
-        )}E${String(targetEpisode).padStart(2, '0')}`,
-      avatar:
-        c.avatar ||
-        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'
+        wikiData.characterParagraphs[idx] || `Central character in ${officialTitle} through ${checkpointCode}`,
+      avatar: c.avatar || ''
     }));
   }
 
-  if (characterStatuses.length === 0) {
-    characterStatuses = [
+  if (characters.length === 0) {
+    characters = [
       {
         id: 'char-1',
         name: `${officialTitle} Lead`,
         role: 'Central Protagonist',
         status: 'alive',
-        note: `Driving the core story arc through S${targetSeason}E${targetEpisode}`,
-        avatar:
-          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'
+        note: `Driving the core story arc through ${checkpointCode}`,
+        avatar: ''
       },
       {
         id: 'char-2',
         name: 'Primary Rival / Antagonist',
         role: 'Opposing Force',
         status: 'alive',
-        note: `Challenging the protagonist through S${targetSeason}E${targetEpisode}`,
-        avatar:
-          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80'
+        note: `Challenging the protagonist through ${checkpointCode}`,
+        avatar: ''
       }
     ];
   }
+
+  const characterStatuses = computeCharacterStatuses(characters, targetSeason, targetEpisode);
 
   // Build Beginner-Friendly Character & World Primer
   const characterGuide = buildCharacterGuideAndWorldPrimer({
@@ -819,14 +1046,29 @@ async function fetchLivePublicShowEngine(title, type, rawSeason, rawEpisode) {
       }
     }
 
+    const epTitle = ep.name || `Episode ${epNum}`;
     return {
       season: sNum,
       episode: epNum,
       overallNumber: idx + 1,
-      title: ep.name || `Episode ${epNum}`,
-      runtime: ep.runtime || 45,
-      summary: richSummary
+      title: epTitle,
+      runtime: Number(ep.runtime) || DEFAULT_RUNTIME_MINUTES[type] || 45,
+      summary: richSummary,
+      isFiller: isFillerEpisode(epTitle, baseSummary, ep.type)
     };
+  });
+
+  // Guarantee a substantial (>150 word) World Premise from spoiler-safe sources only
+  characterGuide.worldPremise = ensureWorldPremise(characterGuide.worldPremise, {
+    officialTitle,
+    type,
+    platform,
+    genres,
+    totalSeasons: cleanEpisodes.length > 0 ? Math.max(...cleanEpisodes.map((e) => e.season)) : 1,
+    totalEpisodes: cleanEpisodes.length || 1,
+    wikiIntro: wikiData.intro,
+    jikanBackground: jikanData?.background || '',
+    synopsis
   });
 
   let targetEpObj = cleanEpisodes.find(
@@ -889,9 +1131,30 @@ async function fetchLivePublicShowEngine(title, type, rawSeason, rawEpisode) {
     )}E${String(targetEpObj.episode).padStart(2, '0')} ("${targetEpObj.title}"):\n${
       targetEpObj.summary
     }`;
+
+    // Thin synopsis? Add the season's earlier beats (all before the checkpoint, so spoiler-safe).
+    if (countWords(targetEpObj.summary) < 80) {
+      const earlier = cleanEpisodes
+        .filter(
+          (e) =>
+            e.season === targetEpObj.season &&
+            e.overallNumber < targetEpObj.overallNumber - 1 &&
+            !e.isFiller &&
+            e.summary
+        )
+        .slice(-3);
+      if (earlier.length > 0) {
+        episodeGist += `\n\nEarlier this season: ${earlier
+          .map((e) => `in "${e.title}", ${(splitSentences(e.summary)[0] || e.summary).replace(/^./, (c) => c.toLowerCase())}`)
+          .join(' Then, ')}`;
+      }
+    }
   } else {
     episodeGist = `${characterGuide.worldPremise}\n\nIn Season ${targetSeason}, Episode ${targetEpisode} of ${officialTitle}, the central conflict escalates as the key characters confront the direct fallout of earlier turning points.`;
   }
+
+  // Minimum content guarantee: the gist is never a single paragraph.
+  episodeGist = ensureMinParagraphs(episodeGist, [characterGuide.worldPremise, wikiData.intro, synopsis]);
 
   // 2. Construct Deep Cumulative Story Recap (S01E01 -> S{targetSeason}E{targetEpisode})
   let storyRecap = '';
@@ -960,31 +1223,17 @@ async function fetchLivePublicShowEngine(title, type, rawSeason, rawEpisode) {
   });
 
   // 4. Relationships
-  const relationships = [];
-  if (characterStatuses.length >= 2) {
-    relationships.push({
-      from: characterStatuses[0].name,
-      to: characterStatuses[1].name,
-      type: 'enemy',
-      label: 'Arch-Rivals / Psychological War'
-    });
-  }
-  if (characterStatuses.length >= 3) {
-    relationships.push({
-      from: characterStatuses[0].name,
-      to: characterStatuses[2].name,
-      type: 'ally',
-      label: 'Bound by Fate'
-    });
-  }
-  if (characterStatuses.length >= 4) {
-    relationships.push({
-      from: characterStatuses[1].name,
-      to: characterStatuses[3].name,
-      type: 'ally',
-      label: 'Investigation Task Force'
-    });
-  }
+  // Curated shows carry real, episode-gated relationships. For everything else we only know who
+  // shares the main storyline, so links stay neutral rather than inventing rivalries.
+  const allRelationships = curated?.relationships
+    ? curated.relationships
+    : characterStatuses.slice(1, 4).map((c) => ({
+        from: characterStatuses[0].name,
+        to: c.name,
+        type: 'ally',
+        label: 'Shares the main storyline'
+      }));
+  const relationships = filterRelationshipsByEpisode(allRelationships, targetSeason, targetEpisode);
 
   const totalSeasonsCount =
     cleanEpisodes.length > 0
@@ -1039,12 +1288,13 @@ async function fetchLivePublicShowEngine(title, type, rawSeason, rawEpisode) {
         )}`
       }
     ],
-    relationships
+    relationships: allRelationships
   };
 
   return {
     show: showObj,
     recap: recapObj,
+    characters,
     characterStatuses,
     relationships
   };
@@ -1052,14 +1302,20 @@ async function fetchLivePublicShowEngine(title, type, rawSeason, rawEpisode) {
 
 export async function POST(request) {
   try {
-    const body = await request.json();
-    const { title, type = 'tv', season = 1, episode = 1 } = body;
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({ success: false, error: 'Invalid JSON body' }, { status: 400 });
+    }
+    const { title, season = 1, episode = 1 } = body || {};
+    const type = ALLOWED_TYPES.has(body?.type) ? body.type : 'tv';
 
-    if (!title || !title.trim()) {
+    if (typeof title !== 'string' || !title.trim()) {
       return NextResponse.json({ success: false, error: 'Title is required' }, { status: 400 });
     }
 
-    const cleanTitle = title.trim();
+    const cleanTitle = title.trim().slice(0, MAX_TITLE_LENGTH);
     const slug = cleanTitle
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
@@ -1072,7 +1328,7 @@ export async function POST(request) {
       Number(episode) || 1
     );
 
-    await saveDynamicShow(generatedData.show);
+    await saveDynamicShow(generatedData.show, generatedData.characters);
     await saveDynamicRecap(slug, generatedData.recap);
 
     return NextResponse.json({
@@ -1080,11 +1336,15 @@ export async function POST(request) {
       slug,
       show: generatedData.show,
       recap: generatedData.recap,
+      characters: generatedData.characters,
       characterStatuses: generatedData.characterStatuses,
       relationships: generatedData.relationships
     });
   } catch (error) {
     console.error('Error in /api/generate:', error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: 'Could not build this story guide right now. Please try again.' },
+      { status: 500 }
+    );
   }
 }

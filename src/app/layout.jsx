@@ -1,6 +1,7 @@
 import '@/styles/globals.css';
 import Navbar from '@/components/Navbar';
 import AuroraBackground from '@/components/reactbits/AuroraBackground';
+import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 
@@ -114,6 +115,7 @@ export default function RootLayout({ children }) {
             </div>
           </footer>
         </AuroraBackground>
+        <ServiceWorkerRegister />
         <SpeedInsights />
         <Analytics />
       </body>

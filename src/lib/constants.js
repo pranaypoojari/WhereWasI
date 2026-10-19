@@ -26,7 +26,7 @@ export const STATUS_COLORS = {
     border: "border-emerald-500/30",
     badge: "bg-emerald-500",
     icon: "🟢",
-    label: "ALIVE"
+    label: "ACTIVE"
   },
   dead: {
     bg: "bg-rose-500/10",
@@ -34,7 +34,7 @@ export const STATUS_COLORS = {
     border: "border-rose-500/30",
     badge: "bg-rose-500",
     icon: "☠️",
-    label: "DEAD"
+    label: "DECEASED"
   },
   injured: {
     bg: "bg-amber-500/10",
@@ -50,7 +50,7 @@ export const STATUS_COLORS = {
     border: "border-purple-500/30",
     badge: "bg-purple-500",
     icon: "❓",
-    label: "MISSING"
+    label: "MIA"
   },
   betrayed: {
     bg: "bg-blue-500/10",
@@ -59,7 +59,25 @@ export const STATUS_COLORS = {
     badge: "bg-blue-500",
     icon: "🗡️",
     label: "BETRAYED"
+  },
+  unknown: {
+    bg: "bg-slate-500/10",
+    text: "text-slate-300",
+    border: "border-slate-500/30",
+    badge: "bg-slate-500",
+    icon: "❔",
+    label: "UNKNOWN"
   }
+};
+
+// Human-facing status names used in filters and the spoiler shield
+export const STATUS_DISPLAY_NAMES = {
+  alive: "Active",
+  dead: "Deceased",
+  injured: "Injured",
+  missing: "MIA",
+  betrayed: "Betrayed",
+  unknown: "Unknown"
 };
 
 export const RELATIONSHIP_COLORS = {

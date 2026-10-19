@@ -1,5 +1,5 @@
 {
-  "executedAt": "2026-10-05T07:47:20.897Z",
+  "executedAt": "2026-10-19T19:38:51.275Z",
   "baseUrl": "http://localhost:3005",
   "totalTests": 42,
   "passed": 42,
@@ -18,7 +18,7 @@
       "description": "1970s classic mob cinema, Act 1 & 2 checkpoint",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 119,
+      "latencyMs": 3453,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -26,17 +26,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 271,
-        "storyRecapLengthChars": 271,
+        "gistLengthChars": 1207,
+        "storyRecapLengthChars": 1207,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 85,
+        "storyBookWords": 241,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "2.5 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "2.3 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (85 words), 2 characters, 271 char gist"
+      "notes": "High Quality: 2 chapters (241 words), 2 characters, 1207 char gist"
     },
     {
       "id": "TC-02",
@@ -49,7 +49,7 @@
       "description": "1980s neo-noir sci-fi classic, Full Movie Ending checkpoint",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 39,
+      "latencyMs": 3242,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -57,17 +57,17 @@
         "episodeTitle": "Season 1, Episode 3",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 270,
-        "storyRecapLengthChars": 270,
+        "gistLengthChars": 1204,
+        "storyRecapLengthChars": 1204,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 85,
+        "storyBookWords": 241,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "2.5 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "2.3 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (85 words), 2 characters, 270 char gist"
+      "notes": "High Quality: 2 chapters (241 words), 2 characters, 1204 char gist"
     },
     {
       "id": "TC-03",
@@ -80,7 +80,7 @@
       "description": "1990s non-linear narrative film",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 37,
+      "latencyMs": 3298,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -88,17 +88,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 270,
-        "storyRecapLengthChars": 270,
+        "gistLengthChars": 1204,
+        "storyRecapLengthChars": 1204,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 85,
+        "storyBookWords": 241,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "2.5 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "2.3 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (85 words), 2 characters, 270 char gist"
+      "notes": "High Quality: 2 chapters (241 words), 2 characters, 1204 char gist"
     },
     {
       "id": "TC-04",
@@ -111,7 +111,7 @@
       "description": "1990s multi-season comedy/sitcom pilot",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 35,
+      "latencyMs": 2437,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -119,17 +119,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 409,
-        "storyRecapLengthChars": 297,
+        "gistLengthChars": 1340,
+        "storyRecapLengthChars": 1228,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 82,
+        "storyBookWords": 237,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (82 words), 2 characters, 409 char gist"
+      "notes": "High Quality: 2 chapters (237 words), 2 characters, 1340 char gist"
     },
     {
       "id": "TC-05",
@@ -142,7 +142,7 @@
       "description": "1990s classic episodic anime mid-season (Ballad of Fallen Angels)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 47,
+      "latencyMs": 3248,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -150,17 +150,17 @@
         "episodeTitle": "Season 1, Episode 5",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 419,
-        "storyRecapLengthChars": 302,
+        "gistLengthChars": 1372,
+        "storyRecapLengthChars": 1255,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 85,
+        "storyBookWords": 243,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "4.8 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (85 words), 2 characters, 419 char gist"
+      "notes": "High Quality: 2 chapters (243 words), 2 characters, 1372 char gist"
     },
     {
       "id": "TC-06",
@@ -173,7 +173,7 @@
       "description": "1990s prestige HBO mob drama mid-season",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 35,
+      "latencyMs": 2442,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -181,17 +181,17 @@
         "episodeTitle": "Season 1, Episode 5",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 419,
-        "storyRecapLengthChars": 302,
+        "gistLengthChars": 1360,
+        "storyRecapLengthChars": 1243,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 85,
+        "storyBookWords": 242,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (85 words), 2 characters, 419 char gist"
+      "notes": "High Quality: 2 chapters (242 words), 2 characters, 1360 char gist"
     },
     {
       "id": "TC-07",
@@ -204,7 +204,7 @@
       "description": "1990s sci-fi epic Act 3 pre-climax",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 36,
+      "latencyMs": 3264,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -212,17 +212,17 @@
         "episodeTitle": "Season 1, Episode 2",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 268,
-        "storyRecapLengthChars": 268,
+        "gistLengthChars": 1198,
+        "storyRecapLengthChars": 1198,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 85,
+        "storyBookWords": 241,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "2.5 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "2.3 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (85 words), 2 characters, 268 char gist"
+      "notes": "High Quality: 2 chapters (241 words), 2 characters, 1198 char gist"
     },
     {
       "id": "TC-08",
@@ -235,7 +235,7 @@
       "description": "2000s psychological anime pilot (Rebirth & rules intro)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 37,
+      "latencyMs": 3271,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -243,17 +243,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 956,
-        "storyRecapLengthChars": 841,
+        "gistLengthChars": 1434,
+        "storyRecapLengthChars": 1319,
         "characterCount": 6,
         "chaptersCount": 5,
         "storyBookWords": 1517,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "15+ Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "4.7 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 5 chapters (1517 words), 6 characters, 956 char gist"
+      "notes": "High Quality: 5 chapters (1517 words), 6 characters, 1434 char gist"
     },
     {
       "id": "TC-09",
@@ -266,7 +266,7 @@
       "description": "2000s psychological anime L vs Light broadcast confrontation",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 37,
+      "latencyMs": 3246,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -274,17 +274,17 @@
         "episodeTitle": "Season 1, Episode 2",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 956,
-        "storyRecapLengthChars": 841,
+        "gistLengthChars": 1434,
+        "storyRecapLengthChars": 1319,
         "characterCount": 6,
         "chaptersCount": 5,
         "storyBookWords": 1517,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "15+ Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "4.7 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 5 chapters (1517 words), 6 characters, 956 char gist"
+      "notes": "High Quality: 5 chapters (1517 words), 6 characters, 1434 char gist"
     },
     {
       "id": "TC-10",
@@ -297,7 +297,7 @@
       "description": "2000s anime series finale (Yellow Box Warehouse & Kira ending)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 29,
+      "latencyMs": 3267,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -305,17 +305,17 @@
         "episodeTitle": "Season 1, Episode 37",
         "totalSeasons": 1,
         "totalEpisodes": 37,
-        "gistLengthChars": 957,
-        "storyRecapLengthChars": 841,
+        "gistLengthChars": 1435,
+        "storyRecapLengthChars": 1319,
         "characterCount": 6,
         "chaptersCount": 5,
         "storyBookWords": 1517,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "15+ Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "4.7 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 5 chapters (1517 words), 6 characters, 957 char gist"
+      "notes": "High Quality: 5 chapters (1517 words), 6 characters, 1435 char gist"
     },
     {
       "id": "TC-11",
@@ -328,7 +328,7 @@
       "description": "2000s superhero masterpiece full synopsis",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 32,
+      "latencyMs": 3254,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -336,17 +336,17 @@
         "episodeTitle": "Season 1, Episode 3",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 273,
-        "storyRecapLengthChars": 273,
+        "gistLengthChars": 1213,
+        "storyRecapLengthChars": 1213,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 88,
+        "storyBookWords": 246,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "2.5 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "2.3 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (88 words), 2 characters, 273 char gist"
+      "notes": "High Quality: 2 chapters (246 words), 2 characters, 1213 char gist"
     },
     {
       "id": "TC-12",
@@ -359,7 +359,7 @@
       "description": "2000s serialized crime drama pilot (Heisenberg origin)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 29,
+      "latencyMs": 2459,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -367,17 +367,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 419,
-        "storyRecapLengthChars": 302,
+        "gistLengthChars": 1360,
+        "storyRecapLengthChars": 1243,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 85,
+        "storyBookWords": 242,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (85 words), 2 characters, 419 char gist"
+      "notes": "High Quality: 2 chapters (242 words), 2 characters, 1360 char gist"
     },
     {
       "id": "TC-13",
@@ -390,7 +390,7 @@
       "description": "2000s serialized crime drama Season 4 Finale (Face Off)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 33,
+      "latencyMs": 2460,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -398,17 +398,17 @@
         "episodeTitle": "Season 4, Episode 13",
         "totalSeasons": 4,
         "totalEpisodes": 13,
-        "gistLengthChars": 420,
-        "storyRecapLengthChars": 302,
+        "gistLengthChars": 1361,
+        "storyRecapLengthChars": 1243,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 85,
+        "storyBookWords": 242,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (85 words), 2 characters, 420 char gist"
+      "notes": "High Quality: 2 chapters (242 words), 2 characters, 1361 char gist"
     },
     {
       "id": "TC-14",
@@ -421,7 +421,7 @@
       "description": "2010s psychological sci-fi Act 1 & 2",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 36,
+      "latencyMs": 3267,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -429,17 +429,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 267,
-        "storyRecapLengthChars": 267,
+        "gistLengthChars": 1195,
+        "storyRecapLengthChars": 1195,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 82,
+        "storyBookWords": 236,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "2.5 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "2.3 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (82 words), 2 characters, 267 char gist"
+      "notes": "High Quality: 2 chapters (236 words), 2 characters, 1195 char gist"
     },
     {
       "id": "TC-15",
@@ -452,7 +452,7 @@
       "description": "2010s epic fantasy high-stakes climax (Baelor)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 35,
+      "latencyMs": 2458,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -460,17 +460,17 @@
         "episodeTitle": "Season 1, Episode 9",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 425,
-        "storyRecapLengthChars": 305,
+        "gistLengthChars": 1372,
+        "storyRecapLengthChars": 1252,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 88,
+        "storyBookWords": 247,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (88 words), 2 characters, 425 char gist"
+      "notes": "High Quality: 2 chapters (247 words), 2 characters, 1372 char gist"
     },
     {
       "id": "TC-16",
@@ -483,7 +483,7 @@
       "description": "2010s dark fantasy anime pilot (Wall Maria breach)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 32,
+      "latencyMs": 3260,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -491,17 +491,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 425,
-        "storyRecapLengthChars": 305,
+        "gistLengthChars": 1384,
+        "storyRecapLengthChars": 1264,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 88,
+        "storyBookWords": 248,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "4.8 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (88 words), 2 characters, 425 char gist"
+      "notes": "High Quality: 2 chapters (248 words), 2 characters, 1384 char gist"
     },
     {
       "id": "TC-17",
@@ -514,7 +514,7 @@
       "description": "2010s anime multi-season mid-point battle (Hero)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 40,
+      "latencyMs": 3272,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -522,17 +522,17 @@
         "episodeTitle": "Season 3, Episode 16",
         "totalSeasons": 3,
         "totalEpisodes": 16,
-        "gistLengthChars": 426,
-        "storyRecapLengthChars": 305,
+        "gistLengthChars": 1385,
+        "storyRecapLengthChars": 1264,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 88,
+        "storyBookWords": 248,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "4.8 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (88 words), 2 characters, 426 char gist"
+      "notes": "High Quality: 2 chapters (248 words), 2 characters, 1385 char gist"
     },
     {
       "id": "TC-18",
@@ -545,7 +545,7 @@
       "description": "2010s space epic complete storyline & ending",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 28,
+      "latencyMs": 3270,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -553,17 +553,17 @@
         "episodeTitle": "Season 1, Episode 3",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 270,
-        "storyRecapLengthChars": 270,
+        "gistLengthChars": 1204,
+        "storyRecapLengthChars": 1204,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 82,
+        "storyBookWords": 236,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "2.5 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "2.3 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (82 words), 2 characters, 270 char gist"
+      "notes": "High Quality: 2 chapters (236 words), 2 characters, 1204 char gist"
     },
     {
       "id": "TC-19",
@@ -576,7 +576,7 @@
       "description": "2010s 80s sci-fi nostalgia pilot (Vanishing of Will Byers)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 28,
+      "latencyMs": 2455,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -584,17 +584,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 425,
-        "storyRecapLengthChars": 305,
+        "gistLengthChars": 1372,
+        "storyRecapLengthChars": 1252,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 85,
+        "storyBookWords": 242,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (85 words), 2 characters, 425 char gist"
+      "notes": "High Quality: 2 chapters (242 words), 2 characters, 1372 char gist"
     },
     {
       "id": "TC-20",
@@ -607,7 +607,7 @@
       "description": "2010s sci-fi late season reveal (Massacre at Hawkins Lab)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 34,
+      "latencyMs": 2447,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -615,17 +615,17 @@
         "episodeTitle": "Season 4, Episode 7",
         "totalSeasons": 4,
         "totalEpisodes": 12,
-        "gistLengthChars": 425,
-        "storyRecapLengthChars": 305,
+        "gistLengthChars": 1372,
+        "storyRecapLengthChars": 1252,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 85,
+        "storyBookWords": 242,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (85 words), 2 characters, 425 char gist"
+      "notes": "High Quality: 2 chapters (242 words), 2 characters, 1372 char gist"
     },
     {
       "id": "TC-21",
@@ -638,7 +638,7 @@
       "description": "2010s Indian crime drama pilot (Purvanchal power struggle)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 61,
+      "latencyMs": 2458,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -646,17 +646,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 411,
-        "storyRecapLengthChars": 298,
+        "gistLengthChars": 1344,
+        "storyRecapLengthChars": 1231,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 82,
+        "storyBookWords": 237,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (82 words), 2 characters, 411 char gist"
+      "notes": "High Quality: 2 chapters (237 words), 2 characters, 1344 char gist"
     },
     {
       "id": "TC-22",
@@ -669,7 +669,7 @@
       "description": "2010s subversive superhero pilot (Robin & Vought bugging)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 24,
+      "latencyMs": 2456,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -677,17 +677,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 411,
-        "storyRecapLengthChars": 298,
+        "gistLengthChars": 1344,
+        "storyRecapLengthChars": 1231,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 85,
+        "storyBookWords": 242,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (85 words), 2 characters, 411 char gist"
+      "notes": "High Quality: 2 chapters (242 words), 2 characters, 1344 char gist"
     },
     {
       "id": "TC-23",
@@ -700,7 +700,7 @@
       "description": "2010s subversive superhero mid-season milestone (Herogasm)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 29,
+      "latencyMs": 2459,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -708,17 +708,17 @@
         "episodeTitle": "Season 3, Episode 6",
         "totalSeasons": 3,
         "totalEpisodes": 12,
-        "gistLengthChars": 411,
-        "storyRecapLengthChars": 298,
+        "gistLengthChars": 1344,
+        "storyRecapLengthChars": 1231,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 85,
+        "storyBookWords": 242,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (85 words), 2 characters, 411 char gist"
+      "notes": "High Quality: 2 chapters (242 words), 2 characters, 1344 char gist"
     },
     {
       "id": "TC-24",
@@ -731,7 +731,7 @@
       "description": "2020s Korean global phenomenon milestone (Gganbu)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 25,
+      "latencyMs": 2457,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -739,17 +739,17 @@
         "episodeTitle": "Season 1, Episode 6",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 415,
-        "storyRecapLengthChars": 300,
+        "gistLengthChars": 1352,
+        "storyRecapLengthChars": 1237,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 85,
+        "storyBookWords": 242,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (85 words), 2 characters, 415 char gist"
+      "notes": "High Quality: 2 chapters (242 words), 2 characters, 1352 char gist"
     },
     {
       "id": "TC-25",
@@ -762,7 +762,7 @@
       "description": "2020s Indian rural slice-of-life pilot (Phulera arrival)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 31,
+      "latencyMs": 2451,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -770,17 +770,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 413,
-        "storyRecapLengthChars": 299,
+        "gistLengthChars": 1348,
+        "storyRecapLengthChars": 1234,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 82,
+        "storyBookWords": 237,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (82 words), 2 characters, 413 char gist"
+      "notes": "High Quality: 2 chapters (237 words), 2 characters, 1348 char gist"
     },
     {
       "id": "TC-26",
@@ -793,7 +793,7 @@
       "description": "2020s Indian global blockbuster complete movie synopsis",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 31,
+      "latencyMs": 3263,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -801,17 +801,17 @@
         "episodeTitle": "Season 1, Episode 3",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 261,
-        "storyRecapLengthChars": 261,
+        "gistLengthChars": 1177,
+        "storyRecapLengthChars": 1177,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 82,
+        "storyBookWords": 236,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "2.5 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "2.3 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (82 words), 2 characters, 261 char gist"
+      "notes": "High Quality: 2 chapters (236 words), 2 characters, 1177 char gist"
     },
     {
       "id": "TC-27",
@@ -824,7 +824,7 @@
       "description": "2020s Targaryen prequel pilot (Heirs of the Dragon)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 23,
+      "latencyMs": 2445,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -832,17 +832,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 433,
-        "storyRecapLengthChars": 309,
+        "gistLengthChars": 1388,
+        "storyRecapLengthChars": 1264,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 91,
+        "storyBookWords": 252,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (91 words), 2 characters, 433 char gist"
+      "notes": "High Quality: 2 chapters (252 words), 2 characters, 1388 char gist"
     },
     {
       "id": "TC-28",
@@ -855,7 +855,7 @@
       "description": "2020s historical biographical drama complete synopsis",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 18,
+      "latencyMs": 3265,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -863,17 +863,17 @@
         "episodeTitle": "Season 1, Episode 3",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 269,
-        "storyRecapLengthChars": 269,
+        "gistLengthChars": 1201,
+        "storyRecapLengthChars": 1201,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 82,
+        "storyBookWords": 236,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "2.5 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "2.3 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (82 words), 2 characters, 269 char gist"
+      "notes": "High Quality: 2 chapters (236 words), 2 characters, 1201 char gist"
     },
     {
       "id": "TC-29",
@@ -886,7 +886,7 @@
       "description": "2024 video game adaptation pilot (Vault 33 breach)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 23,
+      "latencyMs": 2449,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -894,17 +894,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 409,
-        "storyRecapLengthChars": 297,
+        "gistLengthChars": 1340,
+        "storyRecapLengthChars": 1228,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 82,
+        "storyBookWords": 237,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (82 words), 2 characters, 409 char gist"
+      "notes": "High Quality: 2 chapters (237 words), 2 characters, 1340 char gist"
     },
     {
       "id": "TC-30",
@@ -917,7 +917,7 @@
       "description": "2024 feudal Japan historical epic pilot",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 24,
+      "latencyMs": 2454,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -925,17 +925,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 407,
-        "storyRecapLengthChars": 296,
+        "gistLengthChars": 1336,
+        "storyRecapLengthChars": 1225,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 82,
+        "storyBookWords": 237,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (82 words), 2 characters, 407 char gist"
+      "notes": "High Quality: 2 chapters (237 words), 2 characters, 1336 char gist"
     },
     {
       "id": "TC-31",
@@ -946,15 +946,13 @@
       "description": "Search prefix ranking: \"Dea\" prefix matches Death Note",
       "api": "search",
       "status": "PASS",
-      "latencyMs": 35,
+      "latencyMs": 36,
       "httpStatus": 200,
       "assertions": [],
       "details": {
-        "resultsCount": 4,
+        "resultsCount": 1,
         "topTitles": [
-          "Death Note",
-          "DEA",
-          "De Deal"
+          "Death Note"
         ]
       },
       "notes": "Rank #1 match: \"Death Note\""
@@ -968,15 +966,13 @@
       "description": "Search exact title match with category=anime",
       "api": "search",
       "status": "PASS",
-      "latencyMs": 16,
+      "latencyMs": 20,
       "httpStatus": 200,
       "assertions": [],
       "details": {
-        "resultsCount": 4,
+        "resultsCount": 1,
         "topTitles": [
-          "Death Note",
-          "Death Note: New Generation",
-          "Social Death Vote"
+          "Death Note"
         ]
       },
       "notes": "Rank #1 match: \"Death Note\""
@@ -990,7 +986,7 @@
       "description": "Search movie exact title match with category=movie",
       "api": "search",
       "status": "PASS",
-      "latencyMs": 10,
+      "latencyMs": 18,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -1010,7 +1006,7 @@
       "description": "Search Hindi bilingual query for Mirzapur",
       "api": "search",
       "status": "PASS",
-      "latencyMs": 22,
+      "latencyMs": 19,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -1030,7 +1026,7 @@
       "description": "Edge case: single-character query should return empty array (< 2 chars)",
       "api": "search",
       "status": "PASS",
-      "latencyMs": 5,
+      "latencyMs": 6,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -1064,7 +1060,7 @@
       "description": "Whitespace-only title in generate request should return HTTP 400",
       "api": "generate_edge",
       "status": "PASS",
-      "latencyMs": 7,
+      "latencyMs": 3,
       "httpStatus": 400,
       "assertions": [],
       "details": {},
@@ -1080,7 +1076,7 @@
       "description": "Anime title with semicolon (\"Steins;Gate\")",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 38,
+      "latencyMs": 3257,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -1088,17 +1084,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 417,
-        "storyRecapLengthChars": 301,
+        "gistLengthChars": 1368,
+        "storyRecapLengthChars": 1252,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 82,
+        "storyBookWords": 238,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "4.8 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (82 words), 2 characters, 417 char gist"
+      "notes": "High Quality: 2 chapters (238 words), 2 characters, 1368 char gist"
     },
     {
       "id": "TC-39",
@@ -1110,7 +1106,7 @@
       "description": "Movie title with colon and hyphens",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 23,
+      "latencyMs": 3268,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -1118,17 +1114,17 @@
         "episodeTitle": "Season 1, Episode 3",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 293,
-        "storyRecapLengthChars": 293,
+        "gistLengthChars": 1273,
+        "storyRecapLengthChars": 1273,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 91,
+        "storyBookWords": 251,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "2.5 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "2.3 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (91 words), 2 characters, 293 char gist"
+      "notes": "High Quality: 2 chapters (251 words), 2 characters, 1273 char gist"
     },
     {
       "id": "TC-40",
@@ -1140,7 +1136,7 @@
       "description": "Movie passed with Season 4 Episode 12 (should gracefully normalize to Season 1)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 26,
+      "latencyMs": 3262,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -1148,17 +1144,17 @@
         "episodeTitle": "Season 1, Episode 3",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 273,
-        "storyRecapLengthChars": 273,
+        "gistLengthChars": 1213,
+        "storyRecapLengthChars": 1213,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 88,
+        "storyBookWords": 246,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "2.5 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "2.3 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (88 words), 2 characters, 273 char gist"
+      "notes": "High Quality: 2 chapters (246 words), 2 characters, 1213 char gist"
     },
     {
       "id": "TC-41",
@@ -1170,7 +1166,7 @@
       "description": "Episode 999 requested on 8-episode season (should clamp/handle gracefully)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 33,
+      "latencyMs": 2446,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -1178,17 +1174,17 @@
         "episodeTitle": "Season 1, Episode 999",
         "totalSeasons": 1,
         "totalEpisodes": 999,
-        "gistLengthChars": 427,
-        "storyRecapLengthChars": 305,
+        "gistLengthChars": 1374,
+        "storyRecapLengthChars": 1252,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 85,
+        "storyBookWords": 242,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (85 words), 2 characters, 427 char gist"
+      "notes": "High Quality: 2 chapters (242 words), 2 characters, 1374 char gist"
     },
     {
       "id": "TC-42",
@@ -1200,7 +1196,7 @@
       "description": "Completely unknown non-existent title (should fallback gracefully, no 500 crash)",
       "api": "generate",
       "status": "PASS",
-      "latencyMs": 33,
+      "latencyMs": 2453,
       "httpStatus": 200,
       "assertions": [],
       "details": {
@@ -1208,17 +1204,17 @@
         "episodeTitle": "Season 1, Episode 1",
         "totalSeasons": 1,
         "totalEpisodes": 12,
-        "gistLengthChars": 451,
-        "storyRecapLengthChars": 318,
+        "gistLengthChars": 1424,
+        "storyRecapLengthChars": 1291,
         "characterCount": 2,
         "chaptersCount": 2,
-        "storyBookWords": 82,
+        "storyBookWords": 237,
         "hasCharacterGuide": true,
         "hasEndingExplained": true,
-        "timeSavedText": "5.2 Hours Saved",
-        "fillersRemoved": 2
+        "timeSavedText": "9 Hours Saved",
+        "fillersRemoved": 0
       },
-      "notes": "High Quality: 2 chapters (82 words), 2 characters, 451 char gist"
+      "notes": "High Quality: 2 chapters (237 words), 2 characters, 1424 char gist"
     }
   ]
 }

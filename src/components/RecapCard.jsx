@@ -1,7 +1,14 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import SpotlightCard from './reactbits/SpotlightCard';
 import ShinyText from './reactbits/ShinyText';
+import StoryBookReader from './StoryBookReader';
+import {
+  buildFallbackStoryBook,
+  buildRecapMarkdown,
+  copyTextToClipboard,
+  normalizeStoryBook
+} from '@/lib/storyBookUtils';
 import {
   BookOpen,
   CheckCircle2,
@@ -11,13 +18,11 @@ import {
   ArrowRight,
   Film,
   Library,
-  Clock,
-  Zap,
-  Scissors,
-  Flag,
   ChevronLeft,
   ChevronRight,
-  Users
+  Users,
+  ClipboardCopy,
+  Check
 } from 'lucide-react';
 
 export default function RecapCard({
@@ -26,88 +31,50 @@ export default function RecapCard({
   episode,
   nextEpisodeData,
   showTitle = '',
-  initialView = 'cumulative',
+  slug = '',
+  shareBasePath,
+  view,
+  onViewChange,
   onStepEpisode
 }) {
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
-  const [summaryView, setSummaryView] = useState(initialView); // 'cumulative' | 'gist' | 'storybook'
+  const [copyState, setCopyState] = useState('idle'); // 'idle' | 'copied' | 'failed'
+  // Controlled when the parent passes `view` (needed for the "B" keyboard shortcut); local otherwise.
+  const [localView, setLocalView] = useState('cumulative');
+  const summaryView = view ?? localView;
+  const setSummaryView = (next) => {
+    if (onViewChange) onViewChange(next);
+    else setLocalView(next);
+  };
+
+  // Stop the quick audio recap when switching views or unmounting (the Story-Book has its own narrator).
+  useEffect(() => {
+    setIsPlayingAudio(false);
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+  }, [summaryView, season, episode]);
 
   useEffect(() => {
-    if (initialView) {
-      setSummaryView(initialView);
-    }
-  }, [initialView]);
+    if (copyState === 'idle') return;
+    const t = setTimeout(() => setCopyState('idle'), 2000);
+    return () => clearTimeout(t);
+  }, [copyState]);
 
   const storyBook = recap?.storyBook || null;
   const characterGuide =
     recap?.characterGuide || storyBook?.characterGuide || null;
 
-  const effectiveStoryBook = storyBook || {
-    title: `${showTitle || 'Complete Series'} — Start-to-End Story-Book`,
-    subtitle:
-      'Every essential canon plot point from the opening scene to the climax, with all filler subplots stripped out.',
-    readingTimeMinutes: 6,
-    watchTimeSaved: '12+ Hours Saved',
-    fillersRemovedCount: 3,
-    characterGuide,
-    chapters: [
-      {
-        chapterNumber: 1,
-        roman: 'I',
-        title: 'Chapter I: The Opening Premise & Inciting Conflict',
-        episodesCovered: 'Opening Arc (Start)',
-        arcBadge: '100% Canon • Zero Filler',
-        paragraphs: [
-          recap?.storyRecap ||
-            recap?.safeSummary ||
-            'The story opens by introducing the core world, central characters, and the pivotal conflict that sets the entire narrative in motion.'
-        ],
-        keyTakeaway:
-          recap?.keyMoments?.[0] || 'Sets the foundational stakes for all main characters.'
-      },
-      {
-        chapterNumber: 2,
-        roman: 'II',
-        title: `Chapter II: Turning Points & Climax Through S${String(season).padStart(
-          2,
-          '0'
-        )}E${String(episode).padStart(2, '0')}`,
-        episodesCovered: `Up to S${String(season).padStart(2, '0')}E${String(episode).padStart(
-          2,
-          '0'
-        )}`,
-        arcBadge: 'Core Plot Progression',
-        paragraphs: [
-          recap?.episodeGist ||
-            recap?.storyRecap ||
-            'Alliances fracture and hidden motives surface as the protagonists are forced into their most dangerous confrontation yet.'
-        ],
-        keyTakeaway:
-          recap?.cliffhanger ||
-          recap?.keyMoments?.[recap?.keyMoments?.length - 1] ||
-          'High-stakes turning point leading into the final act.'
-      }
-    ],
-    endingExplained:
-      recap?.cliffhanger ||
-      recap?.episodeGist ||
-      'All major character arcs collide as the overarching conflict reaches its decisive culmination.'
-  };
+  const effectiveStoryBook = useMemo(
+    () =>
+      normalizeStoryBook(
+        storyBook || buildFallbackStoryBook({ recap, showTitle, season, episode, characterGuide })
+      ),
+    [storyBook, recap, showTitle, season, episode, characterGuide]
+  );
 
   const activeText =
-    summaryView === 'storybook'
-      ? effectiveStoryBook.chapters
-          .map((ch) => `${ch.title}. ${ch.paragraphs.join(' ')}`)
-          .join('\n\n') + `\n\nEnding Explained: ${effectiveStoryBook.endingExplained}`
-      : summaryView === 'gist'
-      ? recap?.episodeGist ||
-        recap?.safeSummary ||
-        recap?.storyRecap ||
-        'No episode gist available.'
-      : recap?.storyRecap ||
-        recap?.safeSummary ||
-        recap?.episodeGist ||
-        'No story recap available.';
+    summaryView === 'gist'
+      ? recap?.episodeGist || recap?.safeSummary || recap?.storyRecap || 'No episode gist available.'
+      : recap?.storyRecap || recap?.safeSummary || recap?.episodeGist || 'No story recap available.';
 
   const toggleAudio = () => {
     if (!('speechSynthesis' in window)) {
@@ -127,6 +94,24 @@ export default function RecapCard({
       window.speechSynthesis.speak(utterance);
       setIsPlayingAudio(true);
     }
+  };
+
+  const handleCopyMarkdown = async () => {
+    const url =
+      typeof window !== 'undefined'
+        ? `${window.location.origin}${window.location.pathname}${window.location.search}`
+        : '';
+    const markdown = buildRecapMarkdown({
+      showTitle,
+      season,
+      episode,
+      view: summaryView,
+      recap,
+      storyBook: effectiveStoryBook,
+      url
+    });
+    const ok = await copyTextToClipboard(markdown);
+    setCopyState(ok ? 'copied' : 'failed');
   };
 
   const handlePrevEpisode = () => {
@@ -205,7 +190,7 @@ export default function RecapCard({
               </span>
               <h3 className="text-lg sm:text-xl font-bold text-white">
                 {summaryView === 'storybook'
-                  ? effectiveStoryBook.title
+                  ? 'Story-Book Mode'
                   : summaryView === 'gist'
                   ? `What Happens in S${String(season).padStart(2, '0')}E${String(
                       episode
@@ -250,29 +235,48 @@ export default function RecapCard({
             )}
 
             <button
-              onClick={toggleAudio}
+              type="button"
+              onClick={handleCopyMarkdown}
+              title="Copy as Markdown for Discord / Reddit"
               className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all border ${
-                isPlayingAudio
-                  ? 'bg-rose-500 text-white border-rose-400 shadow-lg shadow-rose-500/30 animate-pulse'
+                copyState === 'copied'
+                  ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40'
                   : 'bg-cinema-black/80 text-slate-300 border-cinema-border hover:text-white hover:border-rose-500/40'
               }`}
             >
-              {isPlayingAudio ? (
-                <>
-                  <VolumeX className="w-4 h-4 text-white" />
-                  <span>Stop Audio</span>
-                </>
+              {copyState === 'copied' ? (
+                <Check className="w-4 h-4" />
               ) : (
-                <>
-                  <Volume2 className="w-4 h-4 text-rose-400" />
-                  <span>
-                    {summaryView === 'storybook'
-                      ? 'Listen as Audiobook'
-                      : 'Listen Audio Recap'}
-                  </span>
-                </>
+                <ClipboardCopy className="w-4 h-4 text-rose-400" />
               )}
+              <span>
+                {copyState === 'copied' ? 'Copied!' : copyState === 'failed' ? 'Copy blocked' : 'Copy Recap'}
+              </span>
             </button>
+
+            {summaryView !== 'storybook' && (
+              <button
+                type="button"
+                onClick={toggleAudio}
+                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all border ${
+                  isPlayingAudio
+                    ? 'bg-rose-500 text-white border-rose-400 shadow-lg shadow-rose-500/30 animate-pulse'
+                    : 'bg-cinema-black/80 text-slate-300 border-cinema-border hover:text-white hover:border-rose-500/40'
+                }`}
+              >
+                {isPlayingAudio ? (
+                  <>
+                    <VolumeX className="w-4 h-4 text-white" />
+                    <span>Stop Audio</span>
+                  </>
+                ) : (
+                  <>
+                    <Volume2 className="w-4 h-4 text-rose-400" />
+                    <span>Listen Audio Recap</span>
+                  </>
+                )}
+              </button>
+            )}
           </div>
         </div>
 
@@ -384,89 +388,12 @@ export default function RecapCard({
           </>
         ) : (
           /* MODE C: 📖 COMPLETE START-TO-END STORY-BOOK (ZERO FILLERS) */
-          <div className="space-y-6 animate-in fade-in duration-200">
-            {/* Book Value / Time-Saved Banner */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-950/40 via-cinema-black to-rose-950/30 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="space-y-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1">
-                    <Scissors className="w-3 h-3" /> 100% Canon • All Fillers Removed
-                  </span>
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
-                    <Zap className="w-3 h-3" /> {effectiveStoryBook.watchTimeSaved}
-                  </span>
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono bg-white/5 text-slate-300 border border-white/10 flex items-center gap-1">
-                    <Clock className="w-3 h-3 text-amber-400" /> ~
-                    {effectiveStoryBook.readingTimeMinutes} Min Book Read
-                  </span>
-                </div>
-                <p className="text-xs sm:text-sm text-slate-300 pt-1">
-                  {effectiveStoryBook.subtitle}
-                </p>
-              </div>
-            </div>
-
-            {/* Chapters List */}
-            <div className="space-y-6">
-              {effectiveStoryBook.chapters.map((chapter) => (
-                <div
-                  key={chapter.chapterNumber}
-                  className="p-5 sm:p-7 rounded-2xl bg-cinema-black/75 border border-cinema-border/80 hover:border-amber-500/40 transition space-y-4 shadow-inner"
-                >
-                  <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-cinema-border/50">
-                    <div className="flex items-center gap-3">
-                      <span className="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 font-serif font-black text-sm flex items-center justify-center">
-                        {chapter.roman || chapter.chapterNumber}
-                      </span>
-                      <div>
-                        <h4 className="text-base sm:text-lg font-bold text-white font-serif">
-                          {chapter.title}
-                        </h4>
-                        <span className="text-[11px] font-mono text-slate-400">
-                          Covers: {chapter.episodesCovered}
-                        </span>
-                      </div>
-                    </div>
-
-                    <span className="text-[10px] font-mono uppercase px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">
-                      {chapter.arcBadge || 'Canon Plot'}
-                    </span>
-                  </div>
-
-                  <div className="space-y-4 text-slate-200 text-sm sm:text-base leading-relaxed font-normal">
-                    {chapter.paragraphs.map((para, pIdx) => (
-                      <p key={pIdx} className="leading-relaxed">
-                        {para}
-                      </p>
-                    ))}
-                  </div>
-
-                  {chapter.keyTakeaway && (
-                    <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs sm:text-sm text-amber-200 flex items-start gap-2">
-                      <Sparkles className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                      <div>
-                        <span className="font-bold text-amber-300">Key Plot Turn: </span>
-                        <span>{chapter.keyTakeaway}</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Final Ending Explained Box */}
-            {effectiveStoryBook.endingExplained && (
-              <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-rose-950/50 via-cinema-black to-amber-950/40 border border-rose-500/40 space-y-2">
-                <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-rose-400 font-bold">
-                  <Flag className="w-4 h-4 text-amber-400" />
-                  <span>Final Climax & True Ending Explained</span>
-                </div>
-                <p className="text-sm sm:text-base text-slate-100 leading-relaxed">
-                  {effectiveStoryBook.endingExplained}
-                </p>
-              </div>
-            )}
-          </div>
+          <StoryBookReader
+            storyBook={effectiveStoryBook}
+            showTitle={showTitle}
+            slug={slug}
+            shareBasePath={shareBasePath}
+          />
         )}
       </SpotlightCard>
 
